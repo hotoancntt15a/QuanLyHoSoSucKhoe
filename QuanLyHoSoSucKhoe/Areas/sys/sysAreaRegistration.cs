@@ -11,7 +11,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys
             context.MapRoute(
                 "sys_default",
                 "sys/{controller}/{action}/{id}",
-                new { controller="Home", action = "Index", id = UrlParameter.Optional }
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

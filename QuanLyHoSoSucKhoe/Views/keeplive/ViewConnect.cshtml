@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "ViewConnect";
+    Layout = null;
+    var i = 1;
+    var obj = local.IpConnect.ToList();
+}
+<table class="table table-bordered table-hover">
+    <tbody>
+        @foreach (var v in obj.OrderBy(p => p.Value).ToList())
+        {
+            <tr> <td><i>@i</i>. @v.Value.Replace("|", " ")</td> </tr>
+
+            i++;
+        }
+    </tbody>
+</table>

@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Cơ sở dữ liệu";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var dmtinh = ViewBag.dmtinh as System.Data.DataTable;
 }
 <!-- Nav tabs -->
 <ul class="nav nav-tabs">
@@ -12,9 +13,6 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#tabtsql">TSQL</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#tabdel">Xóa dữ liệu tỉnh</a>
     </li> 
 </ul>
 
@@ -50,36 +48,7 @@
             <a href="javascript:postform('frmtsql', '@Url.Action("createdata")', 'kqtsql');" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Cập nhật lại cấu trúc dữ liệu</a>
         </div>
         <p id="kqtsql"></p>
-    </div>
-    <div id="tabdel" class="tab-pane fade">
-        <form id="frmdeldatatinh" method="post" target="_blank" action="">
-            <input type="hidden" name="mode" value="1" />
-            <div class="form-group">
-                <div class="input-group input-group-sm">
-                    <div class="input-group-append"><div class="input-group-text">Tỉnh</div></div>
-                    <select class="form-control" name="matinh">
-                        @{
-                            if (ViewBag.tinhs != null)
-                            {
-                                foreach (var v in ViewBag.tinhs as List<trabaohiem_mssqlserver.Models.dmtinh>)
-                                {
-                                    <option value="@v.id"> @v.id @v.ten</option>
-                                }
-                            }
-                        }
-                    </select>
-                </div>
-                <div class="input-group input-group-sm">
-                    <div class="input-group-append"><div class="input-group-text">Xóa tài khoản</div></div>
-                    <input class="form-control" name="deluser" id="deluser" value="1" type="checkbox" style="max-width: 50px;" />
-                </div>
-            </div>
-        </form>
-        <div class="form-group">
-            <a href="javascript:postform('frmdeldatatinh', '@Url.Action("deldatatinh")', 'kqdeldatatinh');" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Thực thi</a>
-        </div>
-        <p id="kqdeldatatinh"></p>
-    </div>
+    </div> 
 </div> 
 @section scripts {
     <script>

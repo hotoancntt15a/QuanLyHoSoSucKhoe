@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Danh sách tài khoản";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var dmtinh = ViewBag.dmtinh as List<trabaohiem_mssqlserver.Models.dmtinh>;
+    var dmtinh = ViewBag.dmtinh as System.Data.DataTable; 
 }
 <div class="row">
     <div class="col-12">
@@ -11,9 +11,9 @@
                     <div class="input-group-append"><div class="input-group-text">Tỉnh</div></div>
                     <select class="form-control" name="tinh" id="tinh">
                         <option value=""> -- Chọn -- </option>
-                        @foreach (var v in dmtinh)
+                        @foreach (System.Data.DataRow r in dmtinh.Rows)
                         {
-                            <option value="@v.id"> @v.ten</option>
+                            <option value="@r[0]"> @r[1] </option>
                         }
                     </select>
                 </div>

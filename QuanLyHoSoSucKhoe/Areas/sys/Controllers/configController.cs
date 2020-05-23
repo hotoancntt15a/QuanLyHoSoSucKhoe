@@ -24,7 +24,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             {
                 try
                 {
-                    ViewBag.dmtinh = db.dmtinhs.OrderBy(p => p.ten).ToList();
+                    ViewBag.dmtinh = db.getDataSet("select * from dmtinh order by ten").Tables[0];
                 }
                 catch (Exception ex)
                 {

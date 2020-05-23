@@ -17,50 +17,13 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
         {
             using (var db = local.getDataObject())
             {
-                try {
-                    ViewBag.tinhs = db.dmtinhs.ToList();
+                try
+                {
+                    ViewBag.dmtinh = db.getDataSet("select * from dmtinh").Tables[0];
                 }
                 catch (Exception ex) { ViewBag.Error = ex.Message; }
             }
             return View();
-        }
-
-        [CheckLogin]
-        public ActionResult deldatatinh()
-        {
-            var tsql = new List<string>();
-            var tmp = Request.getValue("matinh").getValueField();
-            try
-            {
-                /* Xóa dữ liệu trong database */
-                if (string.IsNullOrEmpty(tmp)) { throw new Exception(messageKey.thamSoKhongDung); }
-                tsql.Add($"delete from dstgld where matinh='{tmp}';");
-                tsql.Add($"delete from filetrungttcntt where matinh='{tmp}';");
-                tsql.Add($"delete from hocv93 where matinh='{tmp}';");
-                tsql.Add($"delete from khaucv93 where matinh='{tmp}';");
-                tsql.Add($"delete from dieutradanso where matinh='{tmp}';");
-                tsql.Add($"delete from dieutraho where matinh='{tmp}';");
-                if (Request.getValue("deluser") == "1") { tsql.Add($"delete from nguoidung where capdo > 0 and idtinh='{tmp}'"); }
-            }
-            catch (Exception ex) { return Content(ex.Message); }
-            using (var db = local.getDataObject())
-            {
-                try
-                {
-                    var sql = tsql.ToJoin(" ");
-                    db.Execute(sql);
-                    /* Xóa dữ liệu Upload */
-                    /* Lấy danh sách Huyện của tỉnh */
-                    var dmhuyen = db.dmhuyens.Where(p => p.idtinh == tmp).ToList();
-                    /* Xóa thưc mục CV93,soattrungkhau */
-                    /* Xóa thưc mục dstgld */
-                    /* Xóa thưc mục filetrungttcntt */
-                    /* Xóa thưc mục dieutradanso */
-
-                }
-                catch (Exception ex) { return Content(ex.saveMessage()); }
-            }
-            return Content(messageKey.actionSuccess);
         }
 
         [CheckLogin]

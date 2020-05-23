@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = $"Cập nhật tài khoản {Request["id"]}";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var item = ViewBag.data as trabaohiem_mssqlserver.Models.nguoidung;
+    var item = ViewBag.data as QuanLyHoSoSucKhoe.Models.nguoidung;
     string lancuoi = item.lancuoi.HasValue ? item.lancuoi.Value.ToString("dd/MM/yyyy") : "";
 }
 <h2>@ViewBag.Title</h2>

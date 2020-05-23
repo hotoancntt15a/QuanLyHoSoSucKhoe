@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "getfiles";
+    Layout = null;
+}
+@if (ViewBag.listxls != null)
+{
+    <form action="@Url.Action("import")" method="post" id="frmupload" onsubmit="return checkformupload(); ">
+        <input type="hidden" name="id" value="@Request["id"]" />
+        <b>Tập tin Excel</b>
+        <button class="btn btn-primary btn-sm" type="button" onclick="checkall();"><i class="fa fa-check-square"></i> Chọn tất cả</button>
+        <button class="btn btn-primary btn-sm" type="button" onclick="uncheck();"><i class="fa fa-square"></i> Bỏ tất cả</button>
+        <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-save"></i> Cập nhật</button>
+        <button class="btn btn-primary btn-sm" type="button" onclick="delfile();"><i class="fa fa-remove"></i> Xóa</button>
+        <ul id="dsexcel"> @Html.Raw(ViewBag.listxls) </ul>
+    </form>
+}

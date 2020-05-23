@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "fix";
+    Layout = null;
+}
+<form id="frmconfig" method="post" action="/hethong/config/fix?key=@Server.UrlDecode(Request.getValue("key"))">
+    <div class="form-group">
+        <textarea id="value" name="value" class="form-control" placeholder="giá trị của từ khóa" rows="5" >@ViewBag.value</textarea>
+    </div>
+    <input type="hidden" id="cmd" name="cmd" value="1" />
+    <a href="javascript:postform('#frmconfig','/hethong/config/fix?key=@Server.UrlDecode(Request.getValue("key"))');" class="btn btn-primary btn-xs"> <i class="fa fa-save"></i> Lưu lại</a> 
+</form>
+<p></p>
+<div class="alert alert-info">
+    <i>Hướng dẫn thao tác</i>
+    <ul>
+        <li>Quy tắc nhập [từ, ký tự (1)]=[kết quả tương đương(1)]; [từ, ký tự (2)]=[kết quả tương đương(2)]; ..</li> 
+        <li>Không quá 128 nhóm, Nhập không dấu, dấu ';' phân cách giữa các nhóm, dấu ',' phân cách giữa các từ, dấu '=' phân cách giữa các từ và từ đông âm hoặc kết quả tương đương </li> 
+        <li>Trong phần từ, ký tự; thêm dấu '/' đằng trước để phân biệt từ hoặc ký tự đó bắt đầu 1 từ</li> 
+        <li>Kết quả tương đương có thể coi như chuẩn hóa chính tả </li> 
+        <li>Ví dụ: /x=s; tr=ch; ngyen=nguyen </li> 
+    </ul>
+</div>
+     

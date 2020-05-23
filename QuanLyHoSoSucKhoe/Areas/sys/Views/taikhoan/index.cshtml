@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Danh sách tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var dmtinh = ViewBag.dmtinh as List<trabaohiem_mssqlserver.Models.dmtinh>;
+}
+<div class="row">
+    <div class="col-12">
+        <form method="post" role="form" id="frmtaikhoan">
+            <div class="form-group">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">Tỉnh</div></div>
+                    <select class="form-control" name="tinh" id="tinh">
+                        <option value=""> -- Chọn -- </option>
+                        @foreach (var v in dmtinh)
+                        {
+                            <option value="@v.id"> @v.ten</option>
+                        }
+                    </select>
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">Từ</div></div>
+                    <input type="date" name="ngay1" id="ngay1" value="@Request["ngay1"]" class="form-control" style="min-width: 100px; max-width: 150px;" />
+                    <div class="input-group-append"><div class="input-group-text">Đến</div></div>
+                    <input type="date" name="ngay2" id="ngay2" value="@Request["ngay2"]" class="form-control" style="min-width: 100px; max-width: 150px;" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">Tên đăng nhập</div></div>
+                    <input type="text" name="taikhoan" id="taikhoan" value="@Request["taikhoan"]" class="form-control" maxlength="50" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">Số điện thoại</div></div>
+                    <input type="text" name="sdt" id="sdt" value="@Request["sdt"]" class="form-control" maxlength="50" />
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" id="btnsearch" class="btn btn-primary btn-sm"> <i class="fa fa-search"></i> Tìm kiếm</button>
+                <button type="reset" class="btn btn-primary btn-sm"> <i class="fa fa-refresh"></i> Làm mới</button>
+                <a href="@Url.Action("TableDescription", "config", new { area = "sys"})/@ViewBag.tabledescription?redirect=@Server.UrlEncode(Request.Url.PathAndQuery)" class="btn btn-primary btn-sm"> <i class="fa fa-list"></i> Chỉnh tiêu đề hiển thị</a>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12" id="dstaikhoan">
+    </div>
+</div>
+@section scripts {
+    <script>
+        function search() { postform('#frmtaikhoan', '@Url.Action("search")', '#dstaikhoan'); }
+        $(document).ready(function () {
+            search();
+            $('#btnsearch').click(function () { search(); });
+        });
+    </script>
+}

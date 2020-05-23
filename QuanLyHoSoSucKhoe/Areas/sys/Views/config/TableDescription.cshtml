@@ -1,0 +1,21 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} 
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" id="frmupdate" role="form">
+            @Html.Raw(ViewBag.table)
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="javascript:void(0)" onclick="submitform(this);" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Lưu lại</a>
+                    <button type="reset" class="btn btn-primary btn-sm"><i class="fa fa-refresh"></i> Reset </button>
+                    @if (Request["redirect"] != null)
+                    {
+                        <a href="@Request["redirect"]" class="btn btn-primary btn-sm"><i class="fa fa-backward"></i> Trở lại</a>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

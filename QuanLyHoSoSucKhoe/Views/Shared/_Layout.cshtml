@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="@AppConfig.Description">
+    <meta name="author" content="@AppConfig.Author">
+    <title>@ViewBag.Title - @AppConfig.Title</title>
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="~/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link href="~/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="~/vendor/bootstrap/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+    <!-- Datepicker CSS-->
+    <link href="~/vendor/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="~/vendor/sb-admin.css" rel="stylesheet">
+    @{
+        var csssite = new FileInfo(Server.MapPath("~/vendor/Site.css"));
+        var ListStyles = "";
+        if (ViewBag.Styles != null) { ListStyles = "<link href=\"" + string.Join("\" rel=\"stylesheet\"> <link href=\"", (List<string>)ViewBag.Styles) + "\" rel=\"stylesheet\">"; }
+        var obj = ViewContext.RouteData;
+        string area = obj.getNameArea();
+        string controller = obj.getNameController();
+        string action = obj.getNameAction();
+        string doimain = Request.Url.Host;
+        var breadcrumbs = "";
+        if (area != "") { breadcrumbs = $"<li class=\"breadcrumb-item\"> <a href=\"/{area}\">{area}</a> </li>"; }
+        var f = new System.IO.FileInfo(Server.MapPath($"~/bin/{local.projectName}.dll"));
+        var updatelate = "Unknown";
+        if (f.Exists) { updatelate = $"{f.LastWriteTime:dd/MM/yyyy HH:mm}"; }
+        string marquee = "";
+        if (action != "thongbao") { marquee = local.thongbaoMarquee(ViewContext.HttpContext); }
+    }
+    <link href="~/vendor/Site.css?v=@csssite.LastWriteTime.ToOADate()" rel="stylesheet">
+    @Html.Raw(ListStyles)
+</head>
+<body id="page-top">
+    @Html.Partial("_LayoutMenu")
+    <div id="wrapper">
+        <!-- Sidebar -->
+        @Html.Partial("_LayoutMenuLeft")
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"> <a href="/"> <i class="fa fa-fw fa-home"></i> Home</a> </li>
+                    @Html.Raw(breadcrumbs)
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+                <!-- Page Content -->
+                @RenderBody()
+                @Html.Raw(marquee)
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto" style="line-height: 1.6em;">
+                        Nhóm phát triển: Nguyễn Duy Tiến - Hồ Văn Toàn <br />
+                        Nhóm Zalo: @AppConfig.value("app.zalo", "[Chưa tạo]") <br />
+                        Email: <a href="mailto:hotoancntt15a@gmail.com">hotoancntt15a@gmail.com</a> <br />
+                        Cập nhật lần cuối: <a href="~/ReadMe.txt" target="_blank">@f.LastWriteTime.ToString("dd/MM/yyyy HH:mm")</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top"> <i class="fa fa-angle-up"></i> </a>
+    @{
+        var msg1 = local.getAlert(ViewBag.Message, Session.getMessage());
+        var msg2 = local.getAlert(ViewBag.Error, Session.getError(), "danger");
+    }
+    <!-- Logout Modal-->
+    <div class="modal fade" id="mdMessage" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header"> <h4 class="modal-title">Thông báo</h4> <button type="button" class="close" data-dismiss="modal">&times;</button> </div>
+                <div class="modal-body">
+                    @Html.Raw(msg1)
+                    @Html.Raw(msg2)
+                </div>
+                <div class="modal-footer"> <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"> <i class="fa fa-remove"></i> Đóng cửa sổ </button> </div>
+            </div>
+        </div>
+    </div>
+    @{
+        var jssite = new FileInfo(Server.MapPath("~/vendor/site.js"));
+        var ListScript = "";
+        if (ViewBag.Scripts != null) { ListScript = "<script src=\"" + string.Join("\"></script> <script src=\"", (List<string>)ViewBag.Scripts) + "\"></script>"; }
+    }
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="~/vendor/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/vendor/buttons.colVis.min.js"></script>
+    <script src="~/vendor/buttons.html5.min.js"></script>
+    <script src="~/vendor/buttons.print.min.js"></script>
+    <script src="~/vendor/jszip.min.js"></script>
+    <script src="~/vendor/pdfmake.min.js"></script>
+    <!-- Datepicker JavaScript-->
+    <script src="~/vendor/datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/vendor/datepicker/locales/bootstrap-datepicker.vi.min.js" charset="utf-8"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="~/vendor/sb-admin.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendor/buttons.bootstrap4.min.js"></script>
+    <script src="~/vendor/site.js?v=@jssite.LastWriteTime.ToOADate()"></script>
+    @Html.Raw(ListScript)
+    @{
+        var zoomsite = zModules.Tools.getInt(AppConfig.value("zoomsite"), 90);
+        if (zoomsite < 10) { zoomsite = 10; }
+    }
+    <script>
+        function logout() { messageshow('Bạn thực sự có muốn thoát không?', '@Url.Action("index", "logout", new { area = "" })'); }
+        function viewonline() {
+            $('#mdMessage').find('div.modal-body').html('<img alt="" src="/Images/loader.gif" /> đang cập nhật dữ liệu ..');
+            $('#mdMessage').modal('show');
+            var cn = $('#mdMessage').find('div.modal-body').first();
+            cn.html('<img alt="" src="/Images/loader.gif" /> Đang nạp dữ liệu');
+            var s = encodeURIComponent(new Date().toLocaleString());
+            cn.load('@Url.Action("ViewConnect", "keeplive", new { area = "" })?=' + s);
+        }
+        function editcv93khau(id, ho, tinh) { showgeturl("/hethong/cv93/updatekhau?id=" + id + "&ho=" + ho + "&tinh=" + tinh); }
+        $(document).ready(function () {
+            if ($('#mdMessage').find('div.modal-body').first().text().trim().length > 6) { $('#mdMessage').modal("show"); }
+            document.body.style.zoom = '@Html.Raw(zoomsite)%';
+        });
+        $('#sidebarToggle').click();
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>   

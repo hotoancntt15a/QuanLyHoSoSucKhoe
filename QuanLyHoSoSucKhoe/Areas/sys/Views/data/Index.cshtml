@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Cơ sở dữ liệu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#tabinfo">Thông tin</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#tabbackup">Sao lưu/Phục hồi</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#tabtsql">TSQL</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#tabdel">Xóa dữ liệu tỉnh</a>
+    </li> 
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div id="tabinfo" class="tab-pane active">
+        <div id="datainfo"></div>
+        <p><button class="btn btn-primary btn-sm" onclick="loadDataInfo();"> <i class="fa fa-refresh"></i> Làm mới </button></p>
+    </div>
+    <div id="tabbackup" class="tab-pane fade">
+        <form method="post" action="@Url.Action("UpFile")" id="frm_admin_data_upfile" enctype="multipart/form-data">
+            <div class="form-group"> <input type="file" name="taptin" class="file" data-show-preview="false" /> </div>
+            <div class="clearfix"></div>
+            <div id="filesbak"></div>
+            <div class="form-group">
+                <a href="javascript:showgeturl('@Url.Action("Backup")');" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i> Sao lưu dữ liệu</a>
+                <a href="javascript:showgeturl('@Url.Action("shrink")');" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i> Shrink Data</a>
+                <a href="javascript:postform('','@Url.Action("getfilebak")','filesbak');" class="btn btn-primary btn-sm"> <i class="fa fa-file"></i> Lấy danh sách tập tin sao lưu</a>
+            </div>
+        </form>
+    </div>
+    <div id="tabtsql" class="tab-pane fade">
+        <form id="frmtsql" method="post" target="_blank" action="">
+            <input type="hidden" name="mode" value="1" />
+            <div class="form-group">
+                <textarea class="form-control" name="tsql" id="tsql" rows="5"></textarea>
+            </div>
+        </form>
+        <div class="form-group">
+            <a href="javascript:postform('frmtsql', '@Url.Action("runsql")', 'kqtsql');" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Thực thi</a>
+            <a href="javascript:exportxml();" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Export XML</a>
+            <a href="javascript:export7z();" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Export XML 7z</a>
+            <a href="javascript:postform('frmtsql', '@Url.Action("createdata")', 'kqtsql');" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Cập nhật lại cấu trúc dữ liệu</a>
+        </div>
+        <p id="kqtsql"></p>
+    </div>
+    <div id="tabdel" class="tab-pane fade">
+        <form id="frmdeldatatinh" method="post" target="_blank" action="">
+            <input type="hidden" name="mode" value="1" />
+            <div class="form-group">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">Tỉnh</div></div>
+                    <select class="form-control" name="matinh">
+                        @{
+                            if (ViewBag.tinhs != null)
+                            {
+                                foreach (var v in ViewBag.tinhs as List<trabaohiem_mssqlserver.Models.dmtinh>)
+                                {
+                                    <option value="@v.id"> @v.id @v.ten</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">Xóa tài khoản</div></div>
+                    <input class="form-control" name="deluser" id="deluser" value="1" type="checkbox" style="max-width: 50px;" />
+                </div>
+            </div>
+        </form>
+        <div class="form-group">
+            <a href="javascript:postform('frmdeldatatinh', '@Url.Action("deldatatinh")', 'kqdeldatatinh');" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Thực thi</a>
+        </div>
+        <p id="kqdeldatatinh"></p>
+    </div>
+</div> 
+@section scripts {
+    <script>
+        function exportxml() { var frm = $('#frmtsql'); frm.attr('action', '@Url.Action("export")'); frm.submit(); }
+        function export7z() { var frm = $('#frmtsql'); frm.attr('action', '@Url.Action("export7z")'); frm.submit(); }
+        function DelFile(sender) { showMessageDel('Bạn thực sự muốn xóa tập tin ' + sender + ' không?', '@Url.Action("Delete")?v=' + encodeURIComponent(sender)); }
+        function Restore(sender) { showMessageUp('Bạn thực sự muốn khôi phục dữ liệu từ tập tin ' + sender + ' không?', '@Url.Action("Restore")?f=' + encodeURIComponent(sender)); };
+        function loadDataInfo() { var data = $('#datainfo'); if (data.find('img').length > 0) { return; } data.html('Loading <img alt="" src="/images/loader.gif" />'); data.load('@Url.Action("info")'); }
+        $(document).ready(function () { loadDataInfo(); postform('', '@Url.Action("getfilebak")', 'filesbak'); });
+    </script>
+}

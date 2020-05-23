@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "search";
+    Layout = null;
+}
+<table class="table table-bordered table-hover">
+    @{
+        System.Data.DataTable items = new System.Data.DataTable();
+        if (ViewBag.data != null) { items = ViewBag.data as System.Data.DataTable; }
+    }
+    @if (items.Rows.Count == 0)
+            {
+        <tbody><tr><td>Không có dữ liệu; <a href="@Url.Action("update")?t=@DateTime.Now.ToOADate()"> <i class="fa fa-plus"></i> Thêm </a></td></tr></tbody>
+    }
+    else
+    {
+        items.Columns.RemoveAt(1);
+        <thead>
+            <tr>
+                <th> <a href="@Url.Action("update")?t=@DateTime.Now.ToOADate()"> <i class="fa fa-plus"></i> Thêm </a> </th>
+                @foreach (System.Data.DataColumn c in items.Columns)
+                {
+                    <th>@c.ColumnName</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow r in items.Rows)
+            {
+                <tr>
+                    <td>
+                        <a href="javascript:void(0);" onclick="viewfirst(this);"> <i class="fa fa-eye"></i> </a>
+                        <a href="@Url.Action("update")?id=@r[0]&t=@DateTime.Now.ToOADate()"> <i class="fa fa-edit"></i> </a>
+                    </td>
+                    @foreach (System.Data.DataColumn c in items.Columns)
+                    {
+                        if (c.DataType == typeof(DateTime))
+                        {
+                            var s = r[c.ColumnName] == null ? "" : $"{r[c.ColumnName]:dd/MM/yyyy}";
+                            <td>@s</td>
+                        }
+                        else
+                        {
+                            <td>@r[c.ColumnName]</td>
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    }
+</table>

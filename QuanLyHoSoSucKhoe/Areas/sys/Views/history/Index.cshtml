@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Nhật ký hệ thống";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var fileError = new System.IO.FileInfo(Server.MapPath("~/error.txt"));
+}
+<form method="post" id="frm_history" role="search">
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Người thực hiện</div></div>
+            <input type="text" id="name" name="name" value="@ViewBag.Name" class="form-control" maxlength="150" />
+            <div class="input-group-append"><div class="input-group-text">Vị trí</div></div>
+            <input type="text" id="vitri" name="vitri" value="@ViewBag.ViTri" class="form-control" maxlength="150" />
+            <div class="input-group-append"><div class="input-group-text"><button class="btn btn-primary btn-sm" type="submit"> <i class="fa fa-search"></i> Lọc</button></div></div> 
+        </div>
+    </div>
+    <input type="hidden" name="page" id="pageindex" value="@ViewBag.PageIndex" />
+    <table class="table table-bordered table-hover showexporttable" pagelenght="100" id="data_history">
+        <thead> <tr> <th style="width: 10px;">#</th> <th>Times</th> <th>User</th> <th>Vị trí</th> <th>Nội dung</th> </tr> </thead>
+        <tbody>
+            @Html.Raw(ViewBag.Data)
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">@Html.Raw(ViewBag.Page)</td>
+            </tr>
+        </tfoot>
+    </table>
+</form>
+<a href="javascript:DelHistory()" class="btn btn-primary btn-sm"> <i class="fa fa-recycle"></i> Xóa các mục đã chọn</a>
+<a href="javascript:DelAllHistory()" class="btn btn-primary btn-sm"> <i class="fa fa-remove"></i> Xóa toàn bộ</a>
+@if (fileError.Exists)
+{
+     <a href="~/error.txt" class="btn btn-primary btn-sm"> <i class="fa fa-eye"></i> Xem nhật ký báo lỗi <i>@($"{fileError.LastWriteTime:HH:mm dd/MM/yyyy}")</i></a>
+}
+@section scripts {
+    <script type="text/javascript">
+        var urlDel = '@Url.Action("Delete")';
+        var urlDelAll = '@Url.Action("DeleteAll")';
+        var e_from = '#frm_history';
+        function Delete() { $(e_from).attr('action', urlDel); $(e_from).submit(); }
+        function DelHistory() { if ($('input[name="id"]:checked').length == 0) return; showMessageUp('Bạn thực sự muốn xóa các mục đã chọn không?', 'javascript:Delete();'); }
+        function DelAllHistory() { showMessageUp('Bạn thực sự muốn xóa tất cả nhật ký không?', urlDelAll); }
+    </script>
+}

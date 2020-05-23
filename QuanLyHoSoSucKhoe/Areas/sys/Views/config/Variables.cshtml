@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Các biến tiền định";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} 
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-bordered table-hover showexporttable" pagelenght="100">
+            <thead>
+                <tr>
+                    <th>Biến</th>
+                    <th>Giá trị</th>
+                </tr>
+            </thead>
+            <tbody>
+                @Html.Raw(ViewBag.data)
+            </tbody>
+        </table>
+    </div>
+</div>

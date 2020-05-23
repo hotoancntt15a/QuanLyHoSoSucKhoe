@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Load";
+    Layout = null;
+}
+<table id="idlist" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr> <th style="width: 50px;">#</th> <th>Key</th> <th>Value</th> </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.data != null)
+        {
+            var data = (Dictionary<string, string>)ViewBag.data;
+            if (data.Count == 0)
+            {
+                <tr> <td colspan="3">Không có cấu hình</td> </tr>
+            }
+            else
+            {
+                var i = 1;
+                foreach (var item in data)
+                {
+                    <tr rowindex="@i">
+                        <td> <a href="javascript:DelRow('@i')" class="delitem"><i class="fa fa-remove"></i> </a> </td>
+                        <td> <a href="javascript:edit('@i')"> @item.Key </a> </td>
+                        <td>@item.Value</td>
+                    </tr>
+                    i++;
+                }
+            }
+        }
+    </tbody>
+</table>
+
+
+

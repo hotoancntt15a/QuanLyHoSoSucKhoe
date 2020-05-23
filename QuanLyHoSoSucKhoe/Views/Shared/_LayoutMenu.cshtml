@@ -1,0 +1,74 @@
+﻿<!-- Navigation-->
+<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+    <a href="~/" class="navbar-brand mr-1">@AppConfig.Title</a>
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fa fa-bars"></i>
+    </button>
+    <!-- Menu Top -->
+    <ul class="navbar-nav ml-auto ml-md-0">
+        @if (Session.isLogin())
+        {
+            <li class="nav-item dropdown no-arrow mx-1">
+                <a class="nav-link dropdown-toggle mr-lg-2" id="mnuser" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-fw fa-user"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="mnuser">
+                    <a class="dropdown-item" href="@Url.Action("taikhoan", "home", new { area = "" })"><i class="fa fa-user fa-fw"></i> Thông tin @Session[keyS.idUser]</a>
+                    <div class="dropdown-divider"></div>
+                    @if ($"{Session[keyS.capdo]}" == "0")
+                    {
+                        <a class="dropdown-item" href="@Url.Action("index", "home", new { area = "sys" })"><i class="fa fa-cogs fa-fw"></i> System Admin</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Home", new { area = "danhmuc" })"><i class="fa fa-fw fa-list"></i> Danh mục</a>
+                        <div class="dropdown-divider"></div>
+                    }
+                    <a class="dropdown-item" href="javascript:logout();"> <i class="fa fa-fw fa-sign-out"></i> Đăng xuất </a>
+                </div>
+            </li> 
+            if (ViewContext.RouteData.getNameController().ToLower() != "task")
+            {
+                if (local.taskList.Count() > 0)
+                {
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="alerttasklist" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-tasks"></i>
+                            <span class="badge badge-danger">@local.taskList.Count()</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alerttasklist">
+                            @foreach (var v in local.taskList)
+                            {
+                                <a class="dropdown-item" href="@Url.Action("Index", "task", new { area = "" })"><i class="fa fa-tasks"></i> @v.name</a>
+                                <div class="dropdown-divider"></div>
+                            }
+                        </div>
+                    </li>
+                }
+            }
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "login", new { area = "" })" title="Đăng nhập">
+                    <i class="fa fa-fw fa-sign-in"></i>
+                </a>
+            </li>
+        }
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link" href="@Url.Action("About", "Home", new { area = "" })" title="Thông tin">
+                <i class="fa fa-fw fa-question-circle"></i>
+            </a>
+        </li>
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link" href="javascript:showgeturl('@Url.Action("showGroupData", "tools", new { area = "" })')" title="Thống kê dữ liệu">
+                <i class="fa fa-fw fa-database"></i>
+            </a>
+        </li>
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link" href="javascript:viewonline();">
+                <i class="fa fa-wifi"></i>
+                <span class="badge badge-danger">@local.IpConnect.Count</span>
+            </a>
+        </li>
+    </ul>
+    <!-- End Menu Top -->
+</nav> 

@@ -1,0 +1,47 @@
+﻿@{
+    var capdo = $"{Session[keyS.capdo]}";
+    var capdos = new List<string>() { "0", "1", "2" };
+    var areaName = $"{ViewContext.RouteData.DataTokens["area"]}";
+}
+<!-- Menu Left -->
+<ul class="sidebar navbar-nav">
+
+    @if (capdos.Contains(capdo))
+    {
+        if (string.IsNullOrEmpty(areaName))
+        {
+            if (capdo == "1" || capdo == "0")
+            {
+                <li class="nav-item"> <a class="nav-link" href="@Url.Action("index", "home", new { area = "hethong" })"> <i class="fa fa-fw fa-gears"></i> <span>Hệ Thống</span> </a> </li>
+            }
+            <li class="nav-item"> <a class="nav-link" href="@Url.Action("index", "home", new { area = "nhapxuat" })"> <i class="fa fa-fw fa-database"></i> <span>Nhập Xuất</span> </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="@Url.Action("index", "home", new { area = "morong" })"> <i class="fa fa-fw fa-gears"></i> <span>Mở rộng</span> </a> </li>
+        }
+        else
+        {
+            var loadMenu = true;
+            if (areaName == "sys" && capdo != "0") { loadMenu = false; }
+            if (loadMenu)
+            {
+                var list = local.listLinkMVC.Where(p => p.href.StartsWith($"/{areaName}") && p.href.EndsWith("ndex")).ToList();
+                if (areaName == "nhapxuat" && capdo != "0")
+                {
+                    foreach (var v in list)
+                    {
+                        if (v.href.ToLower().EndsWith($"/home/index")) { continue; }
+                        <li class="nav-item"> <a class="nav-link" href="@v.href"> <i class="@v.attr"></i> <span class="nav-link-text">@v.text</span> </a> </li>
+                    }
+                }
+                else
+                {
+                    foreach (var v in list)
+                    {
+                        if (v.href.ToLower().EndsWith($"/home/index")) { continue; }
+                        <li class="nav-item"> <a class="nav-link" href="@v.href"> <i class="@v.attr"></i> <span class="nav-link-text">@v.text</span> </a> </li>
+                    }
+                }
+            }
+        }
+    } 
+</ul>
+<!-- End Menu Left --> 

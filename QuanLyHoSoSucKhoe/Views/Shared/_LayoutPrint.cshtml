@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="@AppConfig.Description">
+    <meta name="author" content="@AppConfig.Author">
+    <title>@ViewBag.Title - @AppConfig.Title</title>
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="~/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="~/vendor/print.css" rel="stylesheet" />
+    <style>
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            font-size: 10.2pt;
+            font-family: 'Times New Roman', Tahoma, Verdana !important;
+        }
+
+        .text-black {
+            color: black !important;
+        }
+
+        .tdh05 td {
+            height: 0.5cm !important;
+        }
+
+        .linehw1 {
+            line-height: 136% !important;
+        }
+
+        .linehw2 {
+            line-height: 138% !important;
+            margin-top: 0.1cm;
+        }
+
+        .page {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 1.5cm 1.2cm 1cm 1.2cm;
+            margin: 0.5cm auto;
+            border: 1px #D3D3D3 solid;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .table {
+            background-color: transparent !important;
+            margin-bottom: 4px !important;
+            margin-top: 5px !important;
+            font-size: 10pt;
+        }
+
+            .table > thead > tr > th {
+                font-weight: normal !important;
+            }
+
+            .table > tbody > tr > td, .table > thead > tr > th {
+                padding: 0 !important;
+                padding-left: 2px !important;
+                padding-right: 2px !important;
+                line-height: 118% !important;
+            }
+
+            .table > tbody > tr > td {
+                font-weight: bold;
+            }
+
+        @@page {
+            size: A4;
+            margin: 0;
+        }
+
+        .row {
+            background-color: transparent !important;
+        }
+
+        @@media print {
+            * {
+                color: #ffffff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+            }
+
+            .table > tbody > tr > td, .table > thead > tr > th {
+                border-color: white !important;
+            }
+
+                .table > thead > tr > th, .table > thead > tr > th > em, .table > thead > tr > th > b {
+                    color: white !important;
+                }
+        }
+    </style>
+    @RenderSection("styles", required: false)
+</head>
+<body id="page-top">
+    @RenderBody()
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>   

@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Import Excel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <div class="card-header bg-primary text-white"><b>Tải tập tin Excel lên máy chủ</b></div>
+    <div class="card-body">
+        <form id="frmupfile" role="form" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-append"><div class="input-group-text">Tập tin</div></div>
+                    <input type="file" name="taptin" id="taptin" class="form-control" placeholder="xls, xlsx, mdb, accdb, db, db3" multiple="multiple" />
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="button" onclick="submitupfile();"><i class="fa fa-save"></i> Thực hiện</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header bg-primary text-white"><b>Danh sách tập tin tải lên</b></div>
+    <div class="card-body" id="danhsachfile">
+    </div>
+</div>
+<div class="form-group">
+    <div class="input-group">
+        <button type="button" class="btn btn-outline-primary btn-sm" onclick="getinfo();"><i class="fa fa-refresh"></i> Lấy thông tin</button>
+    </div>
+</div>
+<div id="thongtin"></div>
+@section scripts {
+    <script>
+    function submitupfile() {
+        if (checkFileExt(document.getElementById('frmupfile'), ['xls', 'xlsx']) == false) { messageshow("Chức năng không hỗ trợ tập tin bạn đẩy lên hệ thống", ''); return; }
+        var frm = $('form#frmupfile');
+        var div = frm.find('button').first().parent();
+        div.html('Đang thực hiện <img alt="" src="/Images/loader.gif" />');
+        frm.submit();
+    }
+        function checkall() { $('input[name="listfile"]').each(function () { $(this).prop("checked", true); }); }
+        function uncheck() { $('input[name="listfile"]').each(function () { $(this).prop("checked", false); }); }
+    function checkformupload() {
+        if ($('input[name="listfile"]:checked').length > 0) { return true; }
+        messageshow("Bạn chưa chọn tập tin nào => Không thể thao tác.", '');
+        return false;
+    }
+        function delfile() { messageshow("Bạn thực sự muốn xóa các tập tin đã chọn.", 'javascript:delfilesumbit();'); }
+        function delfilesumbit() { $('#frmupload').append('<input type="hidden" name="mode" value="1" />'); $('#frmupload').submit(); }
+        function getinfo() {
+            var id = "#thongtin";
+            $(id).html('Đang tải dữ liệu <img alt="" src="/Images/loader.gif" />');
+            $.get('@Url.Action("info")?t=' + (Date.now()).toString(), function (data) {
+                $(id).html(data);
+                $(id).find('table').each(function () { $(this).DataTable({ "scrollX": true }); });
+            }).fail(function () { $(id).html("Lỗi trong quá trình gửi nhận dữ liệu"); });
+        }
+        function getfiles() {
+            var id = "#danhsachfile";
+            $(id).html('Đang tải dữ liệu <img alt="" src="/Images/loader.gif" />');
+            $.get('@Url.Action("getfiles")?t=' + (Date.now()).toString(), function (data) { $(id).html(data); }).fail(function () { $(id).html("Lỗi trong quá trình gửi nhận dữ liệu"); });
+        }
+        $(document).ready(function () { getfiles(); });
+    </script>
+}

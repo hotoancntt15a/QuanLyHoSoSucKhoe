@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.625" name="SQLServer">
+  <DataContextMoniker Name="/SQLServerDataContext" />
+  <nestedChildShapes>
+    <classShape Id="65d41b38-48ba-4f71-8640-26a35fe69ba9" absoluteBounds="0.75, 0.75, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/SQLServerDataContext/thongbao" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1d366a93-a46f-4bb7-8d90-b2d840af9cbd" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8d5f70e3-c070-4ca2-870c-0ab2fb9d6784" absoluteBounds="3.75, 0.75, 2, 3.1170068359375005">
+      <DataClassMoniker Name="/SQLServerDataContext/nguoidung" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6473f872-9044-46d1-9be2-c60b7cfc24de" absoluteBounds="3.765, 1.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="100183dc-043d-480e-aff6-0aa582fb5d6b" absoluteBounds="0.75, 4.75, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/SQLServerDataContext/dmxa" />
+      <nestedChildShapes>
+        <elementListCompartment Id="16f32831-1b1c-4905-a1a5-9ca8a26a89fa" absoluteBounds="0.765, 5.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9d77d701-379d-4855-8c59-a10a7a7a66fb" absoluteBounds="3.75, 4.75, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/SQLServerDataContext/dmtinh" />
+      <nestedChildShapes>
+        <elementListCompartment Id="56d18ce3-b617-443b-8425-6c976f395a26" absoluteBounds="3.765, 5.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="af20d1f9-434e-4cd0-b09c-b74aa62d144f" absoluteBounds="6.75, 0.75, 2, 1.3862939453125003">
+      <DataClassMoniker Name="/SQLServerDataContext/dmhuyen" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0b1b1c61-a7a7-49fe-92da-00d3efef3515" absoluteBounds="6.765, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5a168392-c8fe-4f42-beae-b9549ca95688" absoluteBounds="6.75, 3.75, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/SQLServerDataContext/dmdantoc" />
+      <nestedChildShapes>
+        <elementListCompartment Id="862e8e2e-d17d-4938-8496-84e45207bd15" absoluteBounds="6.765, 4.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7c136907-6205-4382-9675-905932d21fa7" absoluteBounds="3.75, 6.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/SQLServerDataContext/dmbenhvien" />
+      <nestedChildShapes>
+        <elementListCompartment Id="58a33721-9b84-472c-a8b9-34eb01eb6a81" absoluteBounds="3.765, 7.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

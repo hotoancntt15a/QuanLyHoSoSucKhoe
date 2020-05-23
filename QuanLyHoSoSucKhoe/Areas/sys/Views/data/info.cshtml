@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "info";
+    Layout = null;
+    var cn = ViewBag.Connection as System.Data.SqlClient.SqlConnection;
+    if (cn.State == System.Data.ConnectionState.Closed) { cn.Open(); }
+}
+<b>Server: </b> @cn.DataSource <br />
+<b>Database: </b> @cn.Database (@ViewBag.dataSize MB) <br />
+<b>WorkstationId: </b> @cn.WorkstationId <br />
+<b>ConnectionTimeout: </b> @cn.ConnectionTimeout <br />
+<b>PacketSize: </b> @cn.PacketSize <br />
+<b>Server Version: </b> @cn.ServerVersion <br />
+<b>StatisticsEnabled: </b> @cn.StatisticsEnabled <br />
+<b>FireInfoMessageEventOnUserErrors: </b> @cn.FireInfoMessageEventOnUserErrors <br />
+<b>Client Connection Id: </b> @cn.ClientConnectionId <br />
+<b>Ram Install Size: </b> @ViewBag.ramInstall GB <br />
+<b>Available physical memory: </b> @ViewBag.ramAvabile GB <br />
+@{
+    try { cn.Close(); } catch { }
+}

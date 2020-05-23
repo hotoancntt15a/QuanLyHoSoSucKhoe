@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Lấy tập tin sao lưu dữ liệu";
+    Layout = null;    
+    var lf = (List<string>)ViewBag.ListFile;
+}
+@foreach (var v in lf)
+{
+    <div class="form-group">
+        @v [ <a href="~/Download?path=/temp/Backup/@v" title="Tải xuống"> <i class="fa fa-download"></i> Tải về</a> ]
+        [ <a href="javascript:DelFile('@v')" title="Xóa"><i class="fa fa-remove"></i> Xóa </a> ]
+        [ <a href="javascript:Restore('@v')" title="Khôi phục"><i class="fa fa-cogs"></i> Khôi phục </a> ]
+    </div>
+}
+

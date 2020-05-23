@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "System Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var folderCurrent = Server.MapPath("~");
+    var gb = 1024 * 1024 * 1024;
+}
+<div class="card">
+    <div class="card-header bg-primary text-white"><b>Thông tin hệ thống</b></div>
+    <div class="card-body">
+        Operating System: <b>@Html.Raw(zModules.systemInfo.getOperatingSystemInfo(true).Replace("\n", "<br />"))</b>
+        <br />
+        Processor: <b>@zModules.systemInfo.getProcessorInfo(true)</b><br />
+        RAM: <b>@($"{Math.Round(double.Parse(zModules.systemInfo.getTotalPhysicalMemoryInfo(true)) / 1073741824, 0):#,0.0} GB")</b>
+        <br />Time Server: <b>@DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")</b>
+        <br />Server Name: <b>@Server.MachineName</b>
+        <br />Folder Name: <b>@folderCurrent</b>
+        @{
+            DriveInfo[] allDrives = DriveInfo.GetDrives();
+
+            foreach (DriveInfo d in allDrives)
+            {
+                <br /><span>Drive @d.Name; Drive type: @d.DriveType.ToString();</span>
+                if (d.IsReady == true)
+                {
+    <span>@d.VolumeLabel - @d.DriveFormat - @(d.TotalSize / gb) GB;</span> 
+                    <span>Total available space: @(d.TotalFreeSpace / gb) GB;</span>
+                    <!-- Available space to current user: @(d.AvailableFreeSpace / gb) GB; -->
+                    }
+                }
+            }
+    </div>
+</div>
+<div class="card">
+    <div class="card-header bg-primary text-white"><b>@ViewBag.Title</b></div>
+    <div class="card-body">
+        <ul>
+            <li>Thông tin hệ thống</li>
+            <li>Cấu hình hệ thống</li>
+            <li>Nhật ký hệ thống</li>
+            <li>Quản lý tài khoản</li>
+        </ul>
+    </div>
+</div>

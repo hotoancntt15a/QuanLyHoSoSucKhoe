@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Xuất dữ liệu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .tabem {
+        padding-right: 2em;
+    }
+</style>
+<div class="card">
+    <div class="card-header bg-primary text-white"><b>@ViewBag.Title</b></div>
+    <div class="card-body">
+        <form method="post" action="@Url.Action("accdb")" role="form" onsubmit="return checkform();">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-append"><div class="input-group-text">PacketSize</div></div>
+                    <select class="form-control" name="packetsize">
+                        @for (int i = 1000; i < 10001; i = i + 1000)
+                        {
+                            <option value="@i">@i.ToString("#,0")</option>
+                        }
+                    </select>
+
+                </div>
+            </div>
+            <div class="form-group">
+                @foreach (var v in (ViewBag.listtable as List<string>))
+                {
+                    <label class="tabem"><input type="checkbox" name="table" value="@v" /> <b> @v </b></label>
+                }
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="button" onclick="checkall();"><i class="fa fa-check"></i> Chọn tất cả</button>
+                <button class="btn btn-primary" type="button" onclick="uncheck();"><i class="fa fa-square"></i> Bỏ tất cả</button>
+                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Thực hiện</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header bg-primary text-white"><b>Danh sách các tập tin sau khi xuất</b></div>
+    <div class="card-body">
+        @foreach (var v in (ViewBag.listfile as List<System.IO.FileInfo>))
+        { 
+            <a title="Tải tập tin" href="@Url.Action("index", "download", new { area = "" })?path=@Server.UrlEncode("\\temp\\export\\" + v.Name)"><i class="fa fa-download"></i> @v.Name (<i>@v.LastWriteTime.ToString("dd-MM-yyyy HH:mm")</i>)</a>
+            <a title="Xóa tập tin" href="javascript:showMessageDel('@v.Name', '@Url.Action("delaccdb")?f=@Server.UrlEncode(v.Name)');"><i class="fa fa-remove"></i> </a> <br />
+        }
+    </div>
+</div>
+@section scripts {
+    <script>
+        function checkall() { $('input[name="table"]').each(function () { $(this).prop("checked", true); }); }
+        function uncheck() { $('input[name="table"]').each(function () { $(this).prop("checked", false); }); }
+        function checkform() {
+            var len = $('input[name="table"]:checked').length;
+            if (len > 0) { return true; }
+            messageshow("Bạn chưa chọn bản dữ liệu nào => Không thể thao tác.", '');
+            return false;
+        }
+        function delfile() {
+            messageshow("Bạn chưa chọn bản dữ liệu nào => Không thể thao tác.", '');
+        }
+    </script>
+}
+

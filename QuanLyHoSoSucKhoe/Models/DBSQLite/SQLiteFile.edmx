@@ -1,0 +1,457 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=D:\Private\QuanLyHoSoSucKhoeDinhKy\QuanLyHoSoSucKhoe\QuanLyHoSoSucKhoe\App_Data\db.db3" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="pathimage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id2" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="path" Type="nvarchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys_config">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="value" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys_history">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="typeinfo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pathorherf" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="action" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="content" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="times" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys-config">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="value" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys-history">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="iduser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="typeinfo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pathorherf" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="action" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="content" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="times" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys-import">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="action" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="f0" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f3" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f4" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f5" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f6" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f7" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f8" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f9" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f10" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f11" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f12" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f13" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f14" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f15" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f16" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f17" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f18" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f19" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f20" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f21" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f22" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f23" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f24" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f25" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f26" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f27" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f28" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f29" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f30" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f31" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f32" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f33" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f34" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f35" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f36" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f37" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f38" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f39" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f40" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f41" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f42" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f43" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f44" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f45" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f46" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f47" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f48" Type="nvarchar" MaxLength="1000" />
+          <Property Name="f49" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="sys-userconfig">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="value" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="taikhoan">
+          <Key>
+            <PropertyRef Name="iduser" />
+          </Key>
+          <Property Name="iduser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pass" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="hoten" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ngaysinh" Type="nvarchar" MaxLength="10" />
+          <Property Name="gioitinh" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="diachi" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ngaytao" Type="datetime" Nullable="false" />
+          <Property Name="lancuoi" Type="datetime" />
+          <Property Name="ghichu" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="idgroup" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="dbModelStoreContainer">
+          <EntitySet Name="pathimage" EntityType="Self.pathimage" store:Type="Tables" />
+          <EntitySet Name="sys_config" EntityType="Self.sys_config" store:Type="Tables" />
+          <EntitySet Name="sys_history" EntityType="Self.sys_history" store:Type="Tables" />
+          <EntitySet Name="sys-config" EntityType="Self.sys-config" store:Type="Tables" />
+          <EntitySet Name="sys-history" EntityType="Self.sys-history" store:Type="Tables" />
+          <EntitySet Name="sys-import" EntityType="Self.sys-import" store:Type="Tables" />
+          <EntitySet Name="sys-userconfig" EntityType="Self.sys-userconfig" store:Type="Tables" />
+          <EntitySet Name="taikhoan" EntityType="Self.taikhoan" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="pathimage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="path" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys_config">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys_history">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="typeinfo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pathorherf" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="action" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="content" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="times" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys_config1">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys_history1">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="iduser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="typeinfo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pathorherf" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="action" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="content" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="times" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys_import">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="action" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="f0" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f3" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f4" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f5" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f6" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f7" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f8" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f9" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f10" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f11" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f12" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f13" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f14" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f15" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f16" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f17" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f18" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f19" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f20" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f21" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f22" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f23" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f24" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f25" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f26" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f27" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f28" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f29" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f30" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f31" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f32" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f33" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f34" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f35" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f36" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f37" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f38" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f39" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f40" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f41" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f42" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f43" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f44" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f45" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f46" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f47" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f48" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="f49" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sys_userconfig">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="taikhoan">
+          <Key>
+            <PropertyRef Name="iduser" />
+          </Key>
+          <Property Name="iduser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="hoten" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ngaysinh" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="gioitinh" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="diachi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ngaytao" Type="DateTime" Nullable="false" />
+          <Property Name="lancuoi" Type="DateTime" />
+          <Property Name="ghichu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idgroup" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="pathimages" EntityType="Self.pathimage" />
+          <EntitySet Name="sys_config" EntityType="Self.sys_config" />
+          <EntitySet Name="sys_history" EntityType="Self.sys_history" />
+          <EntitySet Name="sys_config1" EntityType="Self.sys_config1" />
+          <EntitySet Name="sys_history1" EntityType="Self.sys_history1" />
+          <EntitySet Name="sys_import" EntityType="Self.sys_import" />
+          <EntitySet Name="sys_userconfig" EntityType="Self.sys_userconfig" />
+          <EntitySet Name="taikhoans" EntityType="Self.taikhoan" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbModelStoreContainer" CdmEntityContainer="dbEntities">
+          <EntitySetMapping Name="pathimages">
+            <EntityTypeMapping TypeName="dbModel.pathimage">
+              <MappingFragment StoreEntitySet="pathimage">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id2" ColumnName="id2" />
+                <ScalarProperty Name="path" ColumnName="path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_config">
+            <EntityTypeMapping TypeName="dbModel.sys_config">
+              <MappingFragment StoreEntitySet="sys_config">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_history">
+            <EntityTypeMapping TypeName="dbModel.sys_history">
+              <MappingFragment StoreEntitySet="sys_history">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="typeinfo" ColumnName="typeinfo" />
+                <ScalarProperty Name="pathorherf" ColumnName="pathorherf" />
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="times" ColumnName="times" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_config1">
+            <EntityTypeMapping TypeName="dbModel.sys_config1">
+              <MappingFragment StoreEntitySet="sys-config">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_history1">
+            <EntityTypeMapping TypeName="dbModel.sys_history1">
+              <MappingFragment StoreEntitySet="sys-history">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="iduser" ColumnName="iduser" />
+                <ScalarProperty Name="typeinfo" ColumnName="typeinfo" />
+                <ScalarProperty Name="pathorherf" ColumnName="pathorherf" />
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="times" ColumnName="times" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_import">
+            <EntityTypeMapping TypeName="dbModel.sys_import">
+              <MappingFragment StoreEntitySet="sys-import">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="f0" ColumnName="f0" />
+                <ScalarProperty Name="f1" ColumnName="f1" />
+                <ScalarProperty Name="f2" ColumnName="f2" />
+                <ScalarProperty Name="f3" ColumnName="f3" />
+                <ScalarProperty Name="f4" ColumnName="f4" />
+                <ScalarProperty Name="f5" ColumnName="f5" />
+                <ScalarProperty Name="f6" ColumnName="f6" />
+                <ScalarProperty Name="f7" ColumnName="f7" />
+                <ScalarProperty Name="f8" ColumnName="f8" />
+                <ScalarProperty Name="f9" ColumnName="f9" />
+                <ScalarProperty Name="f10" ColumnName="f10" />
+                <ScalarProperty Name="f11" ColumnName="f11" />
+                <ScalarProperty Name="f12" ColumnName="f12" />
+                <ScalarProperty Name="f13" ColumnName="f13" />
+                <ScalarProperty Name="f14" ColumnName="f14" />
+                <ScalarProperty Name="f15" ColumnName="f15" />
+                <ScalarProperty Name="f16" ColumnName="f16" />
+                <ScalarProperty Name="f17" ColumnName="f17" />
+                <ScalarProperty Name="f18" ColumnName="f18" />
+                <ScalarProperty Name="f19" ColumnName="f19" />
+                <ScalarProperty Name="f20" ColumnName="f20" />
+                <ScalarProperty Name="f21" ColumnName="f21" />
+                <ScalarProperty Name="f22" ColumnName="f22" />
+                <ScalarProperty Name="f23" ColumnName="f23" />
+                <ScalarProperty Name="f24" ColumnName="f24" />
+                <ScalarProperty Name="f25" ColumnName="f25" />
+                <ScalarProperty Name="f26" ColumnName="f26" />
+                <ScalarProperty Name="f27" ColumnName="f27" />
+                <ScalarProperty Name="f28" ColumnName="f28" />
+                <ScalarProperty Name="f29" ColumnName="f29" />
+                <ScalarProperty Name="f30" ColumnName="f30" />
+                <ScalarProperty Name="f31" ColumnName="f31" />
+                <ScalarProperty Name="f32" ColumnName="f32" />
+                <ScalarProperty Name="f33" ColumnName="f33" />
+                <ScalarProperty Name="f34" ColumnName="f34" />
+                <ScalarProperty Name="f35" ColumnName="f35" />
+                <ScalarProperty Name="f36" ColumnName="f36" />
+                <ScalarProperty Name="f37" ColumnName="f37" />
+                <ScalarProperty Name="f38" ColumnName="f38" />
+                <ScalarProperty Name="f39" ColumnName="f39" />
+                <ScalarProperty Name="f40" ColumnName="f40" />
+                <ScalarProperty Name="f41" ColumnName="f41" />
+                <ScalarProperty Name="f42" ColumnName="f42" />
+                <ScalarProperty Name="f43" ColumnName="f43" />
+                <ScalarProperty Name="f44" ColumnName="f44" />
+                <ScalarProperty Name="f45" ColumnName="f45" />
+                <ScalarProperty Name="f46" ColumnName="f46" />
+                <ScalarProperty Name="f47" ColumnName="f47" />
+                <ScalarProperty Name="f48" ColumnName="f48" />
+                <ScalarProperty Name="f49" ColumnName="f49" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_userconfig">
+            <EntityTypeMapping TypeName="dbModel.sys_userconfig">
+              <MappingFragment StoreEntitySet="sys-userconfig">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="taikhoans">
+            <EntityTypeMapping TypeName="dbModel.taikhoan">
+              <MappingFragment StoreEntitySet="taikhoan">
+                <ScalarProperty Name="iduser" ColumnName="iduser" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="hoten" ColumnName="hoten" />
+                <ScalarProperty Name="ngaysinh" ColumnName="ngaysinh" />
+                <ScalarProperty Name="gioitinh" ColumnName="gioitinh" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="ngaytao" ColumnName="ngaytao" />
+                <ScalarProperty Name="lancuoi" ColumnName="lancuoi" />
+                <ScalarProperty Name="ghichu" ColumnName="ghichu" />
+                <ScalarProperty Name="idgroup" ColumnName="idgroup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

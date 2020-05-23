@@ -16,7 +16,6 @@ using zModules.AspNet;
 using zModules.Config;
 using zModules.Crypt;
 using zModules.MSSQLServer;
-using zModules.NPOIExcel;
 
 namespace QuanLyHoSoSucKhoe
 {
@@ -575,9 +574,9 @@ namespace QuanLyHoSoSucKhoe
         public static string getTsqlInsertHistory(string content, string iduser, string action = "")
         {
             var values = new Dictionary<string, string>();
-            values.Add("iduser", $"N'{iduser.getValueField()}'");
-            values.Add("[action]", $"N'{action.getValueField()}'");
-            values.Add("content", $"N'{content.getValueField()}'");
+            values.Add("iduser", $"'{iduser.getValueField()}'");
+            values.Add("[action]", $"'{action.getValueField()}'");
+            values.Add("content", $"'{content.getValueField()}'");
             values.Add("times", $"'{DateTime.Now:yyyy-MM-dd HH:mm:ss}'");
             return $"insert into sys_history ({string.Join(",", values.Keys)}) values ({string.Join(",", values.Values)})";
         }
@@ -587,10 +586,10 @@ namespace QuanLyHoSoSucKhoe
             var r = w.Request;
             var values = new Dictionary<string, string>();
             if (string.IsNullOrEmpty(iduser)) { iduser = $"{w.Session[keyS.idUser]}"; }
-            values.Add("iduser", $"N'{iduser.getValueField()}'");
+            values.Add("iduser", $"'{iduser.getValueField()}'");
             if (string.IsNullOrEmpty(action)) { action = r.Url.PathAndQuery; }
             var path = r.Url.PathAndQuery;
-            values.Add("[action]", $"N'{action.getValueField()}'");
+            values.Add("[action]", $"'{action.getValueField()}'");
             if (string.IsNullOrEmpty(content))
             {
                 if (path.ToLower().StartsWith("/login")) { content = "Đăng nhập"; }
@@ -610,15 +609,12 @@ namespace QuanLyHoSoSucKhoe
                         if (v == "ASP.NET_SessionId") { continue; }
                         s.Add($"{v}: {r.Cookies[v].Value};");
                     }
-                    if (r.Files.Count > 0)
-                    {
-                        for (int i = 0; i < r.Files.Count; i++) { s.Add($"{r.Files[i].FileName}: {r.Files[i].ContentLength};"); }
-                    }
+                    if (r.Files.Count > 0) { for (int i = 0; i < r.Files.Count; i++) { s.Add($"{r.Files[i].FileName}: {r.Files[i].ContentLength};"); } }
                     s.Add($"[{r.Url.PathAndQuery}]");
                     content = string.Join(" ", s);
                 }
             }
-            values.Add("content", $"N'{content.getValueField()}'");
+            values.Add("content", $"'{content.getValueField()}'");
             values.Add("times", $"'{DateTime.Now:yyyy-MM-dd HH:mm:ss}'");
             return $"insert into sys_history ({string.Join(",", values.Keys)}) values ({string.Join(",", values.Values)})";
         }
@@ -628,33 +624,28 @@ namespace QuanLyHoSoSucKhoe
             string tsql;
             if (!string.IsNullOrEmpty(content)) { tsql = getTsqlInsertHistory(content, iduser, action); }
             else { tsql = HttpContext.Current.getTsqlInsertHistory(content, action, iduser); }
-            using (var db = getDataObject())
+            using (var db = getDataSQLite())
             {
                 try { db.Execute(tsql); }
                 catch (Exception ex) { ex.save(tsql); }
             }
-        }
+        } 
 
-        public static void setHistory(this Models.SQLServerDataContext db, string tsql = "")
-        {
-            if (string.IsNullOrEmpty(tsql)) { tsql = HttpContext.Current.getTsqlInsertHistory(); }
-            try { db.Execute(tsql); }
-            catch (Exception ex) { ex.save(tsql); }
-        }
-
-        public static void setHistoryTaskList(this Models.SQLServerDataContext db, Progressbar p, string iduser = "", string content = "", string requeststring = "")
+        public static void setHistoryTaskList(Progressbar p, string iduser = "", string content = "", string requeststring = "")
         {
             string tsql = "";
             var values = new Dictionary<string, string>();
             values.Add("iduser", $"'{iduser}'");
             values.Add("typeinfo", "'tasklist'");
-            values.Add("[action]", $"N'{p.actionName}.{p.name}'");
+            values.Add("[action]", $"'{p.actionName}.{p.name}'");
             if (string.IsNullOrEmpty(content)) { values.Add("content", $"'Start: {p.timeStart:dd/MM/yyyy HH:mm:ss}; Min: {p.valueMin}; Max: {p.valueMax}; request: {requeststring.getValueField()}'"); }
-            else { values.Add("content", $"N'{content.getValueField()}'"); }
+            else { values.Add("content", $"'{content.getValueField()}'"); }
             values.Add("times", $"'{DateTime.Now:yyyy-MM-dd HH:mm:ss}'");
             tsql = $"insert into sys_history ({string.Join(",", values.Keys)}) values ({string.Join(",", values.Values)})";
-            try { db.Execute(tsql); }
+            var sqlite = getDataSQLite();
+            try { sqlite.Execute(tsql); } 
             catch (Exception ex) { ex.save(tsql); }
+            sqlite.Dispose();
         }
 
         public static void SetSession_Delete()
@@ -662,34 +653,7 @@ namespace QuanLyHoSoSucKhoe
             var w = HttpContext.Current;
             w.Session[keyS.Message] = "Xóa thành công vào lúc " + DateTime.Now.toVN();
             setHistory();
-        }
-
-        public static string BuildPageHTML(int Page, int NumberRecord)
-        {
-            if (NumberRecord == 0) return "Không có dữ liệu";
-            string css = "btn btn-primary btn-xs";
-            string function = "loadPage";
-            int NumberShow = 4;
-            double v = (double)NumberRecord / (double)AppConfig.pageSize;
-            int p = (int)v;
-            int TotalPage = v > p ? p + 1 : p;
-
-            StringBuilder sb = new StringBuilder("<input type=\"hidden\" id=\"thispage\" value=\"" + Page.ToString() + "\" />");
-            if (Page > NumberShow) sb.AppendFormat("<span class=\"{0}\" onclick=\"{1}('1');\"> |<< </span> ", css, function);
-            if (Page - NumberShow > 1) sb.AppendFormat("<span class=\"{0}\"><b> ... </b></span> ", css);
-            for (int i = Page - 3; i < Page + 4; i++)
-            {
-                if (i < 1) continue; if (i > TotalPage) break;
-                if (i == Page) sb.AppendFormat("<span>[ {0} ]</span> ", i);
-                else sb.AppendFormat("<span class=\"{0}\" onclick=\"{1}('{2}');\"><b> {2} </b></span> ", css, function, i);
-            }
-            if (TotalPage >= Page + NumberShow)
-            {
-                sb.Append("<span> <b> ... </b></span> ");
-                sb.AppendFormat("<span class=\"{0}\" onclick=\"{1}('{2}');\"><b> >>| </b></span> ", css, function, TotalPage);
-            }
-            return sb.ToString();
-        }
+        } 
 
         public static void getMenuOptions(this List<string> s, int id, string level)
         {

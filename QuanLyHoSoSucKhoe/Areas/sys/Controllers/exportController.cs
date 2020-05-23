@@ -12,9 +12,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
     {
         public string actionName = "export.accdb";
         private string pathsource = $"{Folders.App_Data}\\db.accdb";
-        private string pathExport = $"{Folders.temp}\\export";
-
-        protected override void HandleUnknownAction(string actionName) => this.HttpContext.HandleUnknownAction(actionName);
+        private string pathExport = $"{Folders.temp}\\export"; 
 
         // GET: nhapxuat/export
         [CheckLogin]
@@ -113,7 +111,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
                 int index = 0;
                 local.taskList.setValueMax(actionName, actions.Count);
                 /* Lưu quá trình tiến trình */
-                db.setHistoryTaskList(local.taskList[actionName], args.idUser, requeststring: args.request);
+                local.setHistoryTaskList(local.taskList[actionName], args.idUser, requeststring: args.request);
                 foreach (var action in actions)
                 {
                     try { action(); index++; local.taskList.Modify(actionName, "", index); }
@@ -121,7 +119,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
                 }
                 /* Lưu kết quả tiến trình */
                 var t = DateTime.Now - p.timeStart;
-                db.setHistoryTaskList(local.taskList[actionName], args.idUser, $"{t.Hours}:{t.Minutes}:{t.Seconds} {string.Join("; ", msgError)}");
+                local.setHistoryTaskList(local.taskList[actionName], args.idUser, $"{t.Hours}:{t.Minutes}:{t.Seconds} {string.Join("; ", msgError)}");
             }
             db.Dispose();
             local.taskList.Remove(p);

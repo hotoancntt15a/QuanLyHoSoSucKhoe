@@ -64,7 +64,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             {
                 db.Execute($"delete from [{tablename}] where id in ({id})");
                 Session.saveMessage("Xóa các dòng nhật ký thành công " + id);
-                db.setHistory();
+                local.setHistory();
             }
             catch (Exception ex) { Session.saveError(ex); }
             db.Dispose();
@@ -79,7 +79,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             {
                 db.truncate(tablename);
                 Session.saveMessage("Xóa toàn bộ nhật ký thành công");
-                db.setHistory();
+                local.setHistory();
             }
             catch (Exception ex) { Session.saveError(ex); }
             db.Dispose();

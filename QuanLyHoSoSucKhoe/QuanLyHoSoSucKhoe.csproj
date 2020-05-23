@@ -55,7 +55,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\..\..\..\Library\NPOI\Release\Net40\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Library\NPOI\Release\Net40\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -63,16 +63,16 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NPOI">
-      <HintPath>..\..\..\..\Library\NPOI\Release\Net40\NPOI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Library\NPOI\Release\Net40\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OOXML">
-      <HintPath>..\..\..\..\Library\NPOI\Release\Net40\NPOI.OOXML.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Library\NPOI\Release\Net40\NPOI.OOXML.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OpenXml4Net">
-      <HintPath>..\..\..\..\Library\NPOI\Release\Net40\NPOI.OpenXml4Net.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Library\NPOI\Release\Net40\NPOI.OpenXml4Net.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OpenXmlFormats">
-      <HintPath>..\..\..\..\Library\NPOI\Release\Net40\NPOI.OpenXmlFormats.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Library\NPOI\Release\Net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -151,10 +151,10 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="zModules">
-      <HintPath>..\..\..\..\Library\zModules.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Library\zModules.dll</HintPath>
     </Reference>
     <Reference Include="zModules.Export">
-      <HintPath>..\..\..\..\Library\zModules.Export.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Library\zModules.Export.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

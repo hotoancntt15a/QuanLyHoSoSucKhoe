@@ -283,7 +283,7 @@ namespace QuanLyHoSoSucKhoe
                 int index = 0;
                 local.taskList.setValueMax(args.action, actions.Count);
                 /* Lưu quá trình tiến trình */
-                db.setHistoryTaskList(local.taskList[args.action], $"{args.idUser}", requeststring: args.request);
+                local.setHistoryTaskList(local.taskList[args.action], $"{args.idUser}", requeststring: args.request);
                 foreach (var action in actions)
                 {
                     try
@@ -301,7 +301,7 @@ namespace QuanLyHoSoSucKhoe
                 /* Lưu kết quả tiến trình */
                 var t = DateTime.Now - p.timeStart;
                 var rs = $"Time Processed: {t.Hours}:{t.Minutes}:{t.Seconds}; {string.Join("; ", msgError)}";
-                db.setHistoryTaskList(local.taskList[args.action], $"{args.idUser}", rs);
+                local.setHistoryTaskList(local.taskList[args.action], $"{args.idUser}", rs);
             }
             db.Dispose();
             local.taskList.Remove(p);

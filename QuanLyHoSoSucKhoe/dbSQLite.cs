@@ -371,8 +371,23 @@ namespace zModules
 
         public static bool tableExits(this SQLiteConnection cn, string tablename) => cn.getValue($"SELECT [name] FROM [sqlite_master] WHERE type='table' AND name <> '{tablename}'") == null ? false : true;
 
+        public static List<string> getViewNames(this DbContext db) => (db.Database.Connection as SQLiteConnection).getViewNames();
+        public static List<string> getViewNames(this SQLiteConnection cn)
+        {
+            var l = new List<string>();
+            var dt = cn.getDataSet($"SELECT [name] FROM [sqlite_master] WHERE type= 'view' AND name not like 'sqlite_%'").Tables[0];
+            foreach (DataRow r in dt.Rows) l.Add($"{r[0]}");
+            return l;
+        }
+        public static List<string> getTableNames(this DbContext db) => (db.Database.Connection as SQLiteConnection).getTableNames();
+        public static List<string> getTableNames(this SQLiteConnection cn)
+        {
+            var l = new List<string>();
+            var dt = cn.getDataSet($"SELECT [name] FROM [sqlite_master] WHERE type= 'table' AND name not like 'sqlite_%'").Tables[0];
+            foreach (DataRow r in dt.Rows) l.Add($"{r[0]}");
+            return l;
+        }
         public static List<string> getAllTables(this DbContext db, bool views = false) => (db.Database.Connection as SQLiteConnection).getAllTables(views);
-
         public static List<string> getAllTables(this SQLiteConnection cn, bool views = false)
         {
             var l = new List<string>();

@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.UI.WebControls;
+using zModules;
 using zModules.MSSQLServer;
 
 namespace QuanLyHoSoSucKhoe
@@ -69,76 +71,50 @@ namespace QuanLyHoSoSucKhoe
         public static string createDatabase()
         {
             var timestring = $"{DateTime.Now:yyMMddHHmmss}";
+            var sqlite = local.getDataSQLite();
             var db = local.getDataObject();
             var s = new List<string>(); 
             var tsql = new List<string>();
             var msgerr = "";
             try
             {
-                var listTable = db.getAllTables(true);
-                db.checkTableSystem(listTable);
-                listTable = db.getAllTables(true);
-                /* Tài khoản */
-                if (listTable.Contains("nguoidung") == false)
-                {
-                    tsql.Add("CREATE TABLE nguoidung (tendangnhap nvarchar(50) NOT NULL PRIMARY KEY, matkhau nvarchar(50) NOT NULL, sdt nvarchar(50) NOT NULL default '', capdo int NOT NULL default 4, kichhoat int NOT NULL DEFAULT 0, ngaytao datetime NOT NULL, lancuoi datetime, ghichu nvarchar(254) NOT NULL DEFAULT '', idtinh nvarchar(10) not null default '', idhuyen nvarchar(10) not null default '', idxa nvarchar(10) not null default '', bhhuyen nvarchar(10) not null default '');");
-                }
+                /* Microsfot SQL Server 
+                 - TABLLE: Select TABLE_NAME from INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE'
+                 - VIEW: Select TABLE_NAME from INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='VIEW'
+                 */
+                var tables = db.ExecuteQuery<string>("select TABLE_NAME from INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE'").ToList();
+                db.checkTableSystem(tables); 
                 /* Danh mục */
-                if (listTable.Contains("dmdantoc") == false)
-                {
-                    tsql.Add("CREATE TABLE [dmdantoc] ([id] nvarchar(5) NOT NULL PRIMARY KEY, [ten] nvarchar(50) NOT NULL DEFAULT '', [tenkhac] nvarchar(255) not null DEFAULT '');");
-                }
-                if (listTable.Contains("dmtinh") == false)
-                {
-                    tsql.Add("create table dmtinh (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '');");
-                }
-                if (listTable.Contains("dmhuyen") == false)
-                {
-                    tsql.Add("create table dmhuyen (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '', idtinh nvarchar(10) not null default '');");
-                }
-                if (listTable.Contains("dmxa") == false)
-                {
-                    tsql.Add($"create table dmxa (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '', idhuyen nvarchar(10) not null default '');");
-                }
-                if (listTable.Contains("bhcaphuyen") == false)
-                {
-                    tsql.Add("create table bhcaphuyen (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '');");
-                }
-                if (listTable.Contains("dmcqbh") == false)
-                {
-                    tsql.Add("create table dmcqbh (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '', idtinh nvarchar(10) not null default '');");
-                }
-                if (listTable.Contains("dmbenhvien") == false)
-                {
-                    tsql.Add("create table dmbenhvien (id nvarchar(20) not null primary key, matinh nvarchar(10) not null default '', mabv nvarchar(10) not null default '', ten nvarchar(255) not null default '');");
-                }
-                if (listTable.Contains("dmmoiquanhe") == false)
-                {
-                    tsql.Add("create table dmmoiquanhe (id nvarchar(10) not null primary key, quanhe nvarchar(50) not null default '', viettat nvarchar(50) not null default '');");
-                }
+                if (tables.Contains("dmdantoc") == false) { tsql.Add("CREATE TABLE [dmdantoc] ([id] nvarchar(5) NOT NULL PRIMARY KEY, [ten] nvarchar(50) NOT NULL DEFAULT '', [tenkhac] nvarchar(255) not null DEFAULT '');"); }
+                if (tables.Contains("dmtinh") == false) { tsql.Add("create table dmtinh (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '');"); }
+                if (tables.Contains("dmhuyen") == false) { tsql.Add("create table dmhuyen (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '', idtinh nvarchar(10) not null default '');"); }
+                if (tables.Contains("dmxa") == false) { tsql.Add($"create table dmxa (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '', idhuyen nvarchar(10) not null default '');"); } 
+                if (tables.Contains("dmcqbh") == false) { tsql.Add("create table dmcqbh (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '', idtinh nvarchar(10) not null default '');"); }
+                if (tables.Contains("dmbenhvien") == false) { tsql.Add("create table dmbenhvien (id nvarchar(20) not null primary key, matinh nvarchar(10) not null default '', mabv nvarchar(10) not null default '', ten nvarchar(255) not null default '');"); }
+                if (tables.Contains("dmmoiquanhe") == false) { tsql.Add("create table dmmoiquanhe (id nvarchar(10) not null primary key, quanhe nvarchar(50) not null default '', viettat nvarchar(50) not null default '');"); }
                 /* Dữ liệu hệ thống */
-                if (listTable.Contains("thongbao") == false)
+                if (tables.Contains("thongbao") == false)
                 {
                     /* Từ ai, đến ai, thời gian đăng, hạn sử dụng đến hết, đã đọc chưa, nội dung thông báo, chi tiết thông báo*/
                     tsql.Add("create table thongbao (id integer NOT NULL PRIMARY KEY IDENTITY(1,1), tu nvarchar(50) not null default '', den nvarchar(50) not null default '', times datetime not null, hansudung datetime, dadoc int not null default 0, noidung nvarchar(255) not null default '', chitiet nvarchar(max) not null default '');");
                     tsql.Add($" create index thongbao{timestring} on thongbao(tu,den,dadoc,times,hansudung,noidung);");
                 }
                 /* Bác sĩ, nhân viên */
-                if (listTable.Contains("bacsy") == false)
+                if (tables.Contains("bacsy") == false)
                 {
                     tsql.Add("create table bacsy (id nvarchar(50) not null primary key, " +
                         "hoten nvarchar(100) not null, ngaysinh varchar(10) not null default '', gioitinh nvarchar(10) not null default '', sobhxh nvarchar(20) not null default '', " +
                         "socmnd nvarchar(20) not null default '', ngaycap nvarchar(10) not null default '', noicap nvarchar(255) not null default '', ngaytao datetime not null);");
                 }
                 /* Bệnh nhân */
-                if (listTable.Contains("benhnhan") == false)
+                if (tables.Contains("benhnhan") == false)
                 {
                     tsql.Add("create table benhnhan (id nvarchar(50) not null primary key, " +
                         "hoten nvarchar(100) not null, ngaysinh varchar(10) not null default '', gioitinh nvarchar(10) not null default '', sobhxh nvarchar(20) not null default '', "+
                         "socmnd nvarchar(20) not null default '', ngaycap nvarchar(10) not null default '', noicap nvarchar(255) not null default '', ngaytao datetime not null);");
                 }
                 /* Hồ sơ khám */
-                if (listTable.Contains("hosokham") == false)
+                if (tables.Contains("hosokham") == false)
                 {
                     tsql.Add("create table hosokham(id nvarchar(50) not null primary key, ngaytao datetime not null, " +
                         "thuongtru nvarchar(255) not null default '', diachi nvarchar(255) not null default '', dienthoai nvarchar(50) not null default '', " +
@@ -148,39 +124,39 @@ namespace QuanLyHoSoSucKhoe
                         "mach float not null default 0, huyetap1 float not null default 0, huyetap2 float not null default 0, " +
                         "pltheluc nvarchar(50) not null default '');");
                 }
-                if (listTable.Contains("dotkham") == false)
+                if (tables.Contains("dotkham") == false)
                 {
                     tsql.Add("create table dotkham(id nvarchar(50) not null primary key, noidung nvarchar(255) not null, donvi nvarchar(255) not null default '', thoigian datetime not null, muckham nvarchar(1000) not null default '');");
                 }
-                if (listTable.Contains("ketquakham") == false)
+                if (tables.Contains("ketquakham") == false)
                 {
                     tsql.Add("create table ketquakham(id nvarchar(50) not null primary key, idhoso nvarchar(50) not null, iddot nvarchar(50) not null default '', thoigian datetime not null, chieucao float not null default 0, " +
                         "cannang float not null default 0, tinhtrang nvarchar(50) null default '', phanloai nvarchar(50) not null default '', ketluan nvarchar(500) not null default '');");
                 }
-                if (listTable.Contains("khammat") == false)
+                if (tables.Contains("khammat") == false)
                 {
                     tsql.Add("create table khammat(id nvarchar(50) not null primary key, idhoso nvarchar(50) not null, iddot nvarchar(50) not null default '', thoigian datetime not null, " +
                         "phai nvarchar(50) not null default '',trai nvarchar(50) not null default '',phaikinh nvarchar(50) not null default '',traikinh nvarchar(50) not null default '', " +
                         "benh nvarchar(255) not null default '', phanloai nvarchar(50) not null default '');");
                 }
-                if (listTable.Contains("khamtaimuimat") == false)
+                if (tables.Contains("khamtaimuimat") == false)
                 {
                     tsql.Add("create table khamtaimuimat(id nvarchar(50) not null primary key, idhoso nvarchar(50) not null, iddot nvarchar(50) not null default '', thoigian datetime not null, " +
                         "taiphai nvarchar(50) not null default '',taitrai nvarchar(50) not null default '',taiphaitham nvarchar(50) not null default '',taitraitham nvarchar(50) not null default '', " +
                         "benhvemui nvarchar(255) not null default '', phanloai nvarchar(50) not null default '');");
                 }
-                if (listTable.Contains("khamrangmieng") == false)
+                if (tables.Contains("khamrangmieng") == false)
                 {
                     tsql.Add("create table khamrangmieng(id nvarchar(50) not null primary key, idhoso nvarchar(50) not null, iddot nvarchar(50) not null default '', thoigian datetime not null, " +
                         "hamtren nvarchar(255) not null default '',hamduoi nvarchar(255) not null default ''," +
                         "benh nvarchar(255) not null default '', phanloai nvarchar(50) not null default '');");
                 }
-                if (listTable.Contains("khamdalieu") == false)
+                if (tables.Contains("khamdalieu") == false)
                 {
                     tsql.Add("create table khamdalieu(id nvarchar(50) not null primary key, idhoso nvarchar(50) not null, iddot nvarchar(50) not null default '', thoigian datetime not null, " +
                         "benh nvarchar(255) not null default '', phanloai nvarchar(50) not null default '');");
                 }
-                if (listTable.Contains("khamnoikhoa") == false)
+                if (tables.Contains("khamnoikhoa") == false)
                 {
                     tsql.Add("create table khamnoikhoa(id nvarchar(50) not null primary key, idhoso nvarchar(50) not null, iddot nvarchar(50) not null default '', thoigian datetime not null, " +
                         "tuanhoan nvarchar(255) not null default '',pltuanhoan nvarchar(50) not null default ''," +
@@ -191,11 +167,11 @@ namespace QuanLyHoSoSucKhoe
                         "thankinh nvarchar(255) not null default '',plthankinh nvarchar(50) not null default ''," +
                         "tamthan nvarchar(255) not null default '',pltamthan nvarchar(50) not null default '');");
                 }
-                if (listTable.Contains("khamngoaikhoa") == false)
+                if (tables.Contains("khamngoaikhoa") == false)
                 {
                     tsql.Add("create table khamngoaikhoa(id nvarchar(50) not null primary key, idhoso nvarchar(50) not null, iddot nvarchar(50) not null default '', thoigian datetime not null);");
                 }
-                if (listTable.Contains("khamkhac") == false)
+                if (tables.Contains("khamkhac") == false)
                 {
                     tsql.Add("create table khamkhac(id nvarchar(50) not null primary key, idhoso nvarchar(50) not null, iddot nvarchar(50) not null default '', thoigian datetime not null);");
                 }
@@ -211,7 +187,7 @@ namespace QuanLyHoSoSucKhoe
                 } 
                 if (tsql.Count > 0) { db.Execute(string.Join(" ", tsql)); }
                 /* Drop table temp */
-                var tmptable = listTable.Where(p => p.EndsWith("temp")).Select(p => p).ToList();
+                var tmptable = tables.Where(p => p.EndsWith("temp")).Select(p => p).ToList();
                 if (tmptable.Count > 0)
                 {
                     tsql = new List<string>();
@@ -219,10 +195,18 @@ namespace QuanLyHoSoSucKhoe
                     db.Execute(string.Join(" ", tsql));
                 }
                 db.truncate(keyTable.importData);
-
+                /* SQLite */
+                tables = sqlite.getTableNames(); tsql = new List<string>();
+                sqlite.checkTableSystem(tables);
+                if(!tables.Contains("nguoidung"))
+                {
+                    tsql.Add("CREATE TABLE nguoidung (tendangnhap nvarchar(50) NOT NULL PRIMARY KEY, matkhau nvarchar(50) NOT NULL, sdt nvarchar(50) NOT NULL default '', capdo int NOT NULL default 4, kichhoat int NOT NULL DEFAULT 0, ngaytao datetime NOT NULL, lancuoi datetime, ghichu nvarchar(254) NOT NULL DEFAULT '', idtinh nvarchar(10) not null default '', idhuyen nvarchar(10) not null default '', idxa nvarchar(10) not null default '', bhhuyen nvarchar(10) not null default '');");
+                }
+                if (tsql.Count > 0) { sqlite.Execute(string.Join(" ", tsql)); }
             }
             catch (Exception ex) { msgerr = ex.saveMessage(string.Join(" ", tsql)); }
             db.Dispose();
+            sqlite.Dispose();
             return msgerr;
         }
         private static string getTypeNvarchar(this string listField, int len, string def = "''")

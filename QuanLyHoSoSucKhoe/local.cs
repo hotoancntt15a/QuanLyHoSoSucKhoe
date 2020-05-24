@@ -178,67 +178,36 @@ namespace QuanLyHoSoSucKhoe
             }
             var rs = false;
             string capdo = "";
-            var urlLogin = AppConfig.value("app.urlserver", "");
-            if (string.IsNullOrEmpty(urlLogin) == false)
+            var db = getDataSQLite();
+            try
             {
-                /* Login from Server */
-                try
+                /* Kiểm tra có bị block không */
+                var dataUser = db.getDataSet($"select * from nguoidung where tendangnhap='{sender.idUser.sqliteGetValueField()}'").Tables[0];
+                if (dataUser.Rows.Count == 0)
                 {
-                    var key = HttpUtility.UrlEncode(md5.MaHoa($"{DateTime.Now:yyMMddHH}|{sender.idUser}|{sender.password}", AppConfig.Key));
-                    var stream = new XmlTextReader($"{urlLogin}/api/login?key={key}");
-                    var dt = new DataTable();
-                    dt.ReadXml(stream);
-                    if (dt.TableName == "error") { throw new Exception($"{dt.Rows[0][0]}"); }
-                    if (dt.Rows.Count == 1)
-                    {
-                        using (var db = getDataObject())
-                        {
-                            try
-                            {
-                                capdo = $"{dt.Rows[0]["capdo"]}";
-                                db.Execute($"delete from nguoidung where tendangnhap=N'{sender.idUser.getValueField()}';");
-                                dt.bulkCopy(db.Connection.ConnectionString, "nguoidung");
-                                rs = true;
-                            }
-                            catch (Exception ex) { throw new Exception(ex.Message); }
-                        }
-                    }
-                    else { throw new Exception("Lỗi không xác định"); }
+                    /* Trường hơp đăng nhập bằng số điện thoại */
+                    if (regNumber.IsMatch(sender.idUser) == false) { throw new Exception($"Tài khoản '{sender.idUser}' không tồn tại trên hệ thống"); }
+                    dataUser = db.getDataSet($"select * from nguoidung where sdt='{sender.idUser.sqliteGetValueField()}'").Tables[0];
+                    if (dataUser.Rows.Count == 0) { throw new Exception($"Tài khoản '{sender.idUser}' không tồn tại trên hệ thống"); }
+                    sender.idUser = dataUser.Rows[0]["tendangnhap"].ToString();
                 }
-                catch (Exception ex) { w.Session.saveError(ex.Message); }
+                var userInfo = dataUser.Rows[0];
+                if (userInfo["kichhoat"].ToString() != "1") { throw new Exception($"Tài khoản '{sender.idUser}' chưa kích hoạt hoặc đã bị khóa"); }
+                /* Kiểm tra bản ghi so với dữ liệu */
+                /* Đăng nhập thất bại: xóa thông tin đăng nhập trình duyệt client */
+                if (userInfo["matkhau"].ToString() != sender.password) { throw new Exception("Mật khẩu không đúng"); }
+                rs = true;
+                capdo = userInfo["capdo"].ToString();
+                /* Lưu lại lần đăng nhập cuối cùng */
+                db.Execute($"update nguoidung set lancuoi='{DateTime.Now:yyyy-MM-dd HH:mm:ss}' where tendangnhap='{sender.idUser.getValueField()}';");
             }
-            else
+            catch (Exception ex)
             {
-                var db = getDataObject();
-                try
-                {
-                    /* Kiểm tra có bị block không */
-                    var userinfo = db.nguoidungs.FirstOrDefault(p => p.tendangnhap == sender.idUser);
-                    if (userinfo == null)
-                    {
-                        /* Trường hơp đăng nhập bằng số điện thoại */
-                        if (regNumber.IsMatch(sender.idUser) == false) { throw new Exception($"Tài khoản '{sender.idUser}' không tồn tại trên hệ thống"); }
-                        userinfo = db.nguoidungs.FirstOrDefault(p => p.sdt == sender.idUser);
-                        if (userinfo == null) { throw new Exception($"Tài khoản '{sender.idUser}' không tồn tại trên hệ thống"); }
-                        sender.idUser = userinfo.tendangnhap;
-                    }
-                    if (userinfo.kichhoat != 1) { throw new Exception($"Tài khoản '{sender.idUser}' chưa kích hoạt hoặc đã bị khóa"); }
-                    /* Kiểm tra bản ghi so với dữ liệu */
-                    /* Đăng nhập thất bại: xóa thông tin đăng nhập trình duyệt client */
-                    if (userinfo.matkhau != sender.password) { throw new Exception("Mật khẩu không đúng"); }
-                    rs = true;
-                    capdo = userinfo.capdo.ToString();
-                    /* Lưu lại lần đăng nhập cuối cùng */
-                    db.Execute($"update nguoidung set lancuoi='{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}' where tendangnhap='{userinfo.tendangnhap.getValueField()}';");
-                }
-                catch (Exception ex)
-                {
-                    if (ex.Message.Contains("Cannot open database") || ex.Message.Contains("The server was not found"))
-                    { w.Session.saveError(ex.Message + " <a href=\"/login?redirect=/sysconfig\"> Cấu hình kết nối </a>"); }
-                    else { w.Session.saveError(ex.Message); }
-                }
-                db.Dispose();
+                if (ex.Message.Contains("Cannot open database") || ex.Message.Contains("The server was not found"))
+                { w.Session.saveError(ex.Message + " <a href=\"/login?redirect=/sysconfig\"> Cấu hình kết nối </a>"); }
+                else { w.Session.saveError(ex.Message); }
             }
+            db.Dispose();
             if (rs) { w.setLoginSuccess(sender, capdo); }
             return rs;
         }
@@ -356,13 +325,6 @@ namespace QuanLyHoSoSucKhoe
             var item = ds.FirstOrDefault(p => p.id == madantoc);
             if (item == null) { return madantoc; }
             return item.ten;
-        }
-
-        internal static Models.nguoidung getUserCurrent(this Models.SQLServerDataContext db, string iduser) => db.nguoidungs.FirstOrDefault(p => p.tendangnhap == iduser);
-
-        internal static Models.nguoidung getUserCurrent(string iduser)
-        {
-            using (var db = getDataObject()) { return db.getUserCurrent(iduser); }
         }
 
         internal static List<string> AddFirst(this List<string> s, string item)

@@ -8,12 +8,6 @@
         <elementListCompartment Id="1d366a93-a46f-4bb7-8d90-b2d840af9cbd" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="8d5f70e3-c070-4ca2-870c-0ab2fb9d6784" absoluteBounds="3.75, 0.75, 2, 3.1170068359375005">
-      <DataClassMoniker Name="/SQLServerDataContext/nguoidung" />
-      <nestedChildShapes>
-        <elementListCompartment Id="6473f872-9044-46d1-9be2-c60b7cfc24de" absoluteBounds="3.765, 1.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="100183dc-043d-480e-aff6-0aa582fb5d6b" absoluteBounds="0.75, 4.75, 2, 1.3862939453125005">
       <DataClassMoniker Name="/SQLServerDataContext/dmxa" />
       <nestedChildShapes>

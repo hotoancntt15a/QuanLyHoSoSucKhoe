@@ -12,22 +12,6 @@
       <Column Name="chitiet" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.nguoidung" Member="nguoidungs">
-    <Type Name="nguoidung">
-      <Column Name="tendangnhap" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="matkhau" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="sdt" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="capdo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="kichhoat" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ngaytao" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="lancuoi" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="ghichu" Type="System.String" DbType="NVarChar(254) NOT NULL" CanBeNull="false" />
-      <Column Name="idtinh" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="idhuyen" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="idxa" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="bhhuyen" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.dmxa" Member="dmxas">
     <Type Name="dmxa">
       <Column Name="id" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />

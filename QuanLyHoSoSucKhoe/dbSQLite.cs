@@ -271,6 +271,16 @@ namespace zModules
             cmd.ExecuteNonQuery();
         }
 
+        public static bool anyRow(this DbContext db, string tsql) { 
+            if(string.IsNullOrEmpty(tsql)) { return false; }
+            try
+            {
+                var dt = db.getDataSet(tsql).Tables[0];
+                if(dt.Rows.Count > 0) { return true; } return false;
+            }
+            catch { return false; }
+        }
+
         public static void delete(this DbContext db, string table) => db.Execute($"delete from [{table}];");
 
         public static void delete(this SQLiteConnection cn, string table, string where = "")

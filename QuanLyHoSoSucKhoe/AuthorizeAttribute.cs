@@ -32,7 +32,7 @@ namespace QuanLyHoSoSucKhoe
             if (rs == true)
             {
                 if (everyone) { return true; }
-                string temp = $"{w.Session["capdo"]}";
+                string temp = $"{w.Session["idgroup"]}";
                 if (temp == "0") { return true; }
                 var area = $"{controllerContext.RouteData.DataTokens["area"]}";
                 string msg = "";

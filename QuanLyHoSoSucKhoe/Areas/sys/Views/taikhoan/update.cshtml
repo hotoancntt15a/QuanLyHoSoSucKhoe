@@ -68,29 +68,4 @@
         <button type="reset" class="btn btn-primary"> <i class="fa fa-refresh"></i> Làm mới </button>
         <a href="@Url.Action("index")" class="btn btn-primary"> <i class="fa fa-backward"></i> Danh sách</a>
     </div>
-</form>
-@section scripts{
-    <script>
-        function loadoptiondiachinh(id1) {
-            if (!id1.startsWith("#")) { id1 = '#' + id1; }
-            if ($(id1).attr('setid') == '') { return; }
-            var id2 = '#' + $(id1).attr('setid');
-            $.get('@Url.Action("optiondiachinh", "tools", new { area = "" })/' + $(id1).val(),
-                function (data) { $(id2).html(data); loadoptiondiachinh(id2); }).fail(function () {
-                    $(id2).html('<option value="error">lỗi trong quá trình tuyền dữ liệu hoặc máy chủ không có phản hồi</option>');
-                    loadoptiondiachinh(id2);
-                });
-            if (id1 == '#idtinh') {
-                $.get('@Url.Action("optionscqbh", "tools", new { area = "" })/' + $(id1).val(),
-                function (data) { $('#bhhuyen').html(data); }).fail(function () {
-                    $(id2).html('<option value="error">lỗi trong quá trình tuyền dữ liệu hoặc máy chủ không có phản hồi</option>');
-                });
-            }
-        }
-        $(document).ready(function () {
-            @if (Request["id"] == null) { Html.Raw("loadoptiondiachinh('idtinh');"); }
-            $('#capdo').val('@item.capdo');
-            $('#kichhoat').val('@item.kichhoat');
-        });
-    </script>
-}
+</form> 

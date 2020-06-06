@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using zModules.NPOIExcel;
 
@@ -205,7 +206,7 @@ namespace zModules
             rs.Add($"({field} >= '{t1:yyyy-MM-dd}' and {field} <= '{t2:yyyy-MM-dd} 23:59')");
             if (title != "") { rs.Add($"{title} từ ngày {date1} đến {date2}"); }
             return rs;
-        }
+        } 
 
         /// <summary>
         /// Execute update or innert data
@@ -275,6 +276,7 @@ namespace zModules
             if(string.IsNullOrEmpty(tsql)) { return false; }
             try
             {
+                if(Regex.IsMatch(tsql, " limit ", RegexOptions.IgnoreCase) == false) { tsql = tsql + " limit 1"; }
                 var dt = db.getDataSet(tsql).Tables[0];
                 if(dt.Rows.Count > 0) { return true; } return false;
             }
@@ -285,6 +287,7 @@ namespace zModules
 
         public static void delete(this SQLiteConnection cn, string table, string where = "")
         {
+            if (cn.State == ConnectionState.Closed) { cn.Open(); }
             if (string.IsNullOrEmpty(where)) { cn.Execute("delete from " + table); return; }
             if (Regex.IsMatch(where, "^where", RegexOptions.IgnoreCase)) { where = where.Substring(5).Trim(); }
             cn.Execute($"delete from {table} where {where}");
@@ -346,6 +349,7 @@ namespace zModules
 
         public static void checkTableSystem(this SQLiteConnection cn, List<string> tables = null)
         {
+            if (cn.State == ConnectionState.Closed) { cn.Open(); }
             if (tables == null) { tables = new List<string>(); }
             if (tables.Count == 0) { tables = cn.getAllTables(); }
             var tsql = tsqlCreateTableSystemSqlite(tables).Trim();
@@ -379,12 +383,16 @@ namespace zModules
 
         public static bool tableExits(this DbContext db, string tablename) => (db.Database.Connection as SQLiteConnection).tableExits(tablename);
 
-        public static bool tableExits(this SQLiteConnection cn, string tablename) => cn.getValue($"SELECT [name] FROM [sqlite_master] WHERE type='table' AND name <> '{tablename}'") == null ? false : true;
+        public static bool tableExits(this SQLiteConnection cn, string tablename)
+        {
+            if (cn.State == ConnectionState.Closed) { cn.Open(); }
+            return cn.getValue($"SELECT [name] FROM [sqlite_master] WHERE type='table' AND name <> '{tablename}'") == null ? false : true;
+        }
 
         public static List<string> getViewNames(this DbContext db) => (db.Database.Connection as SQLiteConnection).getViewNames();
         public static List<string> getViewNames(this SQLiteConnection cn)
         {
-            var l = new List<string>();
+            var l = new List<string>(); if (cn.State == ConnectionState.Closed) { cn.Open(); }
             var dt = cn.getDataSet($"SELECT [name] FROM [sqlite_master] WHERE type= 'view' AND name not like 'sqlite_%'").Tables[0];
             foreach (DataRow r in dt.Rows) l.Add($"{r[0]}");
             return l;
@@ -392,7 +400,7 @@ namespace zModules
         public static List<string> getTableNames(this DbContext db) => (db.Database.Connection as SQLiteConnection).getTableNames();
         public static List<string> getTableNames(this SQLiteConnection cn)
         {
-            var l = new List<string>();
+            var l = new List<string>(); if (cn.State == ConnectionState.Closed) { cn.Open(); }
             var dt = cn.getDataSet($"SELECT [name] FROM [sqlite_master] WHERE type= 'table' AND name not like 'sqlite_%'").Tables[0];
             foreach (DataRow r in dt.Rows) l.Add($"{r[0]}");
             return l;
@@ -409,13 +417,27 @@ namespace zModules
         }
 
         public static List<DataColumn> getColumns(this DbContext db, string tablename) => (db.Database.Connection as SQLiteConnection).getColumns(tablename);
-
         public static List<DataColumn> getColumns(this SQLiteConnection cn, string tablename)
         {
-            var l = new List<DataColumn>();
+            var l = new List<DataColumn>(); if (cn.State == ConnectionState.Closed) { cn.Open(); }
             var dt = cn.getDataSet($"SELECT * FROM {tablename} limit 1").Tables[0];
             foreach (DataColumn c in dt.Columns) l.Add(c);
             return l;
+        }
+        public static List<string> getColumnNamnes(this DbContext db, string tablename) => (db.Database.Connection as SQLiteConnection).getColumnNamnes(tablename); 
+        public static List<string> getColumnNamnes(this SQLiteConnection cn, string tablename)
+        {
+            var cls = cn.getColumns(tablename);
+            return cls.Select(p => p.ColumnName).ToList();
+        }
+        public static Dictionary<string, string> getDataRowVauleDefault(this DbContext db, string tablename) => (db.Database.Connection as SQLiteConnection).getDataRowVauleDefault(tablename);
+        public static Dictionary<string, string> getDataRowVauleDefault(this SQLiteConnection cn, string tablename)
+        {
+            if (cn.State == ConnectionState.Closed) { cn.Open(); }
+            var rs = new Dictionary<string, string>();
+            var dt = cn.getDataSet($"SELECT * FROM {tablename} limit 1").Tables[0];
+            foreach (DataColumn c in dt.Columns) { rs.Add(c.ColumnName, ""); }
+            return rs;
         }
 
         public static string sqliteLike(this string value, string fieldName)

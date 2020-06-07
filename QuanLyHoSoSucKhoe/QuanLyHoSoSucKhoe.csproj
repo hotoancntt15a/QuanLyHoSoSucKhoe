@@ -1901,6 +1901,7 @@
     <Content Include="Areas\sys\Views\taikhoan\index.cshtml" />
     <Content Include="Areas\sys\Views\taikhoan\search.cshtml" />
     <Content Include="Areas\sys\Views\taikhoan\update.cshtml" />
+    <Content Include="Areas\sys\Views\taikhoan\viewupdate.cshtml" />
     <None Include="Models\SQLServer.dbml.layout">
       <DependentUpon>SQLServer.dbml</DependentUpon>
     </None>

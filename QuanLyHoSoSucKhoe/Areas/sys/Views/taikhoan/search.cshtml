@@ -9,14 +9,14 @@
     }
     @if (items.Rows.Count == 0)
             {
-        <tbody><tr><td>Không có dữ liệu; <a href="@Url.Action("update")?t=@DateTime.Now.ToOADate()"> <i class="fa fa-plus"></i> Thêm </a></td></tr></tbody>
+        <tbody><tr><td>Không có dữ liệu; <a href="javascript:void(0);" onclick="showgeturl('@Url.Action("viewupdate")');"> <i class="fa fa-plus"></i> Thêm </a></td></tr></tbody>
     }
     else
     {
         items.Columns.RemoveAt(1);
         <thead>
             <tr>
-                <th> <a href="@Url.Action("update")?t=@DateTime.Now.ToOADate()"> <i class="fa fa-plus"></i> Thêm </a> </th>
+                <th> <a href="javascript:void(0);" onclick="showgeturl('@Url.Action("viewupdate")');"> <i class="fa fa-plus"></i> Thêm </a> </th>
                 @foreach (System.Data.DataColumn c in items.Columns)
                 {
                     <th>@c.ColumnName</th>
@@ -29,7 +29,7 @@
                 <tr>
                     <td>
                         <a href="javascript:void(0);" onclick="viewfirst(this);"> <i class="fa fa-eye"></i> </a>
-                        <a href="@Url.Action("update")?id=@r[0]&t=@DateTime.Now.ToOADate()"> <i class="fa fa-edit"></i> </a>
+                        <a href="javascript:void(0);" onclick="showgeturl('@Url.Action("viewupdate")?id=@r["iduser"]')"> <i class="fa fa-edit"></i> </a>
                     </td>
                     @foreach (System.Data.DataColumn c in items.Columns)
                     {

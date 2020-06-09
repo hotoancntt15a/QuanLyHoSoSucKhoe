@@ -1,0 +1,70 @@
+﻿@{ Layout = null;
+    var zurl = "";
+    var redirect = "";
+    if (Request.UrlReferrer != null) { zurl = Request.UrlReferrer.ToString().Trim(); }
+    if (Request[keyS.redirect] != null) { redirect = Request[keyS.redirect].Trim(); }
+    else if (ViewBag.RequestUrl != null) { redirect = ViewBag.RequestUrl.ToString(); }
+    if (redirect != "") { zurl = redirect; } }
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="UTF-8" />
+    <title>Phát sinh lỗi </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- GLOBAL STYLES -->
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!--END GLOBAL STYLES -->
+    <!-- PAGE LEVEL STYLES -->
+    <style type="text/css">
+        body { padding-top: 30px; }  .logo h1 { color: #000000; font-size: 80px; padding-bottom: 40px; }  .text-muted { color: #000000; font-size: 25px; } 
+        /* media queries */ 
+        @@media (max-width: 767px) { .logo h1 { font-size: 65px; } }
+    </style>
+    <!--END PAGE LEVEL STYLES -->
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body>
+    <!-- PAGE CONTENT -->
+    <div class="container">
+        <div class="col-lg-8 col-lg-offset-2 text-center mx-auto">
+            <div class="logo">
+                <h1>OPPS, Error 404 !</h1>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-lg-8 col-lg-offset-2 mx-auto">
+                <div class="input-group">
+                    <input type="text" placeholder="Tin nhắn của bạn" class="form-control" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button">Liên hệ hỗ trợ</button>
+                    </span>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <br /><br />
+            <div class="text-muted">
+                @if (zurl != "")
+                {<p>URL: @zurl </p>}
+                <p>@Session.getError()</p>
+                <p>@Request.getValue("message")</p>
+            </div>
+            <div class="col-lg-6 col-lg-offset-3 mx-auto">
+                <div class="btn-group btn-group-justified">
+                    <a href="~/" class="btn btn-primary">Return Website</a>
+                    <a href="~/" class="btn btn-success">Trở về trang chủ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT -->
+</body>
+<!-- END BODY -->
+</html> 

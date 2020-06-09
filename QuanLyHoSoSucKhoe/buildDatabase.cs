@@ -200,7 +200,7 @@ namespace QuanLyHoSoSucKhoe
                 sqlite.checkTableSystem(tables);
                 if(!tables.Contains("taikhoan"))
                 {
-                    tsql.Add("CREATE TABLE taikhoan (iduser nvarchar(50) NOT NULL PRIMARY KEY, pass nvarchar(50) NOT NULL, hoten nvarchar(255) NOT NULL default '', ngaysinh nvarchar(10) NOT NULL default '', gioitinh nvarchar(10) NOT NULL default '', sdt nvarchar(50) NOT NULL default '', email sdt nvarchar(50) NOT NULL default '', ngaytao datetime NOT NULL, lancuoi datetime, ghichu nvarchar(255) NOT NULL DEFAULT '', idgroup int not null default 0, block int not null default 0, block_lydo nvarchar(255) not null default '');");
+                    tsql.Add("CREATE TABLE taikhoan (iduser nvarchar(50) NOT NULL PRIMARY KEY, pass nvarchar(50) NOT NULL, hoten nvarchar(255) NOT NULL default '', ngaysinh nvarchar(10) NOT NULL default '', gioitinh nvarchar(10) NOT NULL default '', sdt nvarchar(50) NOT NULL default '', email nvarchar(50) NOT NULL default '', ngaytao datetime NOT NULL, lancuoi datetime, ghichu nvarchar(255) NOT NULL DEFAULT '', idgroup int not null default 0, block int not null default 0, block_lydo nvarchar(255) not null default '');");
                 }
                 if (tsql.Count > 0) { sqlite.Execute(string.Join(" ", tsql)); }
             }

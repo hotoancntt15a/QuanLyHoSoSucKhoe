@@ -32,13 +32,14 @@ namespace QuanLyHoSoSucKhoe
             if (rs == true)
             {
                 if (everyone) { return true; }
+                if($"{w.Session["iduser"]}".ToLower() =="administrator") { return true; }
                 string temp = $"{w.Session["idgroup"]}";
                 if (temp == "0") { return true; }
-                var area = $"{controllerContext.RouteData.DataTokens["area"]}";
                 string msg = "";
                 while (true)
-                { 
-                    if(area == "") { break; }
+                {
+                    var area = $"{controllerContext.RouteData.DataTokens["area"]}";
+                    if (area == "") { break; }
                     var access = getConfigPermission("permission.0", "sys"); 
                     if(access.Contains(area)) { msg = "Giới hạn quyền truy cập chức năng. Vui lòng liên hệ quản trị viên"; break; }
                     /* Cấp tỉnh */ 

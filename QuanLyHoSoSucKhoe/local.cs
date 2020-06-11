@@ -187,17 +187,17 @@ namespace QuanLyHoSoSucKhoe
                 {
                     /* Trường hơp đăng nhập bằng số điện thoại */
                     if (regNumber.IsMatch(sender.idUser) == false) { throw new Exception($"Tài khoản '{sender.idUser}' không tồn tại trên hệ thống"); }
-                    dataUser = db.getDataSet($"select * from nguoidung where sdt='{sender.idUser.sqliteGetValueField()}'").Tables[0];
-                    if (dataUser.Rows.Count == 0) { throw new Exception($"Tài khoản '{sender.idUser}' không tồn tại trên hệ thống"); }
+                    //dataUser = db.getDataSet($"select * from nguoidung where sdt='{sender.idUser.sqliteGetValueField()}'").Tables[0];
+                    //if (dataUser.Rows.Count == 0) { throw new Exception($"Tài khoản '{sender.idUser}' không tồn tại trên hệ thống"); }
                     sender.idUser = dataUser.Rows[0]["tendangnhap"].ToString();
                 }
                 var userInfo = dataUser.Rows[0];
-                if (userInfo["kichhoat"].ToString() != "1") { throw new Exception($"Tài khoản '{sender.idUser}' chưa kích hoạt hoặc đã bị khóa"); }
+                if (userInfo["block"].ToString() == "1") { throw new Exception($"Tài khoản '{sender.idUser}' chưa kích hoạt hoặc đã bị khóa"); }
                 /* Kiểm tra bản ghi so với dữ liệu */
                 /* Đăng nhập thất bại: xóa thông tin đăng nhập trình duyệt client */
                 if (userInfo["matkhau"].ToString() != sender.password) { throw new Exception("Mật khẩu không đúng"); }
                 rs = true;
-                capdo = userInfo["capdo"].ToString();
+                capdo = userInfo["block"].ToString();
                 /* Lưu lại lần đăng nhập cuối cùng */
                 db.Execute($"update nguoidung set lancuoi='{DateTime.Now:yyyy-MM-dd HH:mm:ss}' where tendangnhap='{sender.idUser.getValueField()}';");
             }

@@ -167,6 +167,21 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\bacsy\bacsyAreaRegistration.cs" />
+    <Compile Include="Areas\bacsy\Controllers\homeController.cs" />
+    <Compile Include="Areas\benhnhan\benhnhanAreaRegistration.cs" />
+    <Compile Include="Areas\benhnhan\Controllers\homeController.cs" />
+    <Compile Include="Areas\danhmuc\Controllers\benhvienController.cs" />
+    <Compile Include="Areas\danhmuc\Controllers\cqbhController.cs" />
+    <Compile Include="Areas\danhmuc\Controllers\dantocController.cs" />
+    <Compile Include="Areas\danhmuc\Controllers\homeController.cs" />
+    <Compile Include="Areas\danhmuc\Controllers\huyenController.cs" />
+    <Compile Include="Areas\danhmuc\Controllers\khoaController.cs" />
+    <Compile Include="Areas\danhmuc\Controllers\quanheController.cs" />
+    <Compile Include="Areas\danhmuc\Controllers\quocgiaController.cs" />
+    <Compile Include="Areas\danhmuc\Controllers\tinhController.cs" />
+    <Compile Include="Areas\danhmuc\Controllers\xaController.cs" />
+    <Compile Include="Areas\danhmuc\danhmucAreaRegistration.cs" />
     <Compile Include="Areas\sys\Controllers\configController.cs" />
     <Compile Include="Areas\sys\Controllers\dataController.cs" />
     <Compile Include="Areas\sys\Controllers\exportController.cs" />
@@ -1903,6 +1918,12 @@
     <Content Include="Areas\sys\Views\taikhoan\index.cshtml" />
     <Content Include="Areas\sys\Views\taikhoan\search.cshtml" />
     <Content Include="Areas\sys\Views\taikhoan\viewupdate.cshtml" />
+    <Content Include="Areas\danhmuc\Views\web.config" />
+    <Content Include="Areas\benhnhan\Views\web.config" />
+    <Content Include="Areas\bacsy\Views\web.config" />
+    <Content Include="Areas\danhmuc\Views\khoa\Index.cshtml" />
+    <Content Include="Areas\danhmuc\Views\khoa\tracuu.cshtml" />
+    <Content Include="Areas\danhmuc\Views\khoa\viewid.cshtml" />
     <None Include="Models\SQLServer.dbml.layout">
       <DependentUpon>SQLServer.dbml</DependentUpon>
     </None>
@@ -1921,6 +1942,23 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\bacsy\Data\" />
+    <Folder Include="Areas\bacsy\Views\home\" />
+    <Folder Include="Areas\bacsy\Views\Shared\" />
+    <Folder Include="Areas\benhnhan\Data\" />
+    <Folder Include="Areas\benhnhan\Views\home\" />
+    <Folder Include="Areas\benhnhan\Views\Shared\" />
+    <Folder Include="Areas\danhmuc\Data\" />
+    <Folder Include="Areas\danhmuc\Views\benhvien\" />
+    <Folder Include="Areas\danhmuc\Views\cqbh\" />
+    <Folder Include="Areas\danhmuc\Views\dantoc\" />
+    <Folder Include="Areas\danhmuc\Views\home\" />
+    <Folder Include="Areas\danhmuc\Views\huyen\" />
+    <Folder Include="Areas\danhmuc\Views\quanhe\" />
+    <Folder Include="Areas\danhmuc\Views\quocgia\" />
+    <Folder Include="Areas\danhmuc\Views\Shared\" />
+    <Folder Include="Areas\danhmuc\Views\tinh\" />
+    <Folder Include="Areas\danhmuc\Views\xa\" />
     <Folder Include="Areas\sys\Data\" />
     <Folder Include="Areas\sys\Views\Shared\" />
     <Folder Include="Views\tools\" />

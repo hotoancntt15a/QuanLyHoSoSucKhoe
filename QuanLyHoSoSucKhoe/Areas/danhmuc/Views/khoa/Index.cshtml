@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Danh mục khoa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Form tra cứu -->
+<form id="frm0dmkhoa" method="post">
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Tên khoa</div></div>
+            <input type="text" name="khoa" class="form-control" value="" maxlength="50" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Ghi chú</div></div>
+            <input type="text" name="ghichu" class="form-control" value="" maxlength="255" />
+        </div>
+    </div>
+    <div class="form-group">
+        <a href="javascript:void(0)" onclick="tradmkhoa();" class="btn btn-primary btn-sm"> <i class="fa fa-search"></i> Tra cứu</a>
+        <a href="javascript:void(0)" onclick="showgeturl('@Url.Action("viewid")');" class="btn btn-primary btn-sm"> <i class="fa fa-plus"></i> Thêm mới</a>
+    </div>
+</form>
+<!-- Danh sách kết quả + Sửa xóa -->
+<div id="viewdmkhoa"></div>
+@section scripts {
+    <script>
+        function tradmkhoa() {
+            if ($('#viewdmkhoa').find('img').length > 0) { return; }
+            $('#viewdmkhoa').html('đang truy vấn dữ liệu <img alt="" title="" src="/images/loader.gif" />');
+            postform('frm0dmkhoa', '@Url.Action("tracuu")', 'viewdmkhoa');
+        }
+    </script>
+}

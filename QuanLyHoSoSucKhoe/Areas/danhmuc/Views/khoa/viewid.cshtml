@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Xem thông tin khoa";
+    Layout = null;
+    var data = ViewBag.data as System.Data.DataTable;
+    if(data.Rows.Count == 0)
+    {
+        <div class="alert alert-danger">@zModules.messageKey.notFoundRecord</div>
+        return;
+    }
+    var item = data.Rows[0];
+}
+<form id="frm1dmkhoa" method="post">
+    <input name="id" type="hidden" value="@item["id"]" />
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <div class="input-group-append">
+                <div class="input-group-text">Khoa</div>
+            </div>
+            <input type="text" name="khoa" class="form-control" maxlength="50" value="@item["khoa"]" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append">
+                <div class="input-group-text">Ghi chú</div>
+            </div>
+            <input type="text" name="ghichu" class="form-control" maxlength="255" value="@item["ghichu"]" />
+        </div>
+    </div> 
+    <div class="form-group">
+        <a href="javascript:void(0)" onclick="postform('frm1dmkhoa', '@Url.Action("update")');" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i> Lưu lại</a> 
+    </div>
+</form>

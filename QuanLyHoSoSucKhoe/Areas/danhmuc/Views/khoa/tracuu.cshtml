@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Tra cứu danh mục khoa";
+    Layout = null;
+    var data = ViewBag.data as System.Data.DataTable;
+}
+@if(data.Rows.Count == 0)
+{
+    <div class="alert alert-info"> Không có thông tin dữ liệu phù hợp với nội dung cần tra cứu</div>
+    return;
+}
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Tên khoa</th>
+            <th>Ghi chú</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(System.Data.DataRow r in data.Rows)
+        {
+            <tr>
+                <td><a href="javascript:void(0);" onclick="viewdmkhoa('@r["id"]');">@r["khoa"]</a></td>
+                <td>@r["ghichu"]</td>
+            </tr>
+        }
+    </tbody> 
+</table>
+<script> function viewdmkhoa(id) { showgeturl('@Url.Action("viewid")?id=' + id); } </script>

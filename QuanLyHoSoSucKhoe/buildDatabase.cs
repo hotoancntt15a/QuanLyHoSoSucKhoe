@@ -114,7 +114,7 @@ namespace QuanLyHoSoSucKhoe
                 if (tables.Contains("benhnhan") == false)
                 {
                     tsql.Add("create table benhnhan (id nvarchar(20) not null primary key, " +
-                        "hoten nvarchar(100) not null, ngaysinh varchar(10) not null default '', gioitinh nvarchar(10) not null default '', sobhxh nvarchar(20) not null default '', "+
+                        "hoten nvarchar(100) not null, ngaysinh varchar(10) not null default '', gioitinh nvarchar(10) not null default '', sobhxh nvarchar(20) not null default '', diachi nvarchar(255) not null default '', "+
                         "socmnd nvarchar(20) not null default '', ngaycap nvarchar(10) not null default '', noicap nvarchar(255) not null default '', ngaytao datetime not null);");
                 }
                 /* Đơn vị, cơ quan */

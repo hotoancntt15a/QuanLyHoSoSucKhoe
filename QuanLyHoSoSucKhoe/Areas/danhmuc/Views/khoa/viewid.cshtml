@@ -11,6 +11,7 @@
 }
 <form id="frm1dmkhoa" method="post">
     <input name="id" type="hidden" value="@item["id"]" />
+    <input name="mode" type="hidden" value="@ViewBag.mode" />
     <div class="form-group">
         <div class="input-group input-group-sm">
             <div class="input-group-append">
@@ -24,8 +25,12 @@
             </div>
             <input type="text" name="ghichu" class="form-control" maxlength="255" value="@item["ghichu"]" />
         </div>
-    </div> 
+    </div>
     <div class="form-group">
-        <a href="javascript:void(0)" onclick="postform('frm1dmkhoa', '@Url.Action("update")');" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i> Lưu lại</a> 
+        <a href="javascript:void(0)" onclick="postform('frm1dmkhoa', '@Url.Action("update")');" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i> Lưu lại</a>
+        @if (item[0].ToString() != "")
+        {
+            <a href="javascript:void(0)" onclick="postform('frm1dmkhoa', '@Url.Action("delid", "home")?t=dmkhoa');" class="btn btn-primary btn-sm"> <i class="fa fa-remove"></i> Xóa</a>
+        }
     </div>
 </form>

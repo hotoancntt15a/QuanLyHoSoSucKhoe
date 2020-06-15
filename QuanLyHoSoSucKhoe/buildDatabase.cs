@@ -102,7 +102,7 @@ namespace QuanLyHoSoSucKhoe
                 /* Danh mục khoa */
                 if (tables.Contains("dmkhoa") == false)
                 {
-                    tsql.Add("create table dmkhoa (id nvarchar(20) not null primary key, khoa nvarchar(50) not null, ghichu varchar(255) not null default '');");
+                    tsql.Add("create table dmkhoa (id nvarchar(20) not null primary key, khoa nvarchar(50) not null, ghichu nvarchar(255) not null default '');");
                 }
                 /* Bác sĩ, nhân viên */
                 if (tables.Contains("bacsy") == false)
@@ -191,12 +191,6 @@ namespace QuanLyHoSoSucKhoe
                 /* Check Product */
                 /* Check Function */
                 /* Check Data Default */
-                if ($"{db.getValue("select * from nguoidung where tendangnhap='admin'")}" == "")
-                {
-                    /* Create User Default */
-                    tsql.Add($"insert into nguoidung (tendangnhap,matkhau,sdt,capdo,kichhoat,ngaytao) values ('admin','{"admin".toPassword()}','',1,1,'{DateTime.Now:yyyy-MM-dd}'); ");
-                } 
-                if (tsql.Count > 0) { db.Execute(string.Join(" ", tsql)); }
                 /* Drop table temp */
                 var tmptable = tables.Where(p => p.EndsWith("temp")).Select(p => p).ToList();
                 if (tmptable.Count > 0)
@@ -205,13 +199,20 @@ namespace QuanLyHoSoSucKhoe
                     foreach (var v in tmptable) { tsql.Add($"drop table {v}; "); }
                     db.Execute(string.Join(" ", tsql));
                 }
-                db.truncate(keyTable.importData);
+                db.truncate(keyTable.importData); 
                 /* SQLite */
                 tables = sqlite.getTableNames(); tsql = new List<string>();
                 sqlite.checkTableSystem(tables);
                 if(!tables.Contains("taikhoan"))
                 {
                     tsql.Add("CREATE TABLE taikhoan (iduser nvarchar(50) NOT NULL PRIMARY KEY, pass nvarchar(50) NOT NULL, hoten nvarchar(255) NOT NULL default '', ngaysinh nvarchar(10) NOT NULL default '', gioitinh nvarchar(10) NOT NULL default '', sdt nvarchar(50) NOT NULL default '', email nvarchar(50) NOT NULL default '', ngaytao datetime NOT NULL, lancuoi datetime, ghichu nvarchar(255) NOT NULL DEFAULT '', idgroup int not null default 0, block int not null default 0, block_lydo nvarchar(255) not null default '');");
+                }
+                if (tsql.Count > 0) { sqlite.Execute(string.Join(" ", tsql)); } 
+                /* Check Data Default */
+                if ($"{sqlite.getValue("select * from taikhoan where iduser='admin'")}" == "")
+                {
+                    /* Create User Default */
+                    tsql.Add($"insert into taikhoan (iduser,pass,hoten,sdt,idgroup,ngaytao) values ('admin','{"admin".toPassword()}','Administrator','0914272795',-1,'{DateTime.Now:yyyy-MM-dd}'); ");
                 }
                 if (tsql.Count > 0) { sqlite.Execute(string.Join(" ", tsql)); }
             }

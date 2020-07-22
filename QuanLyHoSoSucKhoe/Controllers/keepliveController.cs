@@ -8,7 +8,7 @@ namespace QuanLyHoSoSucKhoe.Controllers
 {
     public class keepliveController : Controller
     {
-        // GET: keeplive 
+        // GET: keeplive  
         public ActionResult Index()
         {
             local.IpConnect[Session.SessionID] = Request.setFormatOnilne(Session);

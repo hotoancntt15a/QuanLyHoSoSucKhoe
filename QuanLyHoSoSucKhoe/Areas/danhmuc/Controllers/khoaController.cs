@@ -14,14 +14,12 @@ namespace QuanLyHoSoSucKhoe.Areas.danhmuc.Controllers
     public class khoaController : Controller
     {
         // GET: danhmuc/khoa
-
-        [CheckLogin()]
+        [Properties(Name ="Khoa", Note = "fa fa-list")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [CheckLogin()]
         public ActionResult tracuu()
         {
             var w = new List<string>();
@@ -40,7 +38,6 @@ namespace QuanLyHoSoSucKhoe.Areas.danhmuc.Controllers
             }
             return View();
         }
-        [CheckLogin()]
         public ActionResult update()
         {
             var data = new Dictionary<string, string>();

@@ -191,12 +191,12 @@
     <Compile Include="Areas\sys\Controllers\importController.cs" />
     <Compile Include="Areas\sys\Controllers\taikhoanController.cs" />
     <Compile Include="Areas\sys\sysAreaRegistration.cs" />
-    <Compile Include="AuthorizeAttribute.cs" />
     <Compile Include="buildDatabase.cs" />
     <Compile Include="Controllers\errorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\keepliveController.cs" />
     <Compile Include="Controllers\loginController.cs" />
+    <Compile Include="Controllers\logoutController.cs" />
     <Compile Include="Controllers\toolsController.cs" />
     <Compile Include="dbSQLite.cs" />
     <Compile Include="Global.asax.cs">
@@ -1924,11 +1924,15 @@
     <Content Include="Areas\danhmuc\Views\khoa\Index.cshtml" />
     <Content Include="Areas\danhmuc\Views\khoa\tracuu.cshtml" />
     <Content Include="Areas\danhmuc\Views\khoa\viewid.cshtml" />
+    <Content Include="Areas\danhmuc\Views\quanhe\Index.cshtml" />
+    <Content Include="Areas\danhmuc\Views\quanhe\timkiem.cshtml" />
+    <Content Include="Areas\danhmuc\Views\quanhe\capnhat.cshtml" />
     <None Include="Models\SQLServer.dbml.layout">
       <DependentUpon>SQLServer.dbml</DependentUpon>
     </None>
     <Content Include="Views\keeplive\ViewConnect.cshtml" />
     <Content Include="Views\error\Index.cshtml" />
+    <Content Include="Views\logout\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1954,7 +1958,6 @@
     <Folder Include="Areas\danhmuc\Views\dantoc\" />
     <Folder Include="Areas\danhmuc\Views\home\" />
     <Folder Include="Areas\danhmuc\Views\huyen\" />
-    <Folder Include="Areas\danhmuc\Views\quanhe\" />
     <Folder Include="Areas\danhmuc\Views\quocgia\" />
     <Folder Include="Areas\danhmuc\Views\Shared\" />
     <Folder Include="Areas\danhmuc\Views\tinh\" />

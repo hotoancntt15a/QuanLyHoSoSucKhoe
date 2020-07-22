@@ -9,14 +9,13 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
 {
     public class filesController : Controller
     {
-        [CheckLogin]
+
         [Properties(Name = "Quản lý tập tin", Note = "fa fa-file")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [CheckLogin]
         public ActionResult views()
         {
             var ps = Server.MapPath("~");

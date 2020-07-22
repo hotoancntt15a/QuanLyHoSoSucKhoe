@@ -11,7 +11,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
 {
     public class dataController : Controller
     {
-        [CheckLogin]
+
         [Properties(Name = "Dữ liệu", Note = "fa fa-database")]
         public ActionResult Index()
         {
@@ -26,7 +26,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return View();
         }
 
-        [CheckLogin]
         public ActionResult getfilebak()
         {
             var s = new List<string>();
@@ -38,7 +37,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return View();
         }
 
-        [CheckLogin]
         [zModules.Permission(Delete = true)]
         public ActionResult Delete()
         {
@@ -59,7 +57,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return RedirectToAction("Index");
         }
 
-        [CheckLogin]
         [zModules.Permission(AddNew = true)]
         public ActionResult Backup()
         {
@@ -71,7 +68,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return Content(arg.callTaskScheduler());
         }
 
-        [CheckLogin]
         [zModules.Permission(AddNew = true)]
         public ActionResult shrink()
         {
@@ -82,7 +78,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return Content(arg.callTaskScheduler()); 
         }
 
-        [CheckLogin]
         public ActionResult Restore()
         {
             string iduser = Session.getIdUser();
@@ -108,7 +103,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return RedirectToAction("Index");
         }
 
-        [CheckLogin]
         [zModules.Permission(Upload = true)]
         public ActionResult UpFile()
         {
@@ -133,7 +127,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return RedirectToAction("Index");
         }
 
-        [CheckLogin(EveryOne: true)]
         public ActionResult info()
         {
             var db = local.getDataObject();
@@ -144,7 +137,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return View();
         }
 
-        [CheckLogin]
         [HttpPost]
         public ActionResult runsql()
         {
@@ -173,7 +165,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             }
         }
 
-        [CheckLogin]
         [HttpPost]
         public ActionResult createdata()
         {
@@ -183,7 +174,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return Content(s.BootstrapAlter(KeyBootstrapAlerts.Danger));
         }
 
-        [CheckLogin]
         [HttpPost]
         public ActionResult export()
         {
@@ -205,7 +195,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             }
         }
 
-        [CheckLogin]
         [HttpPost]
         public ActionResult export7z()
         {

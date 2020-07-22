@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Tìm kiếm";
+    Layout = null;
+    var data = ViewBag.data as System.Data.DataTable;
+    if (data.Rows.Count == 0)
+    {
+        <div class="alert alert-info">Không có dữ liệu phù hợp với truy vấn</div>
+        return;
+    }
+}
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Quan hệ</th>
+            <th>Viết tắt</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow r in data.Rows)
+        {
+            <tr>
+                <td>@r["id"]</td>
+                <td>@r["quanhe"]</td>
+                <td>@r["viettat"]</td>
+            </tr>
+        }
+    </tbody>
+</table>

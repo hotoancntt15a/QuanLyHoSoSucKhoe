@@ -10,7 +10,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
     public class homeController : Controller
     { 
         // GET: sys/home
-        [CheckLogin]
         public ActionResult index()
         { 
             return View();

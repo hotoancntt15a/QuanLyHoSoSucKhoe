@@ -12,7 +12,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
     {
         private string tablename = "sys_history"; 
 
-        [CheckLogin]
         [Properties(Name = "Nhật ký", Note = "fa fa-history")]
         public ActionResult Index()
         {
@@ -50,7 +49,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return View();
         }
 
-        [CheckLogin]
         public ActionResult Delete()
         {
             string id = Request.getValue("id");
@@ -71,7 +69,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return RedirectToAction("Index");
         }
 
-        [CheckLogin]
         public ActionResult DeleteAll()
         {
             var db = local.getDataObject();

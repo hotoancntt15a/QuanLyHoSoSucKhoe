@@ -19,8 +19,6 @@ namespace QuanLyHoSoSucKhoe.Areas.danhmuc.Controllers
             return View();
         }
 
-
-        [CheckLogin()]
         public ActionResult delid()
         {
             var id = Request.getValue("id");

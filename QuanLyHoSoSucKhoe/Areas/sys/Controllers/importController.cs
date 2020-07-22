@@ -17,7 +17,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
         public string actionName = "importExcel"; 
 
         // GET: hethong/importtst
-        [CheckLogin]
+
         [Properties(Name = "Nhập Excel", Note = "fa fa-file")]
         public ActionResult index()
         {
@@ -45,7 +45,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
         /// ID: Mã bảo hiểm cấp huyện; f: Tên tập tin xử lý; Mode = 1: Xóa tập tin, ngược lại cập nhật danh sách tst; listfile: danh sách tập tin cần xử lý
         /// </summary>
         /// <returns></returns>
-        [CheckLogin]
         [WebMethod]
         public ActionResult import()
         { 
@@ -116,7 +115,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             catch (Exception ex) { Session.saveError(ex.saveMessage()); }
             return RedirectToAction("index");
         }
-        [CheckLogin(EveryOne: true)]
+
         public ActionResult getfiles()
         {
             string foldertmp = Folders.temp + "\\test";
@@ -130,7 +129,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             if (s.Count > 0) { ViewBag.listxls = string.Join("", s); }
             return View();
         }
-        [CheckLogin(EveryOne: true)]
+
         public ActionResult info()
         {
             var iduser = Session.getIdUser();

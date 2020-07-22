@@ -15,7 +15,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
         private string pathExport = $"{Folders.temp}\\export"; 
 
         // GET: nhapxuat/export
-        [CheckLogin]
+
         [Properties(Name = "Xuất dữ liệu", Note = "fa fa-file")]
         public ActionResult Index()
         {
@@ -37,7 +37,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return View();
         }
 
-        [CheckLogin]
         [Properties(Name = "Xuất Access")]
         public ActionResult accdb()
         {
@@ -52,7 +51,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return RedirectToAction("index");
         }
 
-        [CheckLogin]
         [Properties(Name = "Xóa file xuất")]
         public ActionResult delaccdb()
         {

@@ -1,4 +1,49 @@
-﻿<!DOCTYPE html>
+﻿@{   
+    string area = ViewContext.RouteData.getNameArea();
+    string controller = ViewContext.RouteData.getNameController();
+    string action = ViewContext.RouteData.getNameAction();
+    string doimain = Request.Url.Host;
+
+    /* Kiểm tra ghi nhớ đăng nhập trên trình duyệt */
+    if (local.setLogin() == false) { Response.Redirect("/login?redirect=" + Server.UrlEncode(Request.Url.PathAndQuery)); return; }
+    var reg = new System.Text.RegularExpressions.Regex("^[0-9]$");
+    var tmp = "";
+    while(true)
+    {
+        if ($"{Session["iduser"]}".ToLower() == "administrator") { break; }
+        tmp = $"{Session["idgroup"]}";
+        if (tmp == "0") { break; }
+        if (area == "") { break; }
+        string msg = "";
+        while (true)
+        {
+
+            var access = local.getConfigPermission("permission.0", "sys");
+            if (access.Contains(area)) { msg = "Giới hạn quyền truy cập chức năng. Vui lòng liên hệ quản trị viên"; break; }
+            /* Cấp tỉnh */
+            access = local.getConfigPermission("permission.1", "hethong");
+            if (access.Contains(area)) { if (tmp != "1") { msg = "Giới hạn quyền truy cập chức năng. Vui lòng liên hệ quản trị viên"; break; } }
+            /* Cấp huyện không cho phép truy cập chức năng điều chỉnh hệ thống */
+            /* Cấp xã, không cấp không có quyền truy cập chức năng quản lý */
+            int capdo = reg.IsMatch(tmp) ? int.Parse(tmp) : 4;
+            if (capdo > 3)
+            {
+                msg = "Giới hạn quyền truy cập chức năng. Vui lòng liên hệ quản trị viên";
+                break;
+            }
+            break;
+        }
+        if (msg != "")
+        {
+            Session[keyS.Error] = msg;
+            Response.Redirect($"/error?url={Server.HtmlEncode(Request.Url.AbsolutePath)}&message=" + Server.HtmlEncode(msg));
+            return;
+        }
+        break;
+    }
+
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -21,13 +66,12 @@
         var csssite = new FileInfo(Server.MapPath("~/vendor/Site.css"));
         var ListStyles = "";
         if (ViewBag.Styles != null) { ListStyles = "<link href=\"" + string.Join("\" rel=\"stylesheet\"> <link href=\"", (List<string>)ViewBag.Styles) + "\" rel=\"stylesheet\">"; }
-        var obj = ViewContext.RouteData;
-        string area = obj.getNameArea();
-        string controller = obj.getNameController();
-        string action = obj.getNameAction();
-        string doimain = Request.Url.Host;
         var breadcrumbs = "";
-        if (area != "") { breadcrumbs = $"<li class=\"breadcrumb-item\"> <a href=\"/{area}\">{area}</a> </li>"; }
+        if (area != "") {
+            var textArea = new List<string>() { "sys", "Hệ thống", "danhmuc", "Danh mục", "benhnhan" , "Bệnh nhân", "bacsy", "Bác sỹ" };
+            var index = textArea.IndexOf(area); tmp = index < 0 ? area : textArea[index+1];
+            breadcrumbs = $"<li class=\"breadcrumb-item\"> <a href=\"/{area}\">{tmp}</a> </li>";
+        }
         var f = new System.IO.FileInfo(Server.MapPath($"~/bin/{local.projectName}.dll"));
         var updatelate = "Unknown";
         if (f.Exists) { updatelate = $"{f.LastWriteTime:dd/MM/yyyy HH:mm}"; }

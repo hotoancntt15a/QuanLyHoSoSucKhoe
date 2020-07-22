@@ -729,6 +729,14 @@ namespace QuanLyHoSoSucKhoe
             if (s.Count == 0) { return ""; }
             return $"<div class=\"form-group\"> <div class=\"alert alert-dark\"> <marquee id=\"newstatus\" scrollamount=\"3\" onmouseover=\"this.stop();\" onmouseout=\"this.start();\"> {string.Join("", s)} </marquee> </div></div>";
         } 
+        public static List<string> getConfigPermission(string key, string defValue)
+        {
+            var access = AppConfig.value(key, defValue).Replace(" ", "");
+            var m = Regex.Matches(access, "[a-zA-Z0-9,]+");
+            if (m.Count == 1) { return access.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList(); }
+            return new List<string>() { defValue };
+
+        }
     } 
     public class itemStringInt
     {

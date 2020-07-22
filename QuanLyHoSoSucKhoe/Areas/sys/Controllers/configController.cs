@@ -16,7 +16,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
     { 
         /* GET: hethong/config */
 
-        [CheckLogin]
         [Properties(Name = "Cấu hình", Note = "fa fa-cogs")]
         public ActionResult Index()
         {
@@ -35,7 +34,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return View();
         }
 
-        [CheckLogin(EveryOne:true)]
         public ActionResult load()
         {
             string tinh = Request.getValue("id");
@@ -47,7 +45,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return View();
         }
 
-        [CheckLogin(EveryOne: true)]
         public ActionResult save()
         {
             string tinh = Request.getValue("id");
@@ -63,7 +60,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return Content(messageKey.actionSuccess);
         }
 
-        [CheckLogin]
         public ActionResult fix()
         {
             string key = Request.getValue("key");
@@ -84,7 +80,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return View();
         }
 
-        [CheckLogin]
         public ActionResult Variables()
         {
             var s = new List<string>();
@@ -93,7 +88,6 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return View();
         }
 
-        [CheckLogin(EveryOne: true)]
         public ActionResult TableDescription(string id = "")
         {
             string tablename = string.IsNullOrEmpty(id) ? "table_description" : id;

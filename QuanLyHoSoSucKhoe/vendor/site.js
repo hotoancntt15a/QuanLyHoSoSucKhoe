@@ -258,7 +258,7 @@ function showMessageDel(message, url) {
     if (message.indexOf('?') > 1) {
         body = '<div class="alert alert-warning"> <i class="fa fa-warning"> ' + message + ' </div>';
     }
-    var footer = '<a href="' + url + '" class="btn btn-primary"> <i class="fa fa-check"></i> Có </a>';
+    var footer = '<a href="javascript:showgeturl(\'' + url + '\');" class="btn btn-primary"> <i class="fa fa-check"></i> Có </a>';
     ShowModal(body, '', footer);
 }
 function showMessageUp(message, url) {

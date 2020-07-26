@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Cập nhật danh mục bác sỹ";
+    Layout = null;
+    var item = ViewBag.data as Dictionary<string, object>;
+    var dmkhoa = ViewBag.dmkhoa as System.Data.DataTable;
+    var dmGioiTinh = new Dictionary<string, string>();
+    dmGioiTinh.Add("Nam", "Nam");
+    dmGioiTinh.Add("Nữ", "Nữ");
+    dmGioiTinh.Add("Khác", "Khác"); 
+    var gioiTinh = $"{item["gioitinh"]}";
+    var idkhoa = $"{item["idkhoa"]}";
+}
+<form id="frmupbacsy" method="post">
+    <input type="hidden" name="mode" value="update" />
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Mã</div></div>
+            <input name="ma" type="text" maxlength="10" @($"{item["id"]}" == "" ? "" : "readonly=\"readonly\"") value="@item["id"]" class="form-control" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Họ tên</div></div>
+            <input name="hoten" type="text" maxlength="100" value="@item["hoten"]" class="form-control" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Ngày sinh</div></div>
+            <input name="ngaysinh" type="text" maxlength="10" value="@item["ngaysinh"]" class="form-control clsdate" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Giới tính</div></div>
+            <select class="custom-select custom-select-sm" name="gioitinh">
+                @foreach (var v in dmGioiTinh)
+                {
+                    <option value="@v.Key" @(v.Key == gioiTinh ? " selected=\"selected\"" : "")>@v.Value</option>
+                }
+            </select>
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Khoa</div></div>
+            <select class="custom-select custom-select-sm" name="idkhoa">
+                @foreach (System.Data.DataRow r in dmkhoa.Rows)
+                {
+                    var tmp = $"{r[0]}";
+                    <option value="@r[0]" @(tmp == idkhoa ? " selected=\"selected\"" : "")>@r[1]</option>
+                }
+            </select>
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Ghi chú</div></div>
+            <input name="ghichu" type="text" maxlength="255" value="@item["ghichu"]" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <a href="javascript:upbacsy('');" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Cập nhật</a>
+        @if ($"{item["id"]}" != "")
+        {
+            <a href="javascript:showMessageDel('','@Url.Action("delid")?id=@item["id"]');" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i> Xóa</a>
+        }
+    </div>
+</form>
+<div id="viewupbacsy"></div>
+

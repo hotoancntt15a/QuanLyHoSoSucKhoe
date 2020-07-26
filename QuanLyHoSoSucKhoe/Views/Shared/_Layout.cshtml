@@ -58,7 +58,7 @@
     <!-- Page level plugin CSS-->
     <link href="~/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="~/vendor/bootstrap/css/buttons.bootstrap4.min.css" rel="stylesheet" />
-    <!-- Datepicker CSS-->
+    <!-- Datepicker CSS--> 
     <link href="~/vendor/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="~/vendor/sb-admin.css" rel="stylesheet">
@@ -151,7 +151,7 @@
     <script src="~/vendor/buttons.print.min.js"></script>
     <script src="~/vendor/jszip.min.js"></script>
     <script src="~/vendor/pdfmake.min.js"></script>
-    <!-- Datepicker JavaScript-->
+    <!-- Datepicker JavaScript--> 
     <script src="~/vendor/datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="~/vendor/datepicker/locales/bootstrap-datepicker.vi.min.js" charset="utf-8"></script>
     <!-- Custom scripts for all pages-->
@@ -161,10 +161,15 @@
     <script src="~/vendor/site.js?v=@jssite.LastWriteTime.ToOADate()"></script>
     @Html.Raw(ListScript)
     @{
-        var zoomsite = zModules.Tools.getInt(AppConfig.value("zoomsite"), 90);
+        var zoomsite = zModules.Tools.getInt(AppConfig.value("zoomsite"), 100);
         if (zoomsite < 10) { zoomsite = 10; }
     }
     <script>
+        function fixAllClass() {
+            if ($('.clsdate').length > 0) { $('.clsdate').datepicker({ todayBtn: "linked", clearBtn: true, language: "vi", format: 'dd/mm/yyyy' }); }
+            if ($('.clsdatetime').length > 0) { $('.clsdatetime').datepicker({ todayBtn: "linked", clearBtn: true, language: "vi", format: 'dd/mm/yyyy' }); }
+            if ($('.clstime').length > 0) { $('.clstime').datepicker({ format: 'H:i:s' }); }
+        }
         function logout() { messageshow('Bạn thực sự có muốn thoát không?', '@Url.Action("index", "logout", new { area = "" })'); }
         function viewonline() {
             $('#mdMessage').find('div.modal-body').html('<img alt="" src="/Images/loader.gif" /> đang cập nhật dữ liệu ..');
@@ -174,10 +179,10 @@
             var s = encodeURIComponent(new Date().toLocaleString());
             cn.load('@Url.Action("ViewConnect", "keeplive", new { area = "" })?=' + s);
         }
-        function editcv93khau(id, ho, tinh) { showgeturl("/hethong/cv93/updatekhau?id=" + id + "&ho=" + ho + "&tinh=" + tinh); }
         $(document).ready(function () {
             if ($('#mdMessage').find('div.modal-body').first().text().trim().length > 6) { $('#mdMessage').modal("show"); }
             document.body.style.zoom = '@Html.Raw(zoomsite)%';
+            fixAllClass();
         });
         $('#sidebarToggle').click();
     </script>

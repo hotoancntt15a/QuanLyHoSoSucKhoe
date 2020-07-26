@@ -12,16 +12,24 @@
     <thead>
         <tr>
             <th style="width: 100px;">Mã</th>
-            <th>Quan hệ</th>
+            <th>Họ tên</th>
+            <th>Ngày sinh</th>
+            <td>Giới tính</td>
+            <td>Thuộc khoa</td>
+            <td>Ghi chú</td>  
         </tr>
     </thead>
     <tbody>
         @foreach (System.Data.DataRow r in data.Rows)
         {
-            <tr>
-                <td><a href="javascript:showgeturl('@Url.Action("capnhat")?id=@r["id"]')">@r["id"]</a></td>
-                <td>@r["quanhe"]</td>
-            </tr>
+        <tr>
+            <td><a href="javascript:showgeturl('@Url.Action("capnhat")?id=@r["id"]')">@r["id"]</a></td>
+            <td>@r["hoten"]</td>
+            <td>@r["ngaysinh"]</td>
+            <td>@r["gioitinh"]</td>
+            <td>@r["khoa"]</td>
+            <td>@r["ghichu"]</td> 
+        </tr>
         }
     </tbody>
 </table>

@@ -1,9 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Cập nhật danh mục quan hệ";
+    ViewBag.Title = "Cập nhật danh mục dân tộc";
     Layout = null; 
     var item = ViewBag.data as Dictionary<string, object>;
 }
-<form id="frmupquanhe" method="post">
+<form id="frmupdantoc" method="post">
     <input type="hidden" name="mode" value="update" />
     <div class="form-group">
         <div class="input-group input-group-sm">
@@ -11,17 +11,21 @@
             <input name="ma" type="text" maxlength="10" @($"{item["id"]}" == "" ? "" : "readonly=\"readonly\"") value="@item["id"]" class="form-control" />
         </div>
         <div class="input-group input-group-sm">
-            <div class="input-group-append"> <div class="input-group-text">Quan hệ</div></div>
-            <input name="quanhe" type="text" maxlength="50" value="@item["quanhe"]" class="form-control" />
+            <div class="input-group-append"> <div class="input-group-text">Tên</div></div>
+            <input name="ten" type="text" maxlength="50" value="@item["ten"]" class="form-control" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Tên khác</div></div>
+            <input name="tenkhac" type="text" maxlength="255" value="@item["tenkhac"]" class="form-control" />
         </div>
     </div>
     <div class="form-group">
-        <a href="javascript:upquanhe('');" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Cập nhật</a>
+        <a href="javascript:updantoc('');" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Cập nhật</a>
         @if ($"{item["id"]}" != "")
         {
             <a href="javascript:showMessageDel('','@Url.Action("delid")?id=@item["id"]');" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i> Xóa</a>
         }
     </div>
 </form>
-<div id="viewupquanhe"></div>
+<div id="viewupdantoc"></div>
 

@@ -1,17 +1,17 @@
 ﻿@{
-    ViewBag.Title = "Quan hệ nhân thân";
+    ViewBag.Title = "Danh tộc";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var name = "quanhe";
+    var name = "dantoc";
 }
 <div class="form-group">
     <form method="post" id="@("frm" + name)">
         <div class="input-group input-group-sm">
             <div class="input-group-append"><div class="input-group-text">Mã</div></div>
-            <input name="id" type="text" maxlength="10" class="form-control" value="" placeholder="Mã quan hệ" />
+            <input name="id" type="text" maxlength="10" class="form-control" value="" placeholder="Mã dân tộc" />
         </div>
         <div class="input-group input-group-sm">
             <div class="input-group-append"><div class="input-group-text">Tên</div></div>
-            <input name="ten" type="text" maxlength="50" class="form-control" value="" placeholder="Tên quan hệ" />
+            <input name="ten" type="text" maxlength="50" class="form-control" value="" placeholder="Tên dân tộc" />
         </div>
     </form>
 </div>
@@ -21,5 +21,5 @@
 </div>
 <div id="@("kq"+name)"></div>
 <script> 
-    function upquanhe(sender) { postform('frmupquanhe', '@Url.Action("capnhat")?id=' + sender, 'viewupquanhe'); }
+    function updantoc(sender) { postform('frmupdantoc', '@Url.Action("capnhat")?id=' + sender, 'viewupdantoc'); }
 </script>

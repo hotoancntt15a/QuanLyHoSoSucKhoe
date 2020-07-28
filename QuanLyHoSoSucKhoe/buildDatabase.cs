@@ -92,6 +92,7 @@ namespace QuanLyHoSoSucKhoe
                 if (tables.Contains("dmcqbh") == false) { tsql.Add("create table dmcqbh (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '', idtinh nvarchar(10) not null default '');"); }
                 if (tables.Contains("dmbenhvien") == false) { tsql.Add("create table dmbenhvien (id nvarchar(20) not null primary key, matinh nvarchar(10) not null default '', mabv nvarchar(10) not null default '', ten nvarchar(255) not null default '');"); }
                 if (tables.Contains("dmmoiquanhe") == false) { tsql.Add("create table dmmoiquanhe (id nvarchar(10) not null primary key, quanhe nvarchar(50) not null default '', viettat nvarchar(50) not null default '');"); }
+                if (tables.Contains("dmquocgia") == false) { tsql.Add("create table dmquocgia (id nvarchar(10) not null primary key, quocgia nvarchar(50) not null default '', ghichu nvarchar(255) not null default '');"); }
                 /* Dữ liệu hệ thống */
                 if (tables.Contains("thongbao") == false)
                 {

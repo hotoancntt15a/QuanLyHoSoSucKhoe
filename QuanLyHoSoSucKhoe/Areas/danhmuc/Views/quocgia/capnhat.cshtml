@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Cập nhật danh mục quốc gia";
+    Layout = null; 
+    var item = ViewBag.data as Dictionary<string, object>;
+}
+<form id="frmupquocgia" method="post">
+    <input type="hidden" name="mode" value="update" />
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Mã</div></div>
+            <input name="ma" type="text" maxlength="10" @($"{item["id"]}" == "" ? "" : "readonly=\"readonly\"") value="@item["id"]" class="form-control" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Tên</div></div>
+            <input name="quocgia" type="text" maxlength="50" value="@item["quocgia"]" class="form-control" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Ghi chú</div></div>
+            <input name="ghichu" type="text" maxlength="255" value="@item["ghichu"]" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <a href="javascript:upquocgia('');" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Cập nhật</a>
+        @if ($"{item["id"]}" != "")
+        {
+            <a href="javascript:showMessageDel('','@Url.Action("delid")?id=@item["id"]');" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i> Xóa</a>
+        }
+    </div>
+</form>
+<div id="viewupquocgia"></div>
+

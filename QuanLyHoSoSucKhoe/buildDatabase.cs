@@ -86,9 +86,9 @@ namespace QuanLyHoSoSucKhoe
                 db.checkTableSystem(tables); 
                 /* Danh mục */
                 if (tables.Contains("dmdantoc") == false) { tsql.Add("CREATE TABLE [dmdantoc] ([id] nvarchar(5) NOT NULL PRIMARY KEY, [ten] nvarchar(50) NOT NULL DEFAULT '', [tenkhac] nvarchar(255) not null DEFAULT '');"); }
-                if (tables.Contains("dmtinh") == false) { tsql.Add("create table dmtinh (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '');"); }
-                if (tables.Contains("dmhuyen") == false) { tsql.Add("create table dmhuyen (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '', idtinh nvarchar(10) not null default '');"); }
-                if (tables.Contains("dmxa") == false) { tsql.Add($"create table dmxa (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '', idhuyen nvarchar(10) not null default '');"); } 
+                if (tables.Contains("dmtinh") == false) { tsql.Add("create table dmtinh (id nvarchar(10) not null primary key, ten nvarchar(150) not null default '', ten2 nvarchar(150) not null default '');"); }
+                if (tables.Contains("dmhuyen") == false) { tsql.Add("create table dmhuyen (id nvarchar(10) not null primary key, ten nvarchar(150) not null default '', ten2 nvarchar(150) not null default '', idtinh nvarchar(10) not null default '');"); }
+                if (tables.Contains("dmxa") == false) { tsql.Add($"create table dmxa (id nvarchar(10) not null primary key, ten nvarchar(150) not null default '', ten2 nvarchar(150) not null default '', idhuyen nvarchar(10) not null default '');"); } 
                 if (tables.Contains("dmcqbh") == false) { tsql.Add("create table dmcqbh (id nvarchar(10) not null primary key, ten nvarchar(255) not null default '', idtinh nvarchar(10) not null default '');"); }
                 if (tables.Contains("dmbenhvien") == false) { tsql.Add("create table dmbenhvien (id nvarchar(20) not null primary key, matinh nvarchar(10) not null default '', mabv nvarchar(10) not null default '', ten nvarchar(255) not null default '');"); }
                 if (tables.Contains("dmmoiquanhe") == false) { tsql.Add("create table dmmoiquanhe (id nvarchar(10) not null primary key, quanhe nvarchar(50) not null default '', viettat nvarchar(50) not null default '');"); }

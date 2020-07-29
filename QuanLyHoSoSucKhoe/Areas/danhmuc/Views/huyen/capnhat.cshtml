@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Cập nhật danh mục Huyện";
+    Layout = null; 
+    var item = ViewBag.data as Dictionary<string, object>;
+    var dmtinh = ViewBag.dmtinh as System.Data.DataTable;
+    var idtinh = $"{item["idtinh"]}";
+}
+<form id="frmuphuyen" method="post">
+    <input type="hidden" name="mode" value="update" />
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Tỉnh</div></div>
+            <select name="idtinh" class="custom-select custom-select-sm">
+                @foreach(System.Data.DataRow r in dmtinh.Rows)
+                {
+                    <option value="@r[0]" @($"{r[0]}" == idtinh ? "selected=\"selected\"" : "")>@r[1]</option>
+                }
+            </select>
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Mã huyện</div></div>
+            <input name="ma" type="text" maxlength="10" @($"{item["id"]}" == "" ? "" : "readonly=\"readonly\"") value="@item["id"]" class="form-control" placeholder="Mã huyện" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Tên huyện</div></div>
+            <input name="ten" type="text" maxlength="50" value="@item["ten"]" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <a href="javascript:uphuyen('');" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Cập nhật</a>
+        @if ($"{item["id"]}" != "")
+        {
+            <a href="javascript:showMessageDel('','@Url.Action("delid")?id=@item["id"]');" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i> Xóa</a>
+        }
+    </div>
+</form>
+<div id="viewuphuyen"></div>
+

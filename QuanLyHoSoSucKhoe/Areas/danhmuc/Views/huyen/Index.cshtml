@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Huyện";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var name = "huyen";
+}
+<div class="form-group">
+    <form method="post" id="@("frm" + name)">
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Mã</div></div>
+            <input name="id" type="text" maxlength="10" class="form-control" value="" placeholder="Mã tỉnh" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Tên</div></div>
+            <input name="ten" type="text" maxlength="50" class="form-control" value="" placeholder="Tên tỉnh" />
+        </div>
+    </form>
+</div>
+<div class="form-group">
+    <a href="javascript:postform('@("frm" + name)', '@Url.Action("timkiem")', '@("kq"+name)')" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Tra cứu</a>
+    <a href="javascript:showgeturl('@Url.Action("capnhat")')" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Thêm mới </a>
+</div>
+<div id="@("kq"+name)"></div>
+<script> 
+    function uphuyen(sender) { postform('frmuphuyen', '@Url.Action("capnhat")?id=' + sender, 'viewuphuyen'); }
+</script>

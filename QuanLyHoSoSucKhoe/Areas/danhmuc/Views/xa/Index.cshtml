@@ -1,17 +1,17 @@
 ﻿@{
     ViewBag.Title = "Huyện";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var name = "huyen";
+    var name = "xa";
 }
 <div class="form-group">
     <form method="post" id="@("frm" + name)">
         <div class="input-group input-group-sm">
             <div class="input-group-append"><div class="input-group-text">Mã</div></div>
-            <input name="id" type="text" maxlength="10" class="form-control" value="" placeholder="Mã huyện" />
+            <input name="id" type="text" maxlength="10" class="form-control" value="" placeholder="Mã xã" />
         </div>
         <div class="input-group input-group-sm">
             <div class="input-group-append"><div class="input-group-text">Tên</div></div>
-            <input name="ten" type="text" maxlength="50" class="form-control" value="" placeholder="Tên huyện" />
+            <input name="ten" type="text" maxlength="50" class="form-control" value="" placeholder="Tên xã" />
         </div>
     </form>
 </div>
@@ -21,5 +21,6 @@
 </div>
 <div id="@("kq"+name)"></div>
 <script> 
-    function uphuyen(sender) { postform('frmuphuyen', '@Url.Action("capnhat")?id=' + sender, 'viewuphuyen'); }
+    function upxa(sender) { postform('frmupxa', '@Url.Action("capnhat")?id=' + sender, 'viewupxa'); }
+    function loadOptionDmHuyen(idtarget, idtinh) { idtarget = getIdJquery(idtarget); $(idtarget).load('/tools/optiondmhuyen?id=' + encodeURI(idtinh)); }
 </script>

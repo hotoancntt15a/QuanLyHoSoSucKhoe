@@ -402,7 +402,7 @@ namespace QuanLyHoSoSucKhoe
             {
                 var sw = new StreamWriter(Folders.pathApp + "error.txt", true, Encoding.Unicode);
                 sw.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
-                sw.WriteLine(message.Replace(@"D:\Private\bhxhlaocai\trabaohiem_mssqlserver\trabaohiem_mssqlserver", "") + " " + description);
+                sw.WriteLine(message.Replace(Folders.pathApp, "") + " " + description);
                 sw.Flush();
                 sw.Close();
                 sw.Dispose();
@@ -419,6 +419,8 @@ namespace QuanLyHoSoSucKhoe
         public static string saveMessage(this Exception ex, string description = "")
         {
             ex.getLine().saveError(description);
+            var serverName = $"{HttpContext.Current.Request.ServerVariables["SERVER_NAME"]}";
+            if(Regex.IsMatch(serverName, "localhost", RegexOptions.IgnoreCase)) { return ex.getLine().Replace(Folders.pathApp, "").Replace("\n", "<br />") + "<br />" + description; }
             return ex.Message;
         }
 

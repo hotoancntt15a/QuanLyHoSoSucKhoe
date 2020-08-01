@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Cập nhật danh mục Bệnh viện";
+    Layout = null;
+    var item = ViewBag.data as Dictionary<string, object>;
+    var dmtinh = ViewBag.dmtinh as System.Data.DataTable;
+    var dmhuyen = ViewBag.dmhuyen as System.Data.DataTable;
+    var idhuyen = $"{ViewBag.idhuyen}";
+    var idtinh = $"{ViewBag.idtinh}";
+    var readonlyID = $"{item["id"]}" == "" ? "" : "readonly=\"readonly\"";
+}
+<form id="frmupbenhvien" method="post">
+    <input type="hidden" name="mode" value="update" />
+    <input type="hidden" name="ma" value="@item["id"]" />
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Tỉnh</div></div>
+            <select name="idtinh" class="custom-select custom-select-sm" @readonlyID onclick="loadOptionDmHuyen('idhuyen',this.value);">
+                @foreach (System.Data.DataRow r in dmtinh.Rows)
+                {
+                    <option value="@r[0]" @($"{r[0]}" == idtinh ? "selected=\"selected\"" : "")>@r[1]</option>
+                }
+            </select>
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Huyện</div></div>
+            <select name="idhuyen" id="idhuyen" class="custom-select custom-select-sm">
+                @foreach (System.Data.DataRow r in dmhuyen.Rows)
+                {
+                    <option value="@r[0]" @($"{r[0]}" == idhuyen ? "selected=\"selected\"" : "")>@r[1]</option>
+                }
+            </select>
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Mã</div></div>
+            <input name="mabv" type="text" maxlength="10" @readonlyID value="@item["mabv"]" class="form-control" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Tên</div></div>
+            <input name="ten" type="text" maxlength="255" value="@item["ten"]" class="form-control" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Địa chỉ</div></div>
+            <input name="diachi" type="text" maxlength="255" value="@item["diachi"]" class="form-control" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Số thẻ đăng ký</div></div>
+            <input name="sothe" type="text" maxlength="255" value="@item["sothe"]" class="form-control" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Đối tượng tiếp nhận đăng ký KCB ban đầu</div></div>
+            <input name="doituongkcb" type="text" maxlength="255" value="@item["doituongkcb"]" class="form-control" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"> <div class="input-group-text">Dừng hoạt động</div></div>
+            <input name="dunghoatdong" type="text" maxlength="10" value="@item["dunghoatdong"]" class="form-control clsdate" placeholder="Ngày/Tháng/Năm" />
+        </div>
+    </div>
+    <div class="form-group">
+        <a href="javascript:upbenhvien('');" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Cập nhật</a>
+        @if ($"{item["id"]}" != "")
+        {
+            <a href="javascript:showMessageDel('','@Url.Action("delid")?id=@item["id"]');" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i> Xóa</a>
+        }
+    </div>
+</form>
+<div id="viewupbenhvien"></div> 
+

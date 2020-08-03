@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "View Excel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var sheets = ViewBag.listsheet as List<string>;
+}
+<form id="frmviewxls">
+    <input type="hidden" name="file" value="@ViewBag.file" />
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Tập tin (File Name)</div></div>
+            <input type="text" value="@ViewBag.file" readonly="readonly" class="form-control" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Tên bảng(Sheet Name)</div></div>
+            <select name="sheetindex" class="custom-select custom-select-sm" onchange="loadDataXls();">
+                @for(var i = 0; i < sheets.Count; i++)
+                {
+                    <option value="@i">@sheets[i]</option>
+                }
+            </select>
+        </div>
+    </div>
+</form>
+<div id="viewsheet"></div>
+<script>
+    function loadDataXls() { postform('frmviewxls', '@Url.Action("getdatasheet")', 'viewsheet'); }
+</script>

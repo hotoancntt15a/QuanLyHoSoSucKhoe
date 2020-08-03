@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services;
@@ -116,6 +117,30 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             return RedirectToAction("index");
         }
 
+        public ActionResult viewxls()
+        {
+            ViewBag.listsheet = new List<string>();
+            var file = Request.getValue("file");
+            ViewBag.file = file;
+            if (string.IsNullOrEmpty(file)) { ViewBag.Error = messageKey.thamSoKhongDung; return View(); }
+            file = Folders.pathApp + file;
+            if (System.IO.File.Exists(file) == false) { ViewBag.Error = $"Tập tin '{file}' không tồn tại trên hệ thống"; return View(); }
+            ViewBag.listsheet = zModules.NPOIExcel.XLS.getSheetNames(file);
+            return View();
+        }
+        public ActionResult getdatasheet()
+        { 
+            var file = Request.getValue("file"); 
+            if (string.IsNullOrEmpty(file)) { return Content($"<div class=\"alert alert-danger\">{messageKey.thamSoKhongDung}</div>"); }
+            file = Folders.pathApp + file;
+            var tmp = Request.getValue("sheetindex");
+            if(Regex.IsMatch(tmp, "^[0-9]+$") == false) { return Content($"<div class=\"alert alert-danger\">{messageKey.thamSoKhongDung}</div>"); }
+            var sheetIndex = int.Parse(tmp);
+            tmp = Request.getValue("maxrow");
+            var maxrow = Regex.IsMatch(tmp, "^[0-9]+$") == false ? 50 : int.Parse(tmp);
+            ViewBag.data = zModules.NPOIExcel.XLS.getDataFromExcel97_2003(new FileInfo(file), sheetIndex: sheetIndex, maxRow: maxrow);
+            return View(); 
+        }
         public ActionResult getfiles()
         {
             string foldertmp = Folders.temp + "\\test";

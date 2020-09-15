@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using zModules;
 using zModules.MSSQLServer;
 
 namespace QuanLyHoSoSucKhoe.Controllers
@@ -27,15 +29,15 @@ namespace QuanLyHoSoSucKhoe.Controllers
             var setall = Request.getValue("all");
             var value = Request.getValue("value");
             var rs = new List<string>();
-            if(setall == "1") { rs.Add("<option value=\"\"> -- Chọn -- </option>"); }
-            using (var db = local.getDataObject() )
+            if (setall == "1") { rs.Add("<option value=\"\"> -- Chọn -- </option>"); }
+            using (var db = local.getDataObject())
             {
                 try
                 {
                     var dmhuyen = db.getDataSet($"select id,ten from dmhuyen where idtinh=N'{idtinh.getValueField()}' order by ten").Tables[0];
-                    foreach(DataRow r in dmhuyen.Rows) { rs.Add($"<option value=\"{r[0]}\"{(value == r[0].ToString() ? " selected=\"selected\"" : "")}>{r[1]}</option>"); }
-                } 
-                catch(Exception ex) { rs.Add($"<option value=\"\">{ex.saveMessage()}</option>"); }
+                    foreach (DataRow r in dmhuyen.Rows) { rs.Add($"<option value=\"{r[0]}\"{(value == r[0].ToString() ? " selected=\"selected\"" : "")}>{r[1]}</option>"); }
+                }
+                catch (Exception ex) { rs.Add($"<option value=\"\">{ex.saveMessage()}</option>"); }
             }
             return Content(string.Join("", rs));
         }
@@ -58,7 +60,7 @@ namespace QuanLyHoSoSucKhoe.Controllers
             return Content(string.Join("", rs));
         }
         public ActionResult optiondmtinh()
-        { 
+        {
             var setall = Request.getValue("all");
             var value = Request.getValue("value");
             var rs = new List<string>();
@@ -73,6 +75,22 @@ namespace QuanLyHoSoSucKhoe.Controllers
                 catch (Exception ex) { rs.Add($"<option value=\"\">{ex.saveMessage()}</option>"); }
             }
             return Content(string.Join("", rs));
+        }
+
+        public ActionResult getFileFromClient()
+        {
+            var msgErr = "<div class=\"alert alert-danger\">Error</div>";
+            if (Request.Files.Count == 0) { return Content(msgErr); }
+            try
+            {
+                var name = Request.getValue("name");
+                if (string.IsNullOrEmpty(name))
+                {
+                    Request.Files[0].SaveAs(Folders.temp + "\\" + name + Path.GetExtension(Request.Files[0].FileName));
+                }
+                return Content(msgErr);
+            }
+            catch (Exception ex) { return Content("<div class=\"alert alert-danger\">" + ex.getLineHTML() + "</div>"); }
         }
     }
 }

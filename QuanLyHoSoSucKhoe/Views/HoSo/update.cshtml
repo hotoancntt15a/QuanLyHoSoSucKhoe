@@ -2,64 +2,174 @@
     ViewBag.Title = "Thêm mới hồ sơ sức khỏe";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<form method="post" name="frmAddHoSo">
-    <div class="form-group">
-        <div class="input-group input-group-sm">
-            <div class="input-group-append"><div class="input-group-text">1. Họ tên: </div></div>
-            <input type="text" maxlength="255" name="hoten" class="form-control" />
+<form method="post" name="frmAddHoSo" id="frmAddHoSo">
+    <input type="hidden" name="pic" class="form-control" />
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <img src="" id="pic" alt="" title="" style="width: 100%;" />
+            </div>
+            <div class="form-group">
+                <input type="file" value="" onchange="verifyFile(this);" />
+            </div>
         </div>
-        <div class="input-group input-group-sm">
-            <div class="input-group-append"><div class="input-group-text">2. Giới tính: </div></div> 
-            <select name="gioitinh" class="custom-select-sm">
-                <option value="Nam">Nam</option>
-                <option value="Nam">Nữ</option>
-            </select>
-            <div class="input-group-append"><div class="input-group-text">Ngày sinh: </div></div>
-            <input type="text" maxlength="10" name="ngaysinh" class="form-control clsdate" placeholder="Ngày/tháng/năm" style="width: 100px;" />
+        <div class="col-sm-9">
+            <div class="form-group">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">1. Họ tên </div></div>
+                    <input type="text" maxlength="255" name="hoten" class="form-control" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">2. Giới tính </div></div>
+                    <select name="gioitinh" class="custom-select-sm">
+                        <option value="Nam">Nam</option>
+                        <option value="Nam">Nữ</option>
+                    </select>
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">2.2 Ngày sinh </div></div>
+                    <input type="text" maxlength="10" name="ngaysinh" class="form-control clsdate" placeholder="Ngày/tháng/năm" style="width: 100px;" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">3. CMND </div></div>
+                    <input type="text" maxlength="20" name="cmndhochieu" class="form-control" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">3.2 Cấp ngày </div></div>
+                    <input type="text" maxlength="10" name="capngay" class="form-control clsdate" placeholder="Ngày/tháng/năm" style="width: 100px;" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">3.3 Nơi cấp </div></div>
+                    <input type="text" maxlength="255" name="noicap" class="form-control" />
+                </div>
+            </div>
         </div>
-        <div class="input-group input-group-sm">
-            <div class="input-group-append"><div class="input-group-text">3. CMND: </div></div>
-            <input type="text" maxlength="20" name="cmndhochieu" class="form-control" />
-            <div class="input-group-append"><div class="input-group-text">Cấp ngày: </div></div>
-            <input type="text" maxlength="10" name="capngay" class="form-control clsdate" placeholder="Ngày/tháng/năm" style="width: 100px;" />
-            <div class="input-group-append"><div class="input-group-text">Nơi cấp: </div></div>
-            <input type="text" maxlength="255" name="noicap" class="form-control" />
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">4. Hộ khẩu thường trú </div></div>
+                    <input type="text" maxlength="255" name="hokhauthuongtru" class="form-control" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">5. Chỗ ở hiện tại </div></div>
+                    <input type="text" maxlength="255" name="noiohientai" class="form-control" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">6. Nghề nghiệp </div></div>
+                    <input type="text" maxlength="255" name="nghenghiep" class="form-control" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">7. Nơi công tác, học tập </div></div>
+                    <input type="text" maxlength="255" name="noicongtac" class="form-control" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">8. Ngày bắt đầu vào học/làm việc tại đơn vị hiện nay </div></div>
+                    <input type="text" maxlength="255" name="ngaycongtachientai" class="form-control clsdate" placeholder="Ngày/tháng/năm" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">9. Nghề, công việc trước đây </div></div>
+                </div>
+                <div class="input-group input-group-sm">
+                    <table class="table table-hover table-bordered" id="dscongviec">
+                        <thead>
+                            <tr style="font-size: .875rem;">
+                                <th style="width:130px;">Từ ngày</th>
+                                <th style="width:130px;">Đến ngày</th>
+                                <th>Nghề, công việc</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> <input type="text" class="clsdate form-control form-control-sm" maxlength="10" name="cvngay1" placeholder="Ngày/tháng/năm" /> </td>
+                                <td> <input type="text" class="clsdate form-control form-control-sm" maxlength="10" name="cvngay2" placeholder="Ngày/tháng/năm" /> </td>
+                                <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="cvnghe" /> </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">
+                                    <a class="btn btn-primary btn-sm" href="javascript:addTr('dscongviec');"><i class="fa fa-plus"></i> Thêm dòng</a>
+                                    <a class="btn btn-primary btn-sm" href="javascript:delTr('dscongviec');"><i class="fa fa-plus"></i> Xóa dòng</a>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">10. Tiền sử bệnh, tật của gia đình </div></div>
+                    <input type="text" maxlength="255" name="tiensubenhcuagiadinh" class="form-control" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">11. Tiền sử bản thân </div></div>
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text"> - 11.1 Tiền sử bệnh </div></div>
+                    <table class="table table-hover table-bordered" id="dsbenh">
+                        <thead>
+                            <tr style="font-size: .875rem;">
+                                <th style="width:130px;">Từ ngày</th>
+                                <th style="width:130px;">Đến ngày</th>
+                                <th>Tên bệnh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> <input type="text" class="form-control form-control-sm" maxlength="10" name="tsnam1benh" /> </td>
+                                <td> <input type="text" class="form-control form-control-sm" maxlength="10" name="tsnam2benh" /> </td>
+                                <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="tsbenh" /> </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">
+                                    <a class="btn btn-primary btn-sm" href="javascript:addTr('dsbenh');"><i class="fa fa-plus"></i> Thêm dòng</a>
+                                    <a class="btn btn-primary btn-sm" href="javascript:delTr('dsbenh');"><i class="fa fa-plus"></i> Xóa dòng</a>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="input-group-append"><div class="input-group-text"> - 11.2 Tiền sử bệnh nghề nghiệp </div></div>
+                    <table class="table table-hover table-bordered" id="dsbenhnghe">
+                        <thead>
+                            <tr style="font-size: .875rem;">
+                                <th style="width:130px;">Từ ngày</th>
+                                <th style="width:130px;">Đến ngày</th>
+                                <th>Tên bệnh nghề nghiệp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> <input type="text" class="form-control form-control-sm" maxlength="10" name="tsnam1benhnghe" /> </td>
+                                <td> <input type="text" class="form-control form-control-sm" maxlength="10" name="tsnam2benhnghe" /> </td>
+                                <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="tsbenhnghe" /> </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">
+                                    <a class="btn btn-primary btn-sm" href="javascript:addTr('dsbenhnghe');"><i class="fa fa-plus"></i> Thêm dòng</a>
+                                    <a class="btn btn-primary btn-sm" href="javascript:delTr('dsbenhnghe');"><i class="fa fa-plus"></i> Xóa dòng</a>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="input-group input-group-sm">
-            <div class="input-group-append"><div class="input-group-text">4. Hộ khẩu thường trú: </div></div>
-            <input type="text" maxlength="255" name="hokhauthuongtru" class="form-control" />
-        </div>
-        <div class="input-group input-group-sm">
-            <div class="input-group-append"><div class="input-group-text">5. Chỗ ở hiện tại: </div></div>
-            <input type="text" maxlength="255" name="noiohientai" class="form-control" />
-        </div>
-        <div class="input-group input-group-sm">
-            <div class="input-group-append"><div class="input-group-text">6. Nghề nghiệp: </div></div>
-            <input type="text" maxlength="255" name="nghenghiep" class="form-control" />
-        </div>
-        <div class="input-group input-group-sm">
-            <div class="input-group-append"><div class="input-group-text">7. Nơi công tác, học tập: </div></div>
-            <input type="text" maxlength="255" name="noicongtac" class="form-control" />
-        </div>
-        <div class="input-group input-group-sm">
-            <div class="input-group-append"><div class="input-group-text">8. Ngày bắt đầu vào học/làm việc tại đơn vị hiện nay: </div></div>
-            <input type="text" maxlength="255" name="ngaycongtachientai" class="form-control clsdate" placeholder="Ngày/tháng/năm" />
-        </div>
-        <div class="input-group input-group-sm">
-            <div class="input-group-append"><div class="input-group-text">9. Nghề, công việc trước đây: </div></div>
-        </div>
-        <div class="input-group input-group-sm">
-            <table class="table table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th>Từ ngày</th><th>Đến ngày</th><th>Nghề, công việc</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-        </div>
-    </div> 
+    </div>
 </form>
+<script>
+    function delTr(idTable) { idTable = getIdJquery(idTable); var tbody = $(idTable).find('tbody').first(); if (tbody.find('tr').length < 2) { return; } tbody.find('tr').last().remove(); }
+    function addTr(idTable) { idTable = getIdJquery(idTable); var tbody = $(idTable).find('tbody').first(); if (tbody.find('tr').length == 0) { return; } var tr = tbody.find('tr').last().clone(); tr.find('input[type="text"]').val(''); tbody.append(tr); }
+    function verifyFile(e) {
+        let file = e.files[0];
+        if (file) {
+            /* Post File To Server */
+            $('#pic').attr('src', file.name);
+            messageBox('Thông báo', file.name);
+        }  
+    }
+</script>
 

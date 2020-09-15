@@ -12,7 +12,6 @@ using zModules.Crypt;
 
 namespace QuanLyHoSoSucKhoe
 {
-
     public static class AppConfig
     {
         public static string PathFileConfig { get; set; } = "";

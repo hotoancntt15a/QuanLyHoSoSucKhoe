@@ -224,8 +224,8 @@ function showHideClass(getElement, className, resetform) {
         return;
     }
     $(className).css('display', 'none'); $(getElement).html('<i class="fa fa-eye"></i> Hiện chi tiết');
-}
-
+} 
+function messageBox(title, body) { ShowModal(body, title); }
 function viewid(url) {
     var body = '';
     var footer = '<button type="button" class="btn btn-primary" data-dismiss="modal"> <i class="fa fa-remove"></i> Đóng cửa sổ </button>';
@@ -244,10 +244,13 @@ function targetformart(sender, idtarget) {
     else { $(idtarget).html((parseFloat(v)).format(0, 0)); }
 }
 function ShowModal(body, title, footer, url) {
-    if (title == undefined) { title = ''; } if (title == '') { title = 'Thông báo'; }
-    if (footer == undefined) { footer = ''; } if (footer == '') { footer = '<button type="button" class="btn btn-primary" data-dismiss="modal"> <i class="fa fa-remove"></i> Đóng cửa sổ </button>'; }
-    if (body == undefined) { body = ''; }
-    if (url != undefined) { footer = '<a href="' + sender['action'] + '" class="btn btn-primary"> <i class="fa fa-check"></i> Có </a>' + " " + footer }
+    if (typeof (title) != 'string') { title = ''; }
+    if (title == '') { title = 'Thông báo'; }
+    if (typeof (footer) != 'string') { footer = ''; }
+    if (footer == '') { footer = '<button type="button" class="btn btn-primary" data-dismiss="modal"> <i class="fa fa-remove"></i> Đóng cửa sổ </button>'; }
+    if (typeof (body) != 'string') { body = ''; }
+    if (typeof (url) != 'string') { url = ''; }
+    if (url != '') { footer = '<a href="' + sender['action'] + '" class="btn btn-primary"> <i class="fa fa-check"></i> Có </a>' + " " + footer }
     idModal.find('h4.modal-title').first().text(title);
     idModal.find('div.modal-body').html(body);
     idModal.find('div.modal-footer').html(footer);

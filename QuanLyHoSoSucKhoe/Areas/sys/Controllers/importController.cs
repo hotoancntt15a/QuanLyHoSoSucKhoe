@@ -15,7 +15,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
 {
     public class importController : Controller
     {
-        public string actionName = "importExcel"; 
+        public string actionName = "importExcel";
 
         // GET: hethong/importtst
 
@@ -24,9 +24,9 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
         {
             string foldertmp = Folders.temp + "\\test";
             if (Directory.Exists(foldertmp) == false) { Directory.CreateDirectory(foldertmp); }
-            if (Request.Files.Count > 0)
+            try
             {
-                try
+                if (Request.Files.Count > 0)
                 {
                     string foldersave = Folders.temp + "\\test";
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -35,18 +35,18 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
                         var f = new FileInfo(filenName);
                         if (f.Exists) { f.Delete(); }
                         Request.Files[i].SaveAs(filenName);
+                        return Redirect("/sys/import/viewxls?file=" + HttpUtility.UrlEncode(filenName.Replace(Folders.pathApp, "")));
                     }
                     ViewBag.Message = messageKey.actionSuccess;
                 }
-                catch (Exception ex) { ViewBag.Error = ex.getLineHTML(); }
             }
+            catch (Exception ex) { ViewBag.Error = ex.getLineHTML(); }
             return View();
         }
         /// <summary>
         /// ID: Mã bảo hiểm cấp huyện; f: Tên tập tin xử lý; Mode = 1: Xóa tập tin, ngược lại cập nhật danh sách tst; listfile: danh sách tập tin cần xử lý
         /// </summary>
         /// <returns></returns>
-        [WebMethod]
         public ActionResult import()
         { 
             string folder = Folders.temp + "\\test";
@@ -149,7 +149,9 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             foreach (var v in Directory.GetFiles(foldertmp, "*.xls*"))
             {
                 var f = new FileInfo(v);
-                s.Add($"<li> [ <input type=\"checkbox\" name=\"listfile\" value=\"{f.Name}\" /> ] <i class=\"fa fa-file\"></i> {f.Name} (<i>{f.LastWriteTime:dd/MM/yyyy HH:mm}</i>)</li>");
+                s.Add($"<li> [ <input type=\"checkbox\" name=\"listfile\" value=\"{f.Name}\" /> ] <i class=\"fa fa-file\"></i> {f.Name} ");
+                s.Add($" <a href=\"/sys/import/viewxls?file={HttpUtility.UrlEncode(f.FullName.Replace(Folders.pathApp, ""))}\"> <i class=\"fa fa-eye\"></i> </a> ");
+                s.Add($"(<i>{f.LastWriteTime:dd/MM/yyyy HH:mm}</i>)</li>");
             }
             if (s.Count > 0) { ViewBag.listxls = string.Join("", s); }
             return View();

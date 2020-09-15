@@ -195,6 +195,7 @@
     <Compile Include="buildDatabase.cs" />
     <Compile Include="Controllers\errorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HoSoController.cs" />
     <Compile Include="Controllers\keepliveController.cs" />
     <Compile Include="Controllers\loginController.cs" />
     <Compile Include="Controllers\logoutController.cs" />
@@ -1958,6 +1959,8 @@
     <Content Include="Views\keeplive\ViewConnect.cshtml" />
     <Content Include="Views\error\Index.cshtml" />
     <Content Include="Views\logout\Index.cshtml" />
+    <Content Include="Views\HoSo\Index.cshtml" />
+    <Content Include="Views\HoSo\add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

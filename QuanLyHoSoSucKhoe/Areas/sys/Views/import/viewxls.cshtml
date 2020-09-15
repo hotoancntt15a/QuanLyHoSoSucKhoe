@@ -24,4 +24,5 @@
 <div id="viewsheet"></div>
 <script>
     function loadDataXls() { postform('frmviewxls', '@Url.Action("getdatasheet")', 'viewsheet'); }
+    $(document).ready(function () { loadDataXls(); });
 </script>

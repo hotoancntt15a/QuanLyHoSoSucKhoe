@@ -17,7 +17,7 @@ namespace QuanLyHoSoSucKhoe.Controllers
             return View();
         }
 
-        public ActionResult add()
+        public ActionResult update()
         {
             return View();
         }

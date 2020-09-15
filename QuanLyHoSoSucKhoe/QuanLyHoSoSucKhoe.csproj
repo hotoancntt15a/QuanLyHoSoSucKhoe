@@ -1960,7 +1960,7 @@
     <Content Include="Views\error\Index.cshtml" />
     <Content Include="Views\logout\Index.cshtml" />
     <Content Include="Views\HoSo\Index.cshtml" />
-    <Content Include="Views\HoSo\add.cshtml" />
+    <Content Include="Views\HoSo\update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

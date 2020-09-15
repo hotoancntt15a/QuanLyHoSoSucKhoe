@@ -1,9 +1,10 @@
 ﻿@{
     ViewBag.Title = "Thêm mới hồ sơ sức khỏe";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var strtotime = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
 }
 <form method="post" name="frmAddHoSo" id="frmAddHoSo">
-    <input type="hidden" name="pic" class="form-control" />
+    <input type="hidden" name="pic" class="form-control" value="@strtotime"/>
     <div class="row">
         <div class="col-sm-3">
             <div class="form-group">
@@ -160,7 +161,13 @@
         </div>
     </div>
 </form>
+<div id="viewtmp"></div>
+<div style="display: none;">
+    <form id="frmtmp" method="post" enctype="multipart/form-data">
+    </form>
+</div> 
 <script>
+    var fileNamePic = 'img' + '@strtotime';
     function delTr(idTable) { idTable = getIdJquery(idTable); var tbody = $(idTable).find('tbody').first(); if (tbody.find('tr').length < 2) { return; } tbody.find('tr').last().remove(); }
     function addTr(idTable) { idTable = getIdJquery(idTable); var tbody = $(idTable).find('tbody').first(); if (tbody.find('tr').length == 0) { return; } var tr = tbody.find('tr').last().clone(); tr.find('input[type="text"]').val(''); tbody.append(tr); }
     function verifyFile(e) {
@@ -168,8 +175,18 @@
         if (file) {
             /* Post File To Server */
             $('#pic').attr('src', file.name);
-            messageBox('Thông báo', file.name);
-        }  
+            var ext = getFileExtension(file.name).toLowerCase();
+            var supportExt = ['jpg', 'png', 'bmp', 'jpeg', 'svg'];
+            if (supportExt.indexOf(ext) == -1) {
+                $(e).val('');
+                messageBox('Thông báo', `<div class="alert alert-danger">Không hỗ trợ tập tin định dạng ${ext}</div>`);
+                return;
+            }
+            $('#frmtmp').html('');
+            $('#frmtmp').append($(e).clone(true));
+            $('#frmtmp').find('input').first().attr('name', 'fileup');
+            postform('frmtmp', '@Url.Action("getFileFromClient", "tools", new { area = "" })?name=' + fileNamePic, viewtmp);
+        }
     }
 </script>
 

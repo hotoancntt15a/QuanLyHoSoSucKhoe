@@ -78,17 +78,16 @@ namespace QuanLyHoSoSucKhoe.Controllers
         }
 
         public ActionResult getFileFromClient()
-        {
-            var msgErr = "<div class=\"alert alert-danger\">Error</div>";
-            if (Request.Files.Count == 0) { return Content(msgErr); }
+        { 
+            if (Request.Files.Count == 0) { return Content("<div class=\"alert alert-danger\">Error Not File</div>"); }
             try
             {
                 var name = Request.getValue("name");
-                if (string.IsNullOrEmpty(name))
+                if (string.IsNullOrEmpty(name) == false)
                 {
                     Request.Files[0].SaveAs(Folders.temp + "\\" + name + Path.GetExtension(Request.Files[0].FileName));
                 }
-                return Content(msgErr);
+                return Content("<div class=\"alert alert-danger\">Error</div>");
             }
             catch (Exception ex) { return Content("<div class=\"alert alert-danger\">" + ex.getLineHTML() + "</div>"); }
         }

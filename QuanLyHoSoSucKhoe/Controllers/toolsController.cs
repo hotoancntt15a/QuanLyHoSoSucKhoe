@@ -21,8 +21,6 @@ namespace QuanLyHoSoSucKhoe.Controllers
             var mi = (typeof(toolsController)).GetMethod(f);
             return Content($"{mi.Invoke(null, null)}");
         }
-
-
         public ActionResult optiondmhuyen()
         {
             var idtinh = Request.getValue("id");
@@ -78,16 +76,21 @@ namespace QuanLyHoSoSucKhoe.Controllers
         }
 
         public ActionResult getFileFromClient()
-        { 
+        {
             if (Request.Files.Count == 0) { return Content("<div class=\"alert alert-danger\">Error Not File</div>"); }
             try
             {
-                var name = Request.getValue("name");
-                if (string.IsNullOrEmpty(name) == false)
-                {
-                    Request.Files[0].SaveAs(Folders.temp + "\\" + name + Path.GetExtension(Request.Files[0].FileName));
-                }
-                return Content("<div class=\"alert alert-danger\">Error</div>");
+                var path = "";
+                var name = Request.getValue("name").ToLower();
+                if (name.StartsWith("/temp/img") || name.StartsWith("img")) {
+                    if(name.StartsWith("/temp/img")) { path = Server.MapPath("~"+name); if (System.IO.File.Exists(path)) { System.IO.File.Delete(path); } }
+                    name = $"img{(long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds)}{Path.GetExtension(Request.Files[0].FileName).ToLower()}"; 
+                } 
+                else { name = Request.Files[0].FileName; }
+                path = Folders.temp + "\\" + name;
+                if (System.IO.File.Exists(path)) { System.IO.File.Delete(path); }
+                Request.Files[0].SaveAs(path);
+                return Content("<img src=\"/temp/" + name + "\" alt=\"\" />");
             }
             catch (Exception ex) { return Content("<div class=\"alert alert-danger\">" + ex.getLineHTML() + "</div>"); }
         }

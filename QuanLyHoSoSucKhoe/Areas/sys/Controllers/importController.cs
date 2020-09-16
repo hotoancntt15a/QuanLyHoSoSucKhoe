@@ -28,7 +28,7 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
             {
                 if (Request.Files.Count > 0)
                 {
-                    string foldersave = Folders.temp + "\\test";
+                    string foldersave = Folders.temp + "\\test"; 
                     for (int i = 0; i < Request.Files.Count; i++)
                     {
                         var filenName = foldersave + "\\" + Request.Files[i].FileName.xoaDauTV();

@@ -161,31 +161,27 @@
         </div>
     </div>
 </form>
-<div id="viewtmp"></div>
+<div id="viewtmp" style="display: none;"></div>
 <div style="display: none;">
     <form id="frmtmp" method="post" enctype="multipart/form-data">
     </form>
 </div> 
-<script>
-    var fileNamePic = 'img' + '@strtotime';
+<script> 
     function delTr(idTable) { idTable = getIdJquery(idTable); var tbody = $(idTable).find('tbody').first(); if (tbody.find('tr').length < 2) { return; } tbody.find('tr').last().remove(); }
     function addTr(idTable) { idTable = getIdJquery(idTable); var tbody = $(idTable).find('tbody').first(); if (tbody.find('tr').length == 0) { return; } var tr = tbody.find('tr').last().clone(); tr.find('input[type="text"]').val(''); tbody.append(tr); }
     function verifyFile(e) {
         let file = e.files[0];
         if (file) {
-            /* Post File To Server */
-            $('#pic').attr('src', file.name);
+        /* Post File To Server */
+            if (file.size > 1048600) { messageBox('Thông báo', `<div class="alert alert-danger">Tập tin ${file.name} có dung lượng ${(file.size / 1048576).toFixed(1)}Mb > 1Mb</div>`); return; }
+            var name = $('#pic').attr('src'); if (name == '') { name = 'img' + '@strtotime'; }
             var ext = getFileExtension(file.name).toLowerCase();
             var supportExt = ['jpg', 'png', 'bmp', 'jpeg', 'svg'];
-            if (supportExt.indexOf(ext) == -1) {
-                $(e).val('');
-                messageBox('Thông báo', `<div class="alert alert-danger">Không hỗ trợ tập tin định dạng ${ext}</div>`);
-                return;
-            }
-            $('#frmtmp').html('');
-            $('#frmtmp').append($(e).clone(true));
-            $('#frmtmp').find('input').first().attr('name', 'fileup');
-            postform('frmtmp', '@Url.Action("getFileFromClient", "tools", new { area = "" })?name=' + fileNamePic, viewtmp);
+            if (supportExt.indexOf(ext) == -1) { $(e).val(''); messageBox('Thông báo', `<div class="alert alert-danger">Không hỗ trợ tập tin định dạng ${ext}</div>`); return; }
+            $('#frmtmp').html(''); $('#frmtmp').append($(e).clone(true)); $('#frmtmp').find('input').first().attr('name', 'fileup');
+            postform('frmtmp', '@Url.Action("getFileFromClient", "tools", new { area = "" })?name=' + name, 'viewtmp', function () {
+                if ($('#viewtmp').find('img').length == 0) { return; } $('#pic').attr('src', $('#viewtmp').find('img').first().attr('src')); 
+            });
         }
     }
 </script>

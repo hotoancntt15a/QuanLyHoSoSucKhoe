@@ -21,5 +21,11 @@ namespace QuanLyHoSoSucKhoe.Controllers
         {
             return View();
         }
+
+        public ActionResult save()
+        {
+            var tmp = Request.showRequest();
+            return Content(tmp);
+        }
     }
 }

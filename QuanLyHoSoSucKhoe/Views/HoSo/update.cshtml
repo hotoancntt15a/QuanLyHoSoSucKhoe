@@ -92,7 +92,7 @@
                             <tr>
                                 <td colspan="3">
                                     <a class="btn btn-primary btn-sm" href="javascript:addTr('dscongviec');"><i class="fa fa-plus"></i> Thêm dòng</a>
-                                    <a class="btn btn-primary btn-sm" href="javascript:delTr('dscongviec');"><i class="fa fa-plus"></i> Xóa dòng</a>
+                                    <a class="btn btn-primary btn-sm" href="javascript:delTr('dscongviec');"><i class="fa fa-remove"></i> Xóa dòng</a>
                                 </td>
                             </tr>
                         </tfoot>
@@ -110,15 +110,13 @@
                     <table class="table table-hover table-bordered" id="dsbenh">
                         <thead>
                             <tr style="font-size: .875rem;">
-                                <th style="width:130px;">Từ ngày</th>
-                                <th style="width:130px;">Đến ngày</th>
+                                <th style="width:130px;">Năm phát hiện</th>
                                 <th>Tên bệnh</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td> <input type="text" class="form-control form-control-sm" maxlength="10" name="tsnam1benh" /> </td>
-                                <td> <input type="text" class="form-control form-control-sm" maxlength="10" name="tsnam2benh" /> </td>
+                                <td> <input type="text" class="form-control form-control-sm" maxlength="4" name="tsnambenh" /> </td> 
                                 <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="tsbenh" /> </td>
                             </tr>
                         </tbody>
@@ -126,7 +124,7 @@
                             <tr>
                                 <td colspan="3">
                                     <a class="btn btn-primary btn-sm" href="javascript:addTr('dsbenh');"><i class="fa fa-plus"></i> Thêm dòng</a>
-                                    <a class="btn btn-primary btn-sm" href="javascript:delTr('dsbenh');"><i class="fa fa-plus"></i> Xóa dòng</a>
+                                    <a class="btn btn-primary btn-sm" href="javascript:delTr('dsbenh');"><i class="fa fa-remove"></i> Xóa dòng</a>
                                 </td>
                             </tr>
                         </tfoot>
@@ -135,15 +133,13 @@
                     <table class="table table-hover table-bordered" id="dsbenhnghe">
                         <thead>
                             <tr style="font-size: .875rem;">
-                                <th style="width:130px;">Từ ngày</th>
-                                <th style="width:130px;">Đến ngày</th>
+                                <th style="width:130px;">Năm phát hiện</th>
                                 <th>Tên bệnh nghề nghiệp</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td> <input type="text" class="form-control form-control-sm" maxlength="10" name="tsnam1benhnghe" /> </td>
-                                <td> <input type="text" class="form-control form-control-sm" maxlength="10" name="tsnam2benhnghe" /> </td>
+                                <td> <input type="text" class="form-control form-control-sm" maxlength="4" name="tsnambenhnghe" /> </td>
                                 <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="tsbenhnghe" /> </td>
                             </tr>
                         </tbody>
@@ -151,12 +147,19 @@
                             <tr>
                                 <td colspan="3">
                                     <a class="btn btn-primary btn-sm" href="javascript:addTr('dsbenhnghe');"><i class="fa fa-plus"></i> Thêm dòng</a>
-                                    <a class="btn btn-primary btn-sm" href="javascript:delTr('dsbenhnghe');"><i class="fa fa-plus"></i> Xóa dòng</a>
+                                    <a class="btn btn-primary btn-sm" href="javascript:delTr('dsbenhnghe');"><i class="fa fa-remove"></i> Xóa dòng</a>
                                 </td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <a href="javascript:savehoso();" class="btn btn-sm btn-primary"> <i class="fa fa-save"></i> Lưu lại</a>
             </div>
         </div>
     </div>
@@ -180,9 +183,31 @@
             if (supportExt.indexOf(ext) == -1) { $(e).val(''); messageBox('Thông báo', `<div class="alert alert-danger">Không hỗ trợ tập tin định dạng ${ext}</div>`); return; }
             $('#frmtmp').html(''); $('#frmtmp').append($(e).clone(true)); $('#frmtmp').find('input').first().attr('name', 'fileup');
             postform('frmtmp', '@Url.Action("getFileFromClient", "tools", new { area = "" })?name=' + name, 'viewtmp', function () {
-                if ($('#viewtmp').find('img').length == 0) { return; } $('#pic').attr('src', $('#viewtmp').find('img').first().attr('src')); 
+                if ($('#viewtmp').find('img').length == 0) { return; }
+                $('#pic').attr('src', $('#viewtmp').find('img').first().attr('src'));
+                $('input[name="pic"]').val($('#pic').attr('src'));
             });
         }
+    }
+    function savehoso() { 
+        var tmp = '';
+        try {
+            if ($('input[name="hoten"]').val() == '') { throw 'Họ tên bỏ trống'; }
+        /* Kiểm tra các ngày */
+            var regNgay = /^[0-9]{4}$|^[0-9]{2}\/[0-9]{4}$|^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/i
+            tmp = $('input[name="ngaysinh"]').val();
+            if (regNgay.test(tmp) == false) { throw 'Ngày sinh không đúng định dạng'; }
+            tmp = $('input[name="capngay"]').val();
+            if (regNgay.test(tmp) == false) { throw 'Ngày cấp không đúng định dạng'; }
+            tmp = $('input[name="ngaycongtachientai"]').val();
+            if (tmp != '') { if (regNgay.test(tmp) == false) { throw 'Ngày bắt đầu vào học/làm việc không đúng định dạng'; } }
+        }
+        catch (ex) {
+            messageBox('Lỗi', `<div class="alert alert-danger">${ex}</div>`);
+            return;
+        }
+        postform('frmAddHoSo', '@Url.Action("save")', '');
+
     }
 </script>
 

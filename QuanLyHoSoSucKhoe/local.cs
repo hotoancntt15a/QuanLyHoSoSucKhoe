@@ -419,8 +419,14 @@ namespace QuanLyHoSoSucKhoe
         public static string saveMessage(this Exception ex, string description = "")
         {
             ex.getLine().saveError(description);
-            var serverName = $"{HttpContext.Current.Request.ServerVariables["SERVER_NAME"]}";
-            if(Regex.IsMatch(serverName, "localhost", RegexOptions.IgnoreCase)) { return ex.getLine().Replace(Folders.pathApp, "").Replace("\n", "<br />") + "<br />" + description; }
+            var serverName = "";
+            if(HttpContext.Current != null)
+            {
+                try {
+                    serverName = $"{HttpContext.Current.Request.ServerVariables["SERVER_NAME"]}";
+                    if (Regex.IsMatch(serverName, "localhost", RegexOptions.IgnoreCase)) { return ex.getLine().Replace(Folders.pathApp, "").Replace("\n", "<br />") + "<br />" + description; }
+                } catch { } 
+            }
             return ex.Message;
         }
 

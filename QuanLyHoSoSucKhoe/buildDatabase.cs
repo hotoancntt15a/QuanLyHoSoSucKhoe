@@ -126,6 +126,19 @@ namespace QuanLyHoSoSucKhoe
                         "daidien nvarchar(50) not null default '', ghichu nvarchar(255) not null default '');");
                 }
                 /* Hồ sơ khám */
+                if(tables.Contains("hoso") == false)
+                {
+                    tsql.Add("create table hoso(id varchar(50) not null primary key, pic nvarchar(255) not null default '', hoten nvarchar(255) not null default '', gioitinh nvarchar(255) not null default '', ngaysinh nvarchar(255) not null default '', cmndhochieu nvarchar(255) not null default '', capngay nvarchar(255) not null default '', noicap nvarchar(255) not null default '', hokhauthuongtru nvarchar(255) not null default '', noiohientai nvarchar(255) not null default '', nghenghiep nvarchar(255) not null default '', noicongtac nvarchar(255) not null default '', ngaycongtachientai nvarchar(255) not null default '', tiensubenhcuagiadinh nvarchar(255) not null default '', times datetime not null default GETDATE(), iduser nvarchar(50) not null, iduser2 nvarchar(50) not null);");
+                }
+                if(tables.Contains("hosotscongviec") == false)
+                {
+                    tsql.Add("create table hosotscongviec (id nvarchar(50) not null primary key, idhoso nvarchar(50) not null, ngay1 varchar(10) not null default '', ngay2 varchar(10) not null default '', congviec nvarchar(255) not null default '');");
+                }
+                if (tables.Contains("hosotsbenh") == false)
+                {
+                    /* Loại: 0: bệnh; 1: bệnh nghề nghiệp */
+                    tsql.Add("create table hosotsbenh (id nvarchar(50) not null primary key, idhoso nvarchar(50) not null, loai int not null default 0, nam int not null default 0, tenbenh nvarchar(255) not null default '');");
+                }
                 if (tables.Contains("hosokham") == false)
                 {
                     tsql.Add("create table hosokham(id nvarchar(20) not null primary key, ngaytao datetime not null, " +

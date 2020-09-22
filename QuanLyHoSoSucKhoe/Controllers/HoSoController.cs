@@ -33,7 +33,7 @@ namespace QuanLyHoSoSucKhoe.Controllers
             string tmp = "", id = "";
             var item = new Dictionary<string, string>();
             try
-            {
+            { 
                 var fields = "id,pic,hoten,gioitinh,ngaysinh,cmndhochieu,capngay,noicap,hokhauthuongtru,noiohientai,nghenghiep,noicongtac,ngaycongtachientai,tiensubenhcuagiadinh,times,iduser,iduser2".Split(',');
                 foreach (var v in fields) { item[v] = Request.getValue(v); }
                 id = item["id"];
@@ -45,7 +45,7 @@ namespace QuanLyHoSoSucKhoe.Controllers
                 if (item["hokhauthuongtru"] == "") { throw new Exception("4. Hộ khẩu thường trú bỏ trống"); }
                 if (item["noiohientai"] == "") { throw new Exception("5. Nơi ở hiện tại bỏ trống"); }
                 /* Kiểm tra quy tắc */
-                var regDate = new Regex("^[0-9]{2}/[0-9]{2}/[0-9]{4}$");
+                var regDate = new Regex("^[0-3][0-9]/[0-1][0-9]/[1-9][0-9]{3}$");
                 if(regDate.IsMatch(item["ngaysinh"]) == false) { throw new Exception($"2.2 Ngày sinh không đúng định dạng {item["ngaysinh"]}"); }
                 if (item["capngay"] != "") {
                     if (regDate.IsMatch(item["capngay"]) == false) { throw new Exception($"3.2 Ngày cấp không đúng định dạng {item["capngay"]}"); }
@@ -54,15 +54,20 @@ namespace QuanLyHoSoSucKhoe.Controllers
                 {
                     if (regDate.IsMatch(item["ngaycongtachientai"]) == false) { throw new Exception($"8.Ngày bắt đầu vào học/làm việc tại đơn vị hiện nay không đúng định dạng {item["ngaycongtachientai"]}"); }
                 } 
-                if (item["id"] != "") { id = item["id"]; }
-
-                /* Soát danh sách */
+                if (item["id"] != "") { id = item["id"]; } else { item["id"] = Tools.getTimeSpanCurrent().ToString(); }
+                /* Soát danh sách */ 
+                item.Remove("times");
+                if (id != "") { item["iduser2"] = $"{Session["iduser"]}"; item.Remove("iduser"); } 
+                else { item["iduser"] = $"{Session["iduser"]}"; }
             }
             catch (Exception ex) { return Content($"<div class=\"alert alert-danger\">{ex.saveMessage()}</div>"); }
             tmp = "";
             using (var db = local.getDataObject())
             {
-                try { db.Execute(item, "hoso", id == "" ? "" : $"id=N'{id}'"); }
+                try
+                {
+                    db.Execute(item, "hoso", id == "" ? "" : $"id=N'{id.getValueField()}'");
+                }
                 catch (Exception ex) { tmp = ex.saveMessage(); }
             }
             if (tmp == "") { return Content($"{item.getTsqlSQLServerUpdate("hoso", id == "" ? "" : $"id=N'{id}'")} <br /> {Request.showRequest()}"); }

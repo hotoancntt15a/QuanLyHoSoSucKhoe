@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -52,6 +53,7 @@ namespace QuanLyHoSoSucKhoe
             connectionstring = Tools.getConnectionStringSQLiteEF6(pathFile, "Models.DBSQLite.SQLiteFile");
             return new Models.DBSQLite.dbEntities(connectionstring);
         }
+        public static string getValue(this Dictionary<string, string> d, string key) => zModules.Tools.getValue(d, key);
         public static string isSoCMND(string socmnd, string gioitinh, string namsinh, List<string> dmhanhchinh)
         {
             if (Regex.IsMatch(socmnd, "^[0-9]{9}$"))
@@ -755,5 +757,5 @@ namespace QuanLyHoSoSucKhoe
     {
         public string Key { get; set; }
         public string Value { get; set; }
-    }
+    }    
 }

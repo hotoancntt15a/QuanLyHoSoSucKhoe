@@ -1,15 +1,27 @@
 ﻿@{
     ViewBag.Title = "Thêm mới hồ sơ sức khỏe";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var strtotime = zModules.Tools.getTimeSpanCurrent();
+    string tmp = DateTime.Now.ToString("dd/MM/yyyy");
+    var item = new Dictionary<string, string>();
+    item["strtotime"] = zModules.Tools.getTimeSpanCurrent().ToString();
+    item["pic"] = item["strtotime"];
+    item["ngay"] = tmp;
 }
 <form method="post" name="frmAddHoSo" id="frmAddHoSo">
     <input type="hidden" name="id" value="" />
-    <input type="hidden" name="pic" value="@strtotime"/>
+    <input type="hidden" name="pic" value="@item.getValue("pic")"/> 
     <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-append"><div class="input-group-text">Ngày lập sổ *</div></div>
+                    <input type="text" name="ngay" class="form-control clsdate" value="@item.getValue("ngay")" />
+                </div>
+            </div>
+        </div>
         <div class="col-sm-3">
             <div class="form-group">
-                <img src="" id="pic" alt="" title="" style="width: 100%;" />
+                <img src="@item.getValue("pic")" id="pic" alt="" title="" style="width: 100%;" />
             </div>
             <div class="form-group">
                 <input type="file" value="" onchange="verifyFile(this);" />
@@ -19,56 +31,54 @@
             <div class="form-group">
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">1. Họ tên *</div></div>
-                    <input type="text" maxlength="255" name="hoten" class="form-control" />
+                    <input type="text" maxlength="255" name="hoten" class="form-control" value="" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">2. Giới tính </div></div>
                     <select name="gioitinh" class="custom-select-sm">
                         <option value="Nam">Nam</option>
-                        <option value="Nam">Nữ</option>
+                        <option value="Nữ">Nữ</option>
                     </select>
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">2.2 Ngày sinh *</div></div>
-                    <input type="text" maxlength="10" name="ngaysinh" class="form-control clsdate" placeholder="Ngày/tháng/năm" style="width: 100px;" />
+                    <input type="text" maxlength="10" name="ngaysinh" class="form-control clsdate" placeholder="Ngày/tháng/năm" style="width: 100px;" value="" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">3. CMND </div></div>
-                    <input type="text" maxlength="20" name="cmndhochieu" class="form-control" />
+                    <input type="text" maxlength="20" name="cmndhochieu" class="form-control" value="" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">3.2 Cấp ngày </div></div>
-                    <input type="text" maxlength="10" name="capngay" class="form-control clsdate" placeholder="Ngày/tháng/năm" style="width: 100px;" />
+                    <input type="text" maxlength="10" name="capngay" class="form-control clsdate" placeholder="Ngày/tháng/năm" style="width: 100px;" value="" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">3.3 Nơi cấp </div></div>
-                    <input type="text" maxlength="255" name="noicap" class="form-control" />
+                    <input type="text" maxlength="255" name="noicap" class="form-control" value="" />
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
+        </div> 
         <div class="col-sm-12">
             <div class="form-group">
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">4. Hộ khẩu thường trú </div></div>
-                    <input type="text" maxlength="255" name="hokhauthuongtru" class="form-control" />
+                    <input type="text" maxlength="255" name="hokhauthuongtru" class="form-control" value="" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">5. Chỗ ở hiện tại </div></div>
-                    <input type="text" maxlength="255" name="noiohientai" class="form-control" />
+                    <input type="text" maxlength="255" name="noiohientai" class="form-control" value="" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">6. Nghề nghiệp </div></div>
-                    <input type="text" maxlength="255" name="nghenghiep" class="form-control" />
+                    <input type="text" maxlength="255" name="nghenghiep" class="form-control" value="" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">7. Nơi công tác, học tập </div></div>
-                    <input type="text" maxlength="255" name="noicongtac" class="form-control" />
+                    <input type="text" maxlength="255" name="noicongtac" class="form-control" value="" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">8. Ngày bắt đầu vào học/làm việc tại đơn vị hiện nay </div></div>
-                    <input type="text" maxlength="255" name="ngaycongtachientai" class="form-control clsdate" placeholder="Ngày/tháng/năm" />
+                    <input type="text" maxlength="255" name="ngaycongtachientai" class="form-control clsdate" placeholder="Ngày/tháng/năm" value=""/>
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">9. Nghề, công việc trước đây </div></div>
@@ -101,7 +111,7 @@
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">10. Tiền sử bệnh, tật của gia đình </div></div>
-                    <input type="text" maxlength="255" name="tiensubenhcuagiadinh" class="form-control" />
+                    <input type="text" maxlength="255" name="tiensubenhcuagiadinh" class="form-control" value="" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">11. Tiền sử bản thân </div></div>
@@ -178,7 +188,7 @@
         if (file) {
         /* Post File To Server */
             if (file.size > 1048600) { messageBox('Thông báo', `<div class="alert alert-danger">Tập tin ${file.name} có dung lượng ${(file.size / 1048576).toFixed(1)}Mb > 1Mb</div>`); return; }
-            var name = $('#pic').attr('src'); if (name == '') { name = 'img' + '@strtotime'; }
+            var name = $('#pic').attr('src'); if (name == '') { name = 'img' + '@item.getValue("strtotime")'; }
             var ext = getFileExtension(file.name).toLowerCase();
             var supportExt = ['jpg', 'png', 'bmp', 'jpeg', 'svg'];
             if (supportExt.indexOf(ext) == -1) { $(e).val(''); messageBox('Thông báo', `<div class="alert alert-danger">Không hỗ trợ tập tin định dạng ${ext}</div>`); return; }

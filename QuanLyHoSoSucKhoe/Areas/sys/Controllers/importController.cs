@@ -24,21 +24,15 @@ namespace QuanLyHoSoSucKhoe.Areas.sys.Controllers
         {
             string foldertmp = Folders.temp + "\\test";
             if (Directory.Exists(foldertmp) == false) { Directory.CreateDirectory(foldertmp); }
+            if (Request.Files.Count == 0) { return View(); }
             try
             {
-                if (Request.Files.Count > 0)
-                {
-                    string foldersave = Folders.temp + "\\test"; 
-                    for (int i = 0; i < Request.Files.Count; i++)
-                    {
-                        var filenName = foldersave + "\\" + Request.Files[i].FileName.xoaDauTV();
-                        var f = new FileInfo(filenName);
-                        if (f.Exists) { f.Delete(); }
-                        Request.Files[i].SaveAs(filenName);
-                        return Redirect("/sys/import/viewxls?file=" + HttpUtility.UrlEncode(filenName.Replace(Folders.pathApp, "")));
-                    }
-                    ViewBag.Message = messageKey.actionSuccess;
-                }
+                string foldersave = Folders.temp + "\\test";
+                var filenName = foldersave + "\\" + Request.Files[0].FileName.xoaDauTV();
+                var f = new FileInfo(filenName);
+                if (f.Exists) { f.Delete(); }
+                Request.Files[0].SaveAs(filenName);
+                return Redirect("/sys/import/viewxls?file=" + HttpUtility.UrlEncode(filenName.Replace(Folders.pathApp, "")));
             }
             catch (Exception ex) { ViewBag.Error = ex.getLineHTML(); }
             return View();

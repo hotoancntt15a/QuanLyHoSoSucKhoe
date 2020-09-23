@@ -31,7 +31,7 @@ namespace QuanLyHoSoSucKhoe.Controllers
             var tsqlBenh = new List<string>(); 
             try
             {
-                var fields = "id,pic,hoten,gioitinh,ngaysinh,cmndhochieu,capngay,noicap,hokhauthuongtru,noiohientai,nghenghiep,noicongtac,ngaycongtachientai,tiensubenhcuagiadinh,times,iduser,iduser2".Split(',');
+                var fields = "id,ngay,pic,hoten,gioitinh,ngaysinh,cmndhochieu,capngay,noicap,hokhauthuongtru,noiohientai,nghenghiep,noicongtac,ngaycongtachientai,tiensubenhcuagiadinh,times,iduser,iduser2".Split(',');
                 foreach (var v in fields) { item[v] = Request.getValue(v); }
                 id = item["id"];
                 tmp = Request.getValue("pic");
@@ -42,6 +42,13 @@ namespace QuanLyHoSoSucKhoe.Controllers
                 if (item["hokhauthuongtru"] == "") { throw new Exception("4. Hộ khẩu thường trú bỏ trống"); }
                 if (item["noiohientai"] == "") { throw new Exception("5. Nơi ở hiện tại bỏ trống"); }
                 /* Kiểm tra quy tắc */
+                if(item["ngay"] == "") { item["ngay"] = $"{DateTime.Now:yyyy-MM-dd}"; }
+                else {
+                    var time = item["ngay"].vnToDateTime();
+                    if(time == null) { throw new Exception($"0 Ngày lập sổ không đúng định dạng {item["ngay"]}"); }
+                    if(time.HasValue == false) { throw new Exception($"0 Ngày lập sổ không đúng định dạng {item["ngay"]}"); }
+                    item["ngay"] = time.Value.ToString("yyyy-MM-dd");
+                }
                 if (regDate.IsMatch(item["ngaysinh"]) == false) { throw new Exception($"2.2 Ngày sinh không đúng định dạng {item["ngaysinh"]}"); }
                 if (item["capngay"] != "")
                 {

@@ -197,6 +197,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HoSoController.cs" />
     <Compile Include="Controllers\keepliveController.cs" />
+    <Compile Include="Controllers\khamController.cs" />
     <Compile Include="Controllers\loginController.cs" />
     <Compile Include="Controllers\logoutController.cs" />
     <Compile Include="Controllers\toolsController.cs" />
@@ -1961,6 +1962,7 @@
     <Content Include="Views\logout\Index.cshtml" />
     <Content Include="Views\HoSo\Index.cshtml" />
     <Content Include="Views\HoSo\update.cshtml" />
+    <Content Include="Views\kham\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

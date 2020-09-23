@@ -3,6 +3,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     string tmp = DateTime.Now.ToString("dd/MM/yyyy");
     var item = new Dictionary<string, string>();
+
+    System.Data.DataTable dscongviec = local.getDataTableFormViewbag(ViewBag.dscongviec);
+    System.Data.DataTable dsbenh = local.getDataTableFormViewbag(ViewBag.dsbenh);
+    System.Data.DataTable dsbenhnghe = local.getDataTableFormViewbag(ViewBag.dsbenhnghe);
+
     item["strtotime"] = zModules.Tools.getTimeSpanCurrent().ToString();
     item["pic"] = item["strtotime"];
     item["ngay"] = tmp;
@@ -31,30 +36,30 @@
             <div class="form-group">
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">1. Họ tên *</div></div>
-                    <input type="text" maxlength="255" name="hoten" class="form-control" value="" />
+                    <input type="text" maxlength="255" name="hoten" class="form-control" value="@item.getValue("hoten")" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">2. Giới tính </div></div>
                     <select name="gioitinh" class="custom-select-sm">
                         <option value="Nam">Nam</option>
-                        <option value="Nữ">Nữ</option>
+                        <option value="Nữ"@(item.getValue("gioitinh").ToLower() != "nam" ? " selected=\"selected\"" : "")>Nữ</option>
                     </select>
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">2.2 Ngày sinh *</div></div>
-                    <input type="text" maxlength="10" name="ngaysinh" class="form-control clsdate" placeholder="Ngày/tháng/năm" style="width: 100px;" value="" />
+                    <input type="text" maxlength="10" name="ngaysinh" class="form-control clsdate" placeholder="Ngày/tháng/năm" style="width: 100px;" value="@item.getValue("ngaysinh")" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">3. CMND </div></div>
-                    <input type="text" maxlength="20" name="cmndhochieu" class="form-control" value="" />
+                    <input type="text" maxlength="20" name="cmndhochieu" class="form-control" value="@item.getValue("cmndhochieu")" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">3.2 Cấp ngày </div></div>
-                    <input type="text" maxlength="10" name="capngay" class="form-control clsdate" placeholder="Ngày/tháng/năm" style="width: 100px;" value="" />
+                    <input type="text" maxlength="10" name="capngay" class="form-control clsdate" placeholder="Ngày/tháng/năm" style="width: 100px;" value="@item.getValue("capngay")" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">3.3 Nơi cấp </div></div>
-                    <input type="text" maxlength="255" name="noicap" class="form-control" value="" />
+                    <input type="text" maxlength="255" name="noicap" class="form-control" value="@item.getValue("noicap")" />
                 </div>
             </div>
         </div> 
@@ -62,23 +67,23 @@
             <div class="form-group">
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">4. Hộ khẩu thường trú </div></div>
-                    <input type="text" maxlength="255" name="hokhauthuongtru" class="form-control" value="" />
+                    <input type="text" maxlength="255" name="hokhauthuongtru" class="form-control" value="@item.getValue("hokhauthuongtru");" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">5. Chỗ ở hiện tại </div></div>
-                    <input type="text" maxlength="255" name="noiohientai" class="form-control" value="" />
+                    <input type="text" maxlength="255" name="noiohientai" class="form-control" value="@item.getValue("noiohientai")" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">6. Nghề nghiệp </div></div>
-                    <input type="text" maxlength="255" name="nghenghiep" class="form-control" value="" />
+                    <input type="text" maxlength="255" name="nghenghiep" class="form-control" value="@item.getValue("nghenghiep")" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">7. Nơi công tác, học tập </div></div>
-                    <input type="text" maxlength="255" name="noicongtac" class="form-control" value="" />
+                    <input type="text" maxlength="255" name="noicongtac" class="form-control" value="@item.getValue("noicongtac")" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">8. Ngày bắt đầu vào học/làm việc tại đơn vị hiện nay </div></div>
-                    <input type="text" maxlength="255" name="ngaycongtachientai" class="form-control clsdate" placeholder="Ngày/tháng/năm" value=""/>
+                    <input type="text" maxlength="255" name="ngaycongtachientai" class="form-control clsdate" placeholder="Ngày/tháng/năm" value="@item.getValue("ngaycongtachientai")"/>
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">9. Nghề, công việc trước đây </div></div>
@@ -93,11 +98,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td> <input type="text" class="clsdate form-control form-control-sm" maxlength="10" name="cvngay1" placeholder="Ngày/tháng/năm" /> </td>
-                                <td> <input type="text" class="clsdate form-control form-control-sm" maxlength="10" name="cvngay2" placeholder="Ngày/tháng/năm" /> </td>
-                                <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="cvnghe" /> </td>
-                            </tr>
+                            @if(dscongviec.Rows.Count == 0)
+                            {
+                                <tr>
+                                    <td> <input type="text" class="clsdate form-control form-control-sm" maxlength="10" name="cvngay1" placeholder="Ngày/tháng/năm" /> </td>
+                                    <td> <input type="text" class="clsdate form-control form-control-sm" maxlength="10" name="cvngay2" placeholder="Ngày/tháng/năm" /> </td>
+                                    <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="cvnghe" /> </td>
+                                </tr>
+                            }
+                            else
+                            { 
+                                foreach (System.Data.DataRow r in dscongviec.Rows)
+                                {
+                                    <tr>
+                                        <td> <input type="text" class="clsdate form-control form-control-sm" maxlength="10" name="cvngay1" value="@r["ngay1"]" placeholder="Ngày/tháng/năm" /> </td>
+                                        <td> <input type="text" class="clsdate form-control form-control-sm" maxlength="10" name="cvngay2" value="@r["ngay2"]" placeholder="Ngày/tháng/năm" /> </td>
+                                        <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="cvnghe" value="@r["congviec"]" /> </td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                         <tfoot>
                             <tr>
@@ -111,7 +130,7 @@
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">10. Tiền sử bệnh, tật của gia đình </div></div>
-                    <input type="text" maxlength="255" name="tiensubenhcuagiadinh" class="form-control" value="" />
+                    <input type="text" maxlength="255" name="tiensubenhcuagiadinh" class="form-control" value="@item.getValue("tiensubenhcuagiadinh")" />
                 </div>
                 <div class="input-group input-group-sm">
                     <div class="input-group-append"><div class="input-group-text">11. Tiền sử bản thân </div></div>
@@ -126,10 +145,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td> <input type="text" class="form-control form-control-sm" maxlength="4" name="tsnambenh" /> </td> 
-                                <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="tsbenh" /> </td>
-                            </tr>
+                            @if (dsbenh.Rows.Count == 0)
+                            {
+                                <tr>
+                                    <td> <input type="text" class="form-control form-control-sm" maxlength="4" name="tsnambenh" /> </td>
+                                    <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="tsbenh" /> </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (System.Data.DataRow r in dsbenh.Rows)
+                                {
+                                    <tr>
+                                        <td> <input type="text" class="form-control form-control-sm" maxlength="4" name="tsnambenh" value="@r["nam"]" /> </td>
+                                        <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="tsbenh"  value="@r["tenbenh"]"/> </td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                         <tfoot>
                             <tr>
@@ -149,10 +181,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td> <input type="text" class="form-control form-control-sm" maxlength="4" name="tsnambenhnghe" /> </td>
-                                <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="tsbenhnghe" /> </td>
-                            </tr>
+                            @if (dsbenhnghe.Rows.Count == 0)
+                            {
+                                <tr>
+                                    <td> <input type="text" class="form-control form-control-sm" maxlength="4" name="tsnambenhnghe" /> </td>
+                                    <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="tsbenhnghe" /> </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (System.Data.DataRow r in dsbenhnghe.Rows)
+                                {
+                                    <tr>
+                                        <td> <input type="text" class="form-control form-control-sm" maxlength="4" name="tsnambenhnghe" value="@r["nam"]" /> </td>
+                                        <td> <input type="text" class="form-control form-control-sm" maxlength="255" name="tsbenhnghe" value="@r["tenbenh"]" /> </td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                         <tfoot>
                             <tr>

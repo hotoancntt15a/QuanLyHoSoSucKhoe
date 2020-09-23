@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.Pkcs;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -54,6 +55,10 @@ namespace QuanLyHoSoSucKhoe
             return new Models.DBSQLite.dbEntities(connectionstring);
         }
         public static string getValue(this Dictionary<string, string> d, string key) => zModules.Tools.getValue(d, key);
+        public static DataTable getDataTableFormViewbag(object sender) { 
+            if(sender is DataTable) { return sender as DataTable; }
+            return new DataTable();
+        }
         public static string isSoCMND(string socmnd, string gioitinh, string namsinh, List<string> dmhanhchinh)
         {
             if (Regex.IsMatch(socmnd, "^[0-9]{9}$"))

@@ -2,11 +2,12 @@
     ViewBag.Title = "Thêm mới hồ sơ sức khỏe";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string tmp = DateTime.Now.ToString("dd/MM/yyyy");
-    var item = new Dictionary<string, string>();
+    var item = ViewBag.data as Dictionary<string, string>;
 
     System.Data.DataTable dscongviec = local.getDataTableFormViewbag(ViewBag.dscongviec);
     System.Data.DataTable dsbenh = local.getDataTableFormViewbag(ViewBag.dsbenh);
     System.Data.DataTable dsbenhnghe = local.getDataTableFormViewbag(ViewBag.dsbenhnghe);
+
 
     item["strtotime"] = zModules.Tools.getTimeSpanCurrent().ToString();
     item["pic"] = item["strtotime"];
@@ -14,7 +15,8 @@
 }
 <form method="post" name="frmAddHoSo" id="frmAddHoSo">
     <input type="hidden" name="id" value="" />
-    <input type="hidden" name="pic" value="@item.getValue("pic")"/> 
+    <input type="hidden" name="pic" value="@item.getValue("pic")"/>
+    <input type="hidden" name="redriect" value="@Request.getValue("redirect")" />
     <div class="row">
         <div class="col-sm-12">
             <div class="form-group">
@@ -259,7 +261,7 @@
             if (tmp != '') { if (regNgay.test(tmp) == false) { throw 'Ngày bắt đầu vào học/làm việc không đúng định dạng'; } }
         }
         catch (ex) { messageBox('Lỗi', `<div class="alert alert-danger">${ex}</div>`); return; }
-        postform('frmAddHoSo', '@Url.Action("save")', '');
+        postform('frmAddHoSo', '@Url.Action("update")', '');
     }
 </script>
 

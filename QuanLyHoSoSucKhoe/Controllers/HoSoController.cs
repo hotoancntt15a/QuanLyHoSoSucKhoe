@@ -1,5 +1,7 @@
-﻿using System;
+﻿using NPOI.OpenXmlFormats.Spreadsheet;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
@@ -17,18 +19,15 @@ namespace QuanLyHoSoSucKhoe.Controllers
             return View();
         }
 
-        public ActionResult update()
-        {
-            return View();
-        }
-
-        public ActionResult save()
+        [HttpPost]
+        [ActionName("update")]
+        public ActionResult update_post()
         {
             string tmp = "", id = "";
-            var regDate = new Regex("^[0-3][0-9]/[0-1][0-9]/[1-9][0-9]{3}$");
             var item = new Dictionary<string, string>();
+            var regDate = new Regex("^[0-3][0-9]/[0-1][0-9]/[1-9][0-9]{3}$");
             var tsqlNgheCV = new List<string>();
-            var tsqlBenh = new List<string>(); 
+            var tsqlBenh = new List<string>();
             try
             {
                 var fields = "id,ngay,pic,hoten,gioitinh,ngaysinh,cmndhochieu,capngay,noicap,hokhauthuongtru,noiohientai,nghenghiep,noicongtac,ngaycongtachientai,tiensubenhcuagiadinh,times,iduser,iduser2".Split(',');
@@ -42,11 +41,12 @@ namespace QuanLyHoSoSucKhoe.Controllers
                 if (item["hokhauthuongtru"] == "") { throw new Exception("4. Hộ khẩu thường trú bỏ trống"); }
                 if (item["noiohientai"] == "") { throw new Exception("5. Nơi ở hiện tại bỏ trống"); }
                 /* Kiểm tra quy tắc */
-                if(item["ngay"] == "") { item["ngay"] = $"{DateTime.Now:yyyy-MM-dd}"; }
-                else {
+                if (item["ngay"] == "") { item["ngay"] = $"{DateTime.Now:yyyy-MM-dd}"; }
+                else
+                {
                     var time = item["ngay"].vnToDateTime();
-                    if(time == null) { throw new Exception($"0 Ngày lập sổ không đúng định dạng {item["ngay"]}"); }
-                    if(time.HasValue == false) { throw new Exception($"0 Ngày lập sổ không đúng định dạng {item["ngay"]}"); }
+                    if (time == null) { throw new Exception($"0 Ngày lập sổ không đúng định dạng {item["ngay"]}"); }
+                    if (time.HasValue == false) { throw new Exception($"0 Ngày lập sổ không đúng định dạng {item["ngay"]}"); }
                     item["ngay"] = time.Value.ToString("yyyy-MM-dd");
                 }
                 if (regDate.IsMatch(item["ngaysinh"]) == false) { throw new Exception($"2.2 Ngày sinh không đúng định dạng {item["ngaysinh"]}"); }
@@ -104,7 +104,7 @@ namespace QuanLyHoSoSucKhoe.Controllers
             using (var db = local.getDataObject())
             {
                 try
-                {  
+                {
                     db.Execute(item, "hoso", id == "" ? "" : $"id=N'{id.getValueField()}'");
                     db.ExecuteCommand($"delete from hosotsbenh where idhoso=N'{item["id"]}'; delete from hosotscongviec where idhoso=N'{item["id"]}'; ");
                     var tsql = new List<string>();
@@ -114,8 +114,52 @@ namespace QuanLyHoSoSucKhoe.Controllers
                 }
                 catch (Exception ex) { tmp = ex.saveMessage(); }
             }
-            if (tmp == "") { return Content($"{item.getTsqlSQLServerUpdate("hoso", id == "" ? "" : $"id=N'{id}'")} <br /> {Request.showRequest()}"); }
+            if (tmp == "") {
+                tmp = Request.getValue("redirect");
+                if (tmp == "") { return Content(messageKey.actionSuccess); }
+                return Redirect(tmp);
+            }
             return Content($"<div class=\"alert alert-danger\">{tmp} <br />{item.getTsqlSQLServerUpdate("hoso", id == "" ? "" : $"id=N'{id}'")} <br /> {Request.showRequest()}</div>");
         }
+
+        [HttpGet]
+        [ActionName("update")]
+        public ActionResult update_get()
+        {
+            string id = Request.getValue("id"), tmp = "";
+            var item = new Dictionary<string, string>();
+            /* Tạo dữ liệu mặc định */
+            item["ngay"] = DateTime.Now.ToString("dd/MM/yyyy");
+            item["strtotime"] = Tools.getTimeSpanCurrent().ToString();
+            if (id == "") { ViewBag.data = item; return View(); }
+            using (var db = local.getDataObject())
+            {
+                try
+                {
+                    var data = db.getDataSet("select * from hoso where id=N'" + id.getValueField() + "'").Tables[0];
+                    if (data.Rows.Count == 0) { throw new Exception(messageKey.notFoundRecord + ": " + id); }
+                    var colFormat = new Dictionary<string, string>();
+                    colFormat.Add("ngay", "dd/MM/yyyy");
+                    DataRow r = data.Rows[0]; 
+                    for(int i = 0; i < data.Columns.Count; i++)
+                    {
+                        tmp = data.Columns[i].ColumnName;
+                        if(colFormat.ContainsKey(tmp) == false) { item[tmp] = $"{r[i]}";continue; }
+                        item[tmp] = string.Format("{0:" + colFormat[tmp] + "}", r[i]);
+                    }
+                    ViewBag.data = item;
+                    ViewBag.dscongviec = db.getDataSet($"select * from hosotscongviec where idhoso=N'{id.getValueField()}'").Tables[0];
+                    ViewBag.dsbenh = db.getDataSet($"select * from hosotsbenh where loai=1 and idhoso=N'{id.getValueField()}'").Tables[0];
+                    ViewBag.dsbenhnghe = db.getDataSet($"select * from hosotsbenh where loai=2 and idhoso=N'{id.getValueField()}'").Tables[0];
+                }
+                catch (Exception ex) {
+                    var redirect = Request.getValue("redirect");
+                    if (redirect == "") { ViewBag.Error = ex.getLineHTML(); return View(); }
+                    Session.saveError(ex);
+                    return Redirect(redirect);
+                }
+            }
+            return View();
+        } 
     }
 }

@@ -11,10 +11,18 @@
                 </tr>
                 <tr>
                     <th>Ngày</th>
-                    <th>Đối tượng</th>
+                    <th>Đối tượng (Tên + Sdt + đơn vị công tác)</th>
                 </tr>
             </thead>
             <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2">
+                        <a href="@Url.Action("update", "HoSo", new { area = ""})" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Thêm mới hồ sơ</a>
+                        <a href="@Url.Action("update", "HoSo", new { area = ""})" class="btn btn-primary btn-sm"><i class="fa fa-plug"></i> Thêm mới từ hồ sơ đã có</a>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
     <div class="col-sm-12"> 
@@ -35,3 +43,10 @@
         </table>
     </div>
 </div>
+<script>
+    $(document).ready(function () { 
+        var urlCurrent = encodeURIComponent(window.location.href);
+        var link = $('#dsnguoikham>tfoot').find('a').first();
+        $(link).attr('href', $(link).attr('href') + '?redirect=' + urlCurrent);
+    });
+</script>

@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Khám thể lực";
+    Layout = null;
+}
+<form id="frmkhamtheluc" method="post" action="@Url.Action("khamtheluc")"> 
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Chiều cao(cm): </div></div>
+            <input type="text" class="form-control" name="chieucao" value="" maxlength="10" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Cân nặng(kg): </div></div>
+            <input type="text" class="form-control" name="cannang" value="" maxlength="10" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Chỉ số BMI: </div></div>
+            <input type="text" class="form-control" name="bmi" value="" maxlength="10" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Mạch(lân/phút): </div></div>
+            <input type="text" class="form-control" name="mach" value="" maxlength="10" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Huyết áp(mmHg): </div></div>
+            <input type="text" class="form-control" name="huyetap1" value="" maxlength="10" />
+            <div class="input-group-append"><div class="input-group-text">/</div></div>
+            <input type="text" class="form-control" name="huyetap2" value="" maxlength="10" />
+        </div>
+        <div class="input-group input-group-sm">
+            <div class="input-group-append"><div class="input-group-text">Phân loại thể lực: </div></div>
+            <input type="text" class="form-control" name="phanloaitl" value="" maxlength="10" />
+        </div>
+    </div>
+    <div class="form-group">
+        <a href="javascript:void(0);" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i> Lưu lại</a>
+    </div>
+</form>
+

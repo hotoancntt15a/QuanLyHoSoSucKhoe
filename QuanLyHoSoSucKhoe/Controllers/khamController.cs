@@ -21,5 +21,18 @@ namespace QuanLyHoSoSucKhoe.Controllers
         {
             return View();
         }
+         
+        [HttpGet]
+        [ActionName("khamtheluc")]
+        public ActionResult khamtheluc_get()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ActionName("khamtheluc")]
+        public ActionResult khamtheluc_post()
+        {
+            return View();
+        }
     }
 }

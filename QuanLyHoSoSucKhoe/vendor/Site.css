@@ -33,3 +33,9 @@
     background-color: DodgerBlue !important;
     color: #ffffff;
 }
+.table-sm, .table-sm th, .table-sm td {
+    font-size: .875rem;
+    height: calc(1.8125rem + 2px);
+    padding: .25rem .25rem !important;
+    line-height: 1.5;
+}

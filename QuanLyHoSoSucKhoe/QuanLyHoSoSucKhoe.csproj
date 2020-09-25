@@ -1964,6 +1964,7 @@
     <Content Include="Views\HoSo\update.cshtml" />
     <Content Include="Views\kham\Index.cshtml" />
     <Content Include="Views\kham\khamtheluc.cshtml" />
+    <Content Include="Views\kham\dotkham.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Tạo đợi khám";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    /* 
+    Lấy danh sách hồ sơ (Người, sdt, đơn vị, thời gian khám gần nhất) 
+    trên danh sách cho chọn nhiều hồ sơ đẩy sang danh sách tạo đợt khám
+    tạo thông tin đợt khám gồm khám những gì
+    */
+}
+<div class="row">
+    <div class="col-sm-12">
+        <form method="post" id="taodotkham">
+            <input type="hidden" name="id" value="" />
+            <div class="input-group input-group-sm">
+                <div class="input-group-append"><div class="input-group-text">Ngày khám:</div></div>
+                <input type="text" name="ngaykham" class="form-control" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
+            </div>
+            <div class="input-group input-group-sm">
+                <div class="input-group-append"><div class="input-group-text">Nội dung:</div></div>
+                <input type="text" name="noidung" class="form-control" value="" maxlength="255"/>
+            </div>
+            <div class="input-group input-group-sm">
+                <div class="input-group-append"><div class="input-group-text">Khám:</div></div>
+                <table class="table table-hover table-bordered table-sm">
+                    <tbody>
+                        <tr> <td> <label> <input type="checkbox" name="theluc" checked="checked" value="1" /> Khám thể lực</label> </td> </tr>
+                        <tr> <td> <label> <input type="checkbox" name="noikhoa" checked="checked" value="1" /> Khám Nội khoa</label> </td> </tr>
+                        <tr> <td> <label> <input type="checkbox" name="mat" checked="checked" value="1" /> Khám Mắt</label> </td> </tr>
+                        <tr> <td> <label> <input type="checkbox" name="taimuihong" checked="checked" value="1" /> Khám Tai-Mũi-Họng</label> </td> </tr>
+                        <tr> <td> <label> <input type="checkbox" name="ranghammat" checked="checked" value="1" /> Khám Răng-Hàm-Mặt</label> </td> </tr>
+                        <tr> <td> <label> <input type="checkbox" name="dalieu" checked="checked" value="1" /> Khám Da Liễu</label> </td> </tr> 
+                    </tbody>
+                </table>
+            </div>
+            <table class="table table-hover table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th style="width:30px;">Chọn</th>
+                        <th style="width: 90px;">Ngày</th>
+                        <th>Đối tượng</th>
+                        <th style="width: 90px;">Lần cuối</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="form-group">
+                <a href="javascript:saveDotKham();" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i> Lưu lại</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function laydsHoSo() {
+
+    }
+    function saveDotKham() {
+
+    }
+    $(document).ready(function () {
+
+    });
+</script>
+

@@ -124,7 +124,7 @@ namespace QuanLyHoSoSucKhoe.Controllers
 
         [HttpGet]
         [ActionName("update")]
-        public ActionResult update_get()
+        public ActionResult update()
         {
             string id = Request.getValue("id"), tmp = "";
             var item = new Dictionary<string, string>();

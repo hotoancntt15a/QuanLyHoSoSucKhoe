@@ -24,15 +24,17 @@ namespace QuanLyHoSoSucKhoe.Controllers
          
         [HttpGet]
         [ActionName("khamtheluc")]
-        public ActionResult khamtheluc_get()
+        public ActionResult khamtheluc()
         {
+
             return View();
         }
         [HttpPost]
         [ActionName("khamtheluc")]
         public ActionResult khamtheluc_post()
         {
-            return View();
+
+            return Content($"<div class=\"alert alert-info\">{messageKey.actionSuccess}</div>");
         }
     }
 }
